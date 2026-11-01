@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>The Koi Pond</title>
+    <meta name="description" content="The Koi Pond: small, free, slightly unhinged apps." />
+    <link rel="icon" href="onigiri.svg" />
+    <style>
+      :root {
+        --bg: #faf6f1;
+        --surface: #ffffff;
+        --text: #2b2420;
+        --muted: #7a6d64;
+        --border: #e6ddd3;
+        --accent: #b4532a;
+        --radius: 12px;
+        color-scheme: light;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #1c1917;
+          --surface: #27221f;
+          --text: #f1ebe5;
+          --muted: #a89a8f;
+          --border: #3d3530;
+          --accent: #e07a4f;
+          color-scheme: dark;
+        }
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font: 17px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      }
+
+      main {
+        max-width: 640px;
+        margin: 0 auto;
+        padding: 48px 16px 64px;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 2.2rem;
+        line-height: 1.2;
+      }
+
+      .lead {
+        margin: 8px 0 32px;
+        color: var(--muted);
+      }
+
+      a {
+        color: var(--accent);
+      }
+
+      .project {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        padding: 16px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .project img {
+        flex: none;
+        width: 96px;
+        height: auto;
+      }
+
+      .project strong {
+        display: block;
+        font-size: 1.2rem;
+        color: var(--accent);
+      }
+
+      footer {
+        margin-top: 48px;
+        padding-top: 16px;
+        border-top: 1px solid var(--border);
+        color: var(--muted);
+        font-size: 0.95rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>The Koi Pond</h1>
+      <p class="lead">Small, free, slightly unhinged apps. Made for my own household first, then shared.</p>
+
+      <a class="project" href="bento/">
+        <img src="onigiri.svg" alt="" width="96" height="69" />
+        <span>
+          <strong>Bentotachi</strong>
+          A recipe box, dinner plan, shopping list and pantry for your household, starring an onigiri who is fine,
+          actually. Free, private, and kept on your own phone.
+        </span>
+      </a>
+
+      <p class="lead">More soon. Probably.</p>
+
+      <footer>
+        <a href="https://github.com/The-Koi-Pond">GitHub</a>
+        <a href="https://ko-fi.com/bentotachi">Ko-fi ♡</a>
+      </footer>
+    </main>
+  </body>
+</html>

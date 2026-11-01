@@ -247,6 +247,66 @@ def glyph_name(ch):
     return UV2AGL.get(ord(ch), f"uni{ord(ch):04X}")
 
 
+# Kerning: the space between particular pairs ("To", "AV", "LT"). Each
+# character's left and right edge is measured in bands 10 units tall; for a
+# pair, the narrowest gap between them (where both have something at the same
+# height) is brought towards the gap two straight letters have (2 × SIDE).
+# Wide gaps close only partway (closing them fully looks cramped); gaps too
+# small to fit (an f's hook over the next letter) open fully.
+BAND = 10
+GAP = 2 * SIDE
+CLOSE = 0.6  # how much of a too-wide gap to close
+LIMITS = (-160, 100)  # the most a pair moves closer, or apart
+NOTICEABLE = 12  # smaller adjustments are left out
+
+
+def edges(outline):
+    """Per band (y // BAND): the leftmost and rightmost ink."""
+    found = {}
+    for c in outline:
+        pts, current = [], None
+        for op, args in c:
+            if op == "moveTo":
+                current = args[0]
+                pts.append(current)
+            elif op in ("lineTo", "curveTo", "qCurveTo"):
+                # Curves: sample along the control points (close enough here).
+                start = current
+                for t in np.linspace(0.1, 1, 10):
+                    if op == "curveTo" and len(args) == 3:
+                        p1, p2, p3 = args
+                        mt = 1 - t
+                        pts.append((mt ** 3 * start[0] + 3 * mt * mt * t * p1[0] + 3 * mt * t * t * p2[0] + t ** 3 * p3[0],
+                                    mt ** 3 * start[1] + 3 * mt * mt * t * p1[1] + 3 * mt * t * t * p2[1] + t ** 3 * p3[1]))
+                    else:
+                        pts.append(args[-1])
+                        break
+                current = args[-1]
+        for (x1, y1), (x2, y2) in zip(pts, pts[1:] + pts[:1]):
+            for band in range(int(min(y1, y2) // BAND), int(max(y1, y2) // BAND) + 1):
+                y = (band + 0.5) * BAND
+                if min(y1, y2) <= y <= max(y1, y2) and y1 != y2:
+                    x = x1 + (x2 - x1) * (y - y1) / (y2 - y1)
+                    lo, hi = found.get(band, (x, x))
+                    found[band] = (min(lo, x), max(hi, x))
+    return found
+
+
+edge = {ch: edges(outline) for ch, (outline, _) in glyphs.items()}
+kerns = []
+for a, (_, width_a) in glyphs.items():
+    for b in glyphs:
+        shared = set(edge[a]) & set(edge[b])
+        if len(shared) < 3:
+            continue
+        gap = min(width_a - edge[a][band][1] + edge[b][band][0] for band in shared)
+        move = (GAP - gap) * (CLOSE if gap > GAP else 1)
+        move = round(max(LIMITS[0], min(LIMITS[1], move)))
+        if abs(move) >= NOTICEABLE:
+            kerns.append(f"  pos {glyph_name(a)} {glyph_name(b)} {move};")
+KERN_FEATURE = "feature kern {\n" + "\n".join(kerns) + "\n} kern;\n"
+
+
 order = [".notdef", "space"] + [glyph_name(ch) for ch in glyphs]
 cmap = {32: "space", **{ord(ch): glyph_name(ch) for ch in glyphs}}
 cmap.update({ord(k): glyph_name(v) for k, v in ALSO.items()})
@@ -279,11 +339,12 @@ fb.setupNameTable({"familyName": NAME, "styleName": "Regular", "uniqueFontIdenti
                    "fullName": NAME, "psName": "PondPebbles-Regular",
                    "copyright": "Copyright 2026 Xelvanis (The Koi Pond)"})
 fb.setupOS2(sTypoAscender=980, sTypoDescender=-320, sTypoLineGap=0, usWinAscent=1050, usWinDescent=360,
-            sCapHeight=CAP, sxHeight=round(CAP * 0.59), achVendID="KOIP")
+            sCapHeight=CAP, sxHeight=XHEIGHT, achVendID="KOIP")
 fb.setupPost()
+fb.addOpenTypeFeatures(KERN_FEATURE)
 otf = os.path.join(HERE, "PondPebbles.otf")
 fb.save(otf)
 web = TTFont(otf)
 web.flavor = "woff2"
 web.save(os.path.join(HERE, "PondPebbles.woff2"))
-print("wrote", otf, "with", len(glyphs), "characters")
+print("wrote", otf, "with", len(glyphs), "characters and", len(kerns), "kerning pairs")

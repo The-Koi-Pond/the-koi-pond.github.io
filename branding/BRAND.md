@@ -23,11 +23,12 @@ A screaming onigiri is welcome. A screaming settings page isn't.
 
 The palette is Deki's: a cream body, koi-orange spots, jade fins and a
 brown outline. There are two moods. **Daytime** is light mode and
-**night water** is dark mode.
+**pond at night** is dark mode. (Koihongo's "Night Water" theme is a
+different, colder set of colours; see its row below.)
 
 | Name | Used for | Light | Dark |
 |---|---|---|---|
-| Rice / Night water | Page background | `#FAF6F1` | `#141B1B` |
+| Rice / Pond at night | Page background | `#FAF6F1` | `#141B1B` |
 | Paper | Cards, sheets, panels | `#FFFFFF` | `#202928` |
 | Ink | Main text | `#2B2420` | `#F1EBE5` |
 | Mist | Quieter text (hints, dates, captions) | `#7A6D64` | `#A89A8F` |
@@ -63,14 +64,14 @@ Checked on 2026-11-01. The usual minimum for normal-size text is 4.5:1.
 | Koi orange `#B4532A` | Rice | 4.63 |
 | White | Koi orange `#B4532A` | 4.99 |
 | Jade `#3F7668` | Rice | 4.88 |
-| Ink `#F1EBE5` | Night water `#141B1B` | 14.8 |
-| Mist `#A89A8F` | Night water | 6.39 |
-| Koi orange `#E07A4F` | Night water | 5.88 |
-| Jade `#7FBFAE` | Night water | 8.29 |
+| Ink `#F1EBE5` | Pond at night `#141B1B` | 14.8 |
+| Mist `#A89A8F` | Pond at night | 6.39 |
+| Koi orange `#E07A4F` | Pond at night | 5.88 |
+| Jade `#7FBFAE` | Pond at night | 8.29 |
 | Ink `#F1EBE5` | Dark Paper `#202928` | 12.6 |
 | Mist `#A89A8F` | Dark Paper | 5.45 |
 | Koi orange `#E07A4F` | Dark Paper | 5.01 |
-| Night water text | Dark-mode orange button `#E07A4F` | 5.88 |
+| Pond-at-night text `#141B1B` | Dark-mode orange button `#E07A4F` | 5.88 |
 
 Light Mist and light koi orange are only just over the line. Don't make
 them any lighter.
@@ -82,16 +83,19 @@ them any lighter.
   should breathe. (This rule comes from De-Koi.)
 - **Danger isn't orange.** The accent is already orange, so errors and
   delete buttons use Danger red (table above), plus an icon or words.
-  It's 6.07 on Rice, 6.54 under white button text, and 6.86 on night
-  water in dark mode (Bentotachi's values).
+  It's 6.07 on Rice, 6.54 under white button text, and 6.86 on pond at
+  night in dark mode (Bentotachi's values).
 - **Apps may add colours for meaning.** An app can have its own colours
   for its own categories, like Koihongo's kana, component, kanji and word
   colours. Text on them must still reach 4.5:1, and they shouldn't be
-  orange or red, so they don't get mixed up with actions or danger.
+  orange or red, so they don't get mixed up with actions or danger. The
+  exception is warnings: a level that really is a warning may use red or
+  amber, always with words (Bentotachi's pantry shows "1 out" in red and
+  "1 low" in amber).
 - **Colour is never the only signal.** Pair it with a label, an icon or a
   shape, for colour-blind people.
 
-### Night water (decided 2026-11-01)
+### Pond at night (decided 2026-11-01)
 
 Dark mode is the pond at night: a teal-tinted near-black, `#141B1B`.
 Bentotachi, its website and thekoipond.dev all use it. It replaced a warm
@@ -108,8 +112,8 @@ The soft tints behind highlighted things are tinted to match:
 | Orange tint | Behind selected and highlighted things | `#302A25` (orange text on it: 4.76) |
 | Jade tint | Calm notes, "good" boxes | `#1D3330` |
 
-Text that sits on a coloured button or badge in dark mode is the night
-water colour, `#141B1B`.
+Text that sits on a coloured button or badge in dark mode is the pond-
+at-night colour, `#141B1B`.
 
 ## Type
 
@@ -192,8 +196,8 @@ Bentotachi's rice), but the apps shouldn't drift further towards it:
 
 | App | Its own personality | Where it stands |
 |---|---|---|
-| Bentotachi | Ben, the screaming onigiri on chopsticks, and his moods; the drawn title with the umeboshi | Uses the pond colours; dark mode is night water (since 2026-11-01). Pill-shaped buttons and chips. "A Koi Pond app" credit at the bottom of its ⋮ menu. |
-| Koihongo | Pixel art, sparkles, pixel fonts, Deki-senpai | Navy, periwinkle and pink for now. Getting three themes to choose from: "That tasted purple!" (today's look), **Night Water** (cold teal-black pond, moonlit) and **Lantern Dusk** (warm dusk with paper lanterns, using the night-water candidate colours). |
+| Bentotachi | Ben, the screaming onigiri on chopsticks, and his moods; the drawn title with the umeboshi | Uses the pond colours; dark mode is pond at night (since 2026-11-01). Pill-shaped buttons and chips. "A Koi Pond app" credit at the bottom of its ⋮ menu. |
+| Koihongo | Pixel art, sparkles, pixel fonts, Deki-senpai | Navy, periwinkle and pink for now. Getting three themes to choose from: "That tasted purple!" (today's look), **Night Water** (cold teal-black pond, moonlit) and **Lantern Dusk** (warm dusk with paper lanterns, built on the pond-at-night colours). |
 | De-Koi | Visual-novel atmosphere, sprites, the "Koi Pond at Dusk" look | Already close: ember orange `#F06F3F`, lotus teal, parchment text. Its own rules are in its `DESIGN.md`. |
 | DeKoi | The fish ring, sumi-e brush motifs, serif titles | Shelved. Its `DESIGN.md` is the most detailed design writing we have, and worth borrowing from. |
 

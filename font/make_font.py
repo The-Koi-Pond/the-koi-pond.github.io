@@ -256,11 +256,12 @@ for ch in [c for c in glyphs if c.islower()]:
         s = need.get(row_of[ch]) or float(np.median([v for (sh, _), v in need.items() if sh == sheet]))
     glyphs[ch] = scaled(*glyphs[ch], s)
 
-# Hand adjustments. SHRINK: a little smaller than drawn (from its left edge
-# and the baseline). NUDGE, in font units (up is positive): the t's crossbar
-# sat a little above the other small letters' tops, so it looked hopped up.
-SHRINK = {"t": 0.94}
-for ch, s in SHRINK.items():
+# Hand adjustments. RESIZE: a little smaller or bigger than drawn (from its
+# left edge and the baseline). NUDGE, in font units (up is positive): the t's
+# crossbar sat a little above the other small letters' tops, so it looked
+# hopped up.
+RESIZE = {"t": 0.94, "r": 1.05}
+for ch, s in RESIZE.items():
     glyphs[ch] = scaled(*glyphs[ch], s)
 NUDGE = {"t": -30}
 for ch, dy in NUDGE.items():
@@ -326,6 +327,8 @@ def edges(outline):
 # Hand-tuned pairs, added on top of the automatic kerning (negative: closer).
 HAND_KERN = {
     "No": -30,
+    "Th": -30,
+    "Po": -25,
 }
 
 edge = {ch: edges(outline) for ch, (outline, _) in glyphs.items()}

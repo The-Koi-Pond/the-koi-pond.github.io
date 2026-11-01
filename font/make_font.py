@@ -194,11 +194,22 @@ for sheet, rows in SHEETS.items():
     else:
         sheet_scale = CAP * 0.58 / float(np.median([b[3] - b[1] for c, b, r in placed]))
     traced = contours(trace(sheet, ink))
-    for ch, b, r in placed:
+    # Each traced outline belongs to exactly one character: the one whose box
+    # covers most of it. (Boxes overlap where letters tuck under each other,
+    # like the j's tail under the J, which once put the j inside the J too.)
+    owner = {}
+    for i, c in enumerate(traced):
+        xs, ys = [p[0] for p in points(c)], [p[1] for p in points(c)]
+        cx0, cy0, cx1, cy1 = min(xs), min(ys), max(xs), max(ys)
+        size = max(1.0, (cx1 - cx0) * (cy1 - cy0))
+        cover = [max(0, min(cx1, b[2]) - max(cx0, b[0])) * max(0, min(cy1, b[3]) - max(cy0, b[1])) / size
+                 for _, b, _ in placed]
+        if max(cover) > 0.5:
+            owner[i] = int(np.argmax(cover))
+    for n, (ch, b, r) in enumerate(placed):
         k = row_scale[r] or sheet_scale
         bottom = b[3] if ch in ON_BASELINE else row_base[r]
-        mine = [c for c in traced if b[0] <= np.mean([p[0] for p in points(c)]) <= b[2]
-                and b[1] <= np.mean([p[1] for p in points(c)]) <= b[3]]
+        mine = [c for i, c in enumerate(traced) if owner.get(i) == n]
         assert mine, ch
         left = min(p[0] for c in mine for p in points(c))
         right = max(p[0] for c in mine for p in points(c))

@@ -95,16 +95,30 @@
         color: var(--accent);
       }
 
+      /* Ben and the name side by side on top, the description centred below. */
       .project {
         display: flex;
-        gap: 16px;
+        flex-direction: column;
+        gap: 8px;
         align-items: center;
-        padding: 16px;
+        text-align: center;
+        padding: 16px 20px 20px;
         background: var(--surface);
         border: 1px solid var(--border);
         border-radius: var(--radius);
         color: inherit;
         text-decoration: none;
+      }
+
+      .project-head {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+
+      /* Even line lengths, so no lone word on the last line. */
+      .project-text {
+        text-wrap: balance;
       }
 
       .project img {
@@ -114,7 +128,6 @@
       }
 
       .project strong {
-        display: block;
         font: 400 2.2rem/1.1 "Pond Pebbles", system-ui, sans-serif;
         color: var(--accent);
       }
@@ -149,9 +162,11 @@
       <p class="lead">Made with a lot of AI help: Claude for code, ChatGPT for the first drafts of the art.</p>
 
       <a class="project" href="bento/">
-        <img src="onigiri.svg" alt="" width="96" height="69" />
-        <span>
+        <span class="project-head">
+          <img src="onigiri.svg" alt="" width="96" height="69" />
           <strong>Bentotachi</strong>
+        </span>
+        <span class="project-text">
           A recipe box, dinner plan, shopping list and pantry for your household, starring an onigiri who is fine,
           actually. Free, private, and kept on your own phone.
         </span>

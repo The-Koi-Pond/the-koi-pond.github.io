@@ -61,16 +61,25 @@
         box-sizing: border-box;
       }
 
+      /* The page fills the window: on a tall screen the content sits in the
+         middle and the footer at the bottom, instead of everything bunching
+         at the top. When the content is taller than the window (phones),
+         it just scrolls as normal. */
       body {
         margin: 0;
+        min-height: 100vh;
+        min-height: 100dvh;
+        display: flex;
+        flex-direction: column;
         background: var(--bg);
         color: var(--text);
         font: 17px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
       }
 
       main {
+        width: 100%;
         max-width: 640px;
-        margin: 0 auto;
+        margin: auto;
         padding: 48px 16px 0;
       }
 
@@ -114,12 +123,14 @@
         text-wrap: balance;
       }
 
-      /* Small print just above the footer. */
+      /* Small print just above the footer's line: smaller and italic, but
+         not paler (Mist is already as light as readable text can be). */
       .fineprint {
-        margin: 40px auto 0;
+        margin: 0 auto 12px;
         max-width: 40em;
         color: var(--muted);
-        font-size: 0.9rem;
+        font-size: 0.82rem;
+        font-style: italic;
       }
 
       /* Break only between phrases, never inside one. */
@@ -204,10 +215,15 @@
       }
 
       /* Outside <main>, so screen readers can jump to it as the page's footer;
-         lined up with main's column (608px wide, 16px from the edges on phones). */
+         lined up with main's column (608px wide, 16px from the edges on phones).
+         The small print, the line and the links stay together at the bottom. */
       footer {
         max-width: 608px;
-        margin: 48px max(16px, calc((100% - 608px) / 2)) 64px;
+        margin: 8px max(16px, calc((100% - 608px) / 2)) 40px;
+        text-align: center;
+      }
+
+      .footer-links {
         padding-top: 16px;
         border-top: 1px solid var(--border);
         color: var(--muted);
@@ -247,18 +263,19 @@
       </a>
 
       <p class="lead">More soon. Probably.</p>
+    </main>
 
+    <footer>
       <p class="fineprint">
         <span>Made with a lot of AI help:</span> <span>Claude for code,</span>
         <span>ChatGPT for the first drafts of the art.</span>
       </p>
-    </main>
-
-    <footer>
-      <a href="https://github.com/The-Koi-Pond">GitHub</a>
-      <a href="https://bsky.app/profile/thekoipond.dev">Bluesky</a>
-      <a href="https://ko-fi.com/bentotachi">Ko-fi <span aria-hidden="true">♡</span></a>
-      <a href="mailto:splash@thekoipond.dev">splash@thekoipond.dev</a>
+      <div class="footer-links">
+        <a href="https://github.com/The-Koi-Pond">GitHub</a>
+        <a href="https://bsky.app/profile/thekoipond.dev">Bluesky</a>
+        <a href="https://ko-fi.com/bentotachi">Ko-fi <span aria-hidden="true">♡</span></a>
+        <a href="mailto:splash@thekoipond.dev">splash@thekoipond.dev</a>
+      </div>
     </footer>
   </body>
 </html>

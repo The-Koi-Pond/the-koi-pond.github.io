@@ -47,23 +47,31 @@
         padding: 48px 16px 64px;
       }
 
-      /* Deki, The Koi Pond's mascot, beside the name. */
+      /* Deki, The Koi Pond's mascot, beside the drawn name. */
       header {
         display: flex;
         align-items: center;
         gap: 16px;
       }
 
-      header img {
+      .deki {
         flex: none;
         width: 110px;
         height: auto;
       }
 
+      /* Its own width: sized only by the image inside, Firefox squeezes it to
+         nothing in the flex row. */
       h1 {
+        flex: 0 1 210px;
+        min-width: 0;
         margin: 0;
-        font-size: 2.2rem;
-        line-height: 1.2;
+      }
+
+      .wordmark {
+        display: block;
+        width: 100%;
+        height: auto;
       }
 
       .lead {
@@ -114,12 +122,15 @@
   <body>
     <main>
       <header>
-        <img src="deki.svg" alt="" width="110" height="116" />
-        <div>
-          <h1>The Koi Pond</h1>
-          <p class="lead">Small, free, slightly unhinged apps. Made for my own household first, then shared.</p>
-        </div>
+        <img class="deki" src="deki.svg" alt="" width="110" height="116" />
+        <h1>
+          <picture>
+            <source srcset="thekoipond-title-dark.svg" media="(prefers-color-scheme: dark)" />
+            <img class="wordmark" src="thekoipond-title.svg" alt="The Koi Pond" width="210" height="124" />
+          </picture>
+        </h1>
       </header>
+      <p class="lead">Small, free, slightly unhinged apps. Made for my own household first, then shared.</p>
 
       <a class="project" href="bento/">
         <img src="onigiri.svg" alt="" width="96" height="69" />

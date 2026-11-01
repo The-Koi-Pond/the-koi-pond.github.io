@@ -17,3 +17,14 @@ python branding/make_svg_deki.py branding/Deki.png .
 It needs Python with Pillow, numpy and scipy, and Inkscape 1.4. It leaves
 out the picture's shadow, body shading and curl gloss, so Deki stays crisp
 when small.
+
+`thekoipond-title.svg` (brown letters) and `thekoipond-title-dark.svg`
+(cream letters, for dark mode) are the drawn name, traced from
+`branding/TheKoiPond.png`:
+
+```
+python branding/make_svg_wordmark.py branding/TheKoiPond.png .
+```
+
+Colours, shared with Bentotachi: letters #361F17 (dark mode #F1EBE5), jade
+#5A9A8A for the curl and ripple, cream background #FAF6F1.

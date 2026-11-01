@@ -30,6 +30,13 @@
         }
       }
 
+      /* Pond Pebbles, The Koi Pond's own display font (font/make_font.py). */
+      @font-face {
+        font-family: "Pond Pebbles";
+        src: url("font/PondPebbles.woff2") format("woff2");
+        font-display: swap;
+      }
+
       * {
         box-sizing: border-box;
       }
@@ -108,7 +115,7 @@
 
       .project strong {
         display: block;
-        font-size: 1.2rem;
+        font: 400 2.2rem/1.1 "Pond Pebbles", system-ui, sans-serif;
         color: var(--accent);
       }
 
@@ -120,6 +127,7 @@
         font-size: 0.95rem;
         display: flex;
         flex-wrap: wrap;
+        justify-content: center;
         gap: 8px 20px;
       }
     </style>

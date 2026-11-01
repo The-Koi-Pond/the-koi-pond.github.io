@@ -147,6 +147,7 @@ def inside(pt, pts):
 
 
 glyphs = {}  # character: (list of contours in font units, advance width)
+row_of = {}  # character: (sheet, row) it was drawn in
 for sheet, rows in SHEETS.items():
     im = Image.open(os.path.join(HERE, "sheets", sheet + ".png")).convert("L")
     small_ink = np.asarray(im).astype(float) < 110
@@ -196,6 +197,50 @@ for sheet, rows in SHEETS.items():
                 getattr(TransformPen(rec, transform), op)(*args)
             moved.append(rec.value)
         glyphs[ch] = (moved, round((right - left) * k + 2 * SIDE))
+        row_of[ch] = (sheet, r)
+
+
+def top_of(outline):
+    pen = BoundsPen(None)
+    for c in outline:
+        for op, args in c:
+            getattr(pen, op)(*args)
+    return pen.bounds[3]
+
+
+def scaled(outline, width, s):
+    """A character made s times bigger, from its left edge and the baseline."""
+    transform = (s, 0, 0, s, SIDE * (1 - s), 0)
+    moved = []
+    for c in outline:
+        rec = RecordingPen()
+        for op, args in c:
+            getattr(TransformPen(rec, transform), op)(*args)
+        moved.append(rec.value)
+    return moved, round((width - 2 * SIDE) * s + 2 * SIDE)
+
+
+# Small letters: the sheets drew them at slightly different sizes next to
+# their capitals (up to a fifth apart), which shows in words. The ones that
+# are only x-height tall are each sized to exactly XHEIGHT; the ones with a
+# tall stroke or a tail are sized by how much their row's x-height letters
+# needed, so they stay in proportion. Capitals and digits are left as drawn.
+XHEIGHT = round(CAP * 0.58)
+X_LETTERS = set("acemnorsuvwxz")
+need = {}  # (sheet, row): how much its x-height letters needed, on average
+for key in set(row_of.values()):
+    mine = [XHEIGHT / top_of(glyphs[ch][0]) for ch in X_LETTERS if row_of.get(ch) == key]
+    if mine:
+        need[key] = float(np.median(mine))
+for ch in [c for c in glyphs if c.islower()]:
+    sheet, _ = row_of[ch]
+    if ch in X_LETTERS:
+        s = XHEIGHT / top_of(glyphs[ch][0])
+    else:
+        # A row without x-height letters (b d f g, beside the fused pairs)
+        # uses its sheet's other rows.
+        s = need.get(row_of[ch]) or float(np.median([v for (sh, _), v in need.items() if sh == sheet]))
+    glyphs[ch] = scaled(*glyphs[ch], s)
 
 
 def glyph_name(ch):

@@ -27,11 +27,11 @@ brown outline. There are two moods. **Daytime** is light mode and
 
 | Name | Used for | Light | Dark |
 |---|---|---|---|
-| Rice | Page background | `#FAF6F1` | see "Night water" below |
-| Paper | Cards, sheets, panels | `#FFFFFF` | `#27221F` |
+| Rice / Night water | Page background | `#FAF6F1` | `#141B1B` |
+| Paper | Cards, sheets, panels | `#FFFFFF` | `#202928` |
 | Ink | Main text | `#2B2420` | `#F1EBE5` |
 | Mist | Quieter text (hints, dates, captions) | `#7A6D64` | `#A89A8F` |
-| Line | Borders and dividers | `#E6DDD3` | `#3D3530` |
+| Line | Borders and dividers | `#E6DDD3` | `#34403E` |
 | Koi orange | Main buttons, links, the selected thing | `#B4532A` | `#E07A4F` |
 | Jade | A second colour for calmer highlights | `#3F7668` | `#7FBFAE` |
 | Danger | Errors, delete buttons | `#B3261E` | `#F2827A` |
@@ -46,6 +46,7 @@ art doesn't have to work as text:
 | Name | Colour | Where |
 |---|---|---|
 | Art ink (outlines, drawn letters) | `#361F17`, or `#F1EBE5` on dark | Logos and titles |
+| Ben's ink | `#2E201B` | Ben's outline and nori (`onigiri.svg` and his moods) |
 | Art orange | `#C8643A` | Ben's chopsticks |
 | Art jade | `#5A9A8A` | The ripple, the curl in "Koi" |
 | Deki's cream / blush / spots | `#FEF6ED` / `#FED7CA` / `#FD9E82` | `deki.svg` |
@@ -62,10 +63,14 @@ Checked on 2026-11-01. The usual minimum for normal-size text is 4.5:1.
 | Koi orange `#B4532A` | Rice | 4.63 |
 | White | Koi orange `#B4532A` | 4.99 |
 | Jade `#3F7668` | Rice | 4.88 |
-| Ink `#F1EBE5` | Dark background `#1C1917` | 14.8 |
-| Mist `#A89A8F` | `#1C1917` | 6.40 |
-| Koi orange `#E07A4F` | `#1C1917` | 5.88 |
-| Jade `#7FBFAE` | `#1C1917` | 8.30 |
+| Ink `#F1EBE5` | Night water `#141B1B` | 14.8 |
+| Mist `#A89A8F` | Night water | 6.39 |
+| Koi orange `#E07A4F` | Night water | 5.88 |
+| Jade `#7FBFAE` | Night water | 8.29 |
+| Ink `#F1EBE5` | Dark Paper `#202928` | 12.6 |
+| Mist `#A89A8F` | Dark Paper | 5.45 |
+| Koi orange `#E07A4F` | Dark Paper | 5.01 |
+| Night water text | Dark-mode orange button `#E07A4F` | 5.88 |
 
 Light Mist and light koi orange are only just over the line. Don't make
 them any lighter.
@@ -77,8 +82,8 @@ them any lighter.
   should breathe. (This rule comes from De-Koi.)
 - **Danger isn't orange.** The accent is already orange, so errors and
   delete buttons use Danger red (table above), plus an icon or words.
-  It's 6.07 on Rice, 6.54 under white button text, and 6.87 on the dark
-  background in dark mode (Bentotachi's values).
+  It's 6.07 on Rice, 6.54 under white button text, and 6.86 on night
+  water in dark mode (Bentotachi's values).
 - **Apps may add colours for meaning.** An app can have its own colours
   for its own categories, like Koihongo's kana, component, kanji and word
   colours. Text on them must still reach 4.5:1, and they shouldn't be
@@ -86,25 +91,32 @@ them any lighter.
 - **Colour is never the only signal.** Pair it with a label, an icon or a
   shape, for colour-blind people.
 
-### Night water (undecided)
+### Night water (decided 2026-11-01)
 
-Right now the dark modes don't agree:
+Dark mode is the pond at night: a teal-tinted near-black, `#141B1B`.
+Bentotachi, its website and thekoipond.dev all use it. It replaced a warm
+stone, `#1C1917`, which is just as bright, so every contrast ratio stayed
+the same. It also moves the dark mode away from the warm-cream-and-
+terracotta look AI tools tend to produce by default (see "Our own look,
+not the default one" below). De-Koi's own near-black teal, `#05090D`, is
+the same idea, only darker.
 
-- Bentotachi and thekoipond.dev use warm stone, `#1C1917`.
-- De-Koi uses near-black pond teal, `#05090D`.
+The soft tints behind highlighted things are tinted to match:
 
-The suggestion is to tint the stone toward teal, so the dark modes read
-as the same pond at night. `#141B1B` is about as bright as `#1C1917`, so
-every ratio in the table above stays the same: 14.8 for text, 6.39 for
-Mist, 5.88 for orange and 8.29 for jade. A matching card colour would be
-around `#202928`, where text is 12.6, Mist 5.45 and orange 5.01. These
-are candidates. Try them in Bentotachi before deciding.
+| Name | Used for | Dark |
+|---|---|---|
+| Orange tint | Behind selected and highlighted things | `#302A25` (orange text on it: 4.76) |
+| Jade tint | Calm notes, "good" boxes | `#1D3330` |
+
+Text that sits on a coloured button or badge in dark mode is the night
+water colour, `#141B1B`.
 
 ## Type
 
 - **Pond Pebbles** is The Koi Pond's own font (`font/`, made by
   `font/make_font.py`). It's for the studio name, app names and big
-  titles only. Never use it for body text.
+  titles only, which includes a website's section headings (the
+  Bentotachi site uses it for those). Never use it for body text.
 - **Body text** uses a plain, readable font. The website uses the
   system's own font (Segoe UI on Windows, Roboto on Android).
 - Each app may have **one display font of its own** for its personality:
@@ -114,7 +126,9 @@ are candidates. Try them in Bentotachi before deciding.
 ## Shape and motion
 
 - **Corners:** 12px for cards and panels, 4 to 8px for small controls,
-  fully round for icon-only buttons. Pixel-art apps like Koihongo may use
+  fully round for icon-only buttons. An app may make its buttons, chips
+  and tags fully round pills instead (Bentotachi does, everywhere), as
+  long as it does so consistently. Pixel-art apps like Koihongo may use
   their own corners (a pill-shaped Start button, rounder banners).
 - **Motion behaves like water:** drift, ripple, glide. Something you can
   click may lift 2px when you point at it. No bouncing, spinning or
@@ -136,6 +150,24 @@ little different there:
 - **Text sits on solid colour**, never straight on scenery or stars.
 - **Sizes follow the pixel grid.** Pixel fonts drawn on an 8px grid use
   sizes in multiples of 8.
+
+## Our own look, not the default one
+
+Warm cream backgrounds, a terracotta accent and serif headings are the
+look AI tools fall back on when nobody steers them. Our daytime palette
+is close to it. It has real reasons (Deki's cream body and koi spots,
+Bentotachi's rice), but the apps shouldn't drift further towards it:
+
+- **What makes the apps related is the motifs:** Deki, the ripple, the
+  fish ring, Pond Pebbles and the "A Koi Pond app" credit. They don't
+  have to share page colours. Koihongo keeps its own palette.
+- **Lean on the specific things:** each app's mascot, drawn lettering and
+  signature details. They say more about who made the app than any
+  background colour does.
+- **Bentotachi never gets serif headings.** Its type is the drawn title,
+  Pond Pebbles and the system font.
+- **Jade can do more than it does now,** so the palette reads as "koi
+  pond", not just "warm".
 
 ## Shared motifs
 
@@ -160,7 +192,7 @@ little different there:
 
 | App | Its own personality | Where it stands |
 |---|---|---|
-| Bentotachi | Ben, the screaming onigiri on chopsticks, and his moods; the drawn title with the umeboshi | Uses the pond colours. Dark mode may move to night water. |
+| Bentotachi | Ben, the screaming onigiri on chopsticks, and his moods; the drawn title with the umeboshi | Uses the pond colours; dark mode is night water (since 2026-11-01). Pill-shaped buttons and chips. "A Koi Pond app" credit at the bottom of its ⋮ menu. |
 | Koihongo | Pixel art, sparkles, pixel fonts, Deki-senpai | Navy, periwinkle and pink for now. Getting three themes to choose from: "That tasted purple!" (today's look), **Night Water** (cold teal-black pond, moonlit) and **Lantern Dusk** (warm dusk with paper lanterns, using the night-water candidate colours). |
 | De-Koi | Visual-novel atmosphere, sprites, the "Koi Pond at Dusk" look | Already close: ember orange `#F06F3F`, lotus teal, parchment text. Its own rules are in its `DESIGN.md`. |
 | DeKoi | The fish ring, sumi-e brush motifs, serif titles | Shelved. Its `DESIGN.md` is the most detailed design writing we have, and worth borrowing from. |
@@ -177,12 +209,10 @@ All paths are under `C:\Projects\TheKoiPond\` on Xel's PC.
 
 ## Still to decide
 
-1. **Night water:** whether Bentotachi and the website move their dark
-   mode from `#1C1917` to the teal-tinted candidate above.
-2. **Koihongo's two pond themes:** the exact colours, tuned in the real
+1. **Koihongo's two pond themes:** the exact colours, tuned in the real
    app. Decided on 2026-11-01: Night Water and Lantern Dusk, both kept
    as options next to "That tasted purple!". The hills and bushes get
    recoloured; the blossoms stay as they are.
-3. **Pixel koi for the fish ring:** Xel draws them (left- and
+2. **Pixel koi for the fish ring:** Xel draws them (left- and
    right-facing at least; more directions if the ring goes all the way
    round).

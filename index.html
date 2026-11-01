@@ -54,9 +54,15 @@
         padding: 48px 16px 64px;
       }
 
+      /* Everything on this short page is centred, like a business card. */
+      main {
+        text-align: center;
+      }
+
       /* Deki, The Koi Pond's mascot, beside the drawn name. */
       header {
         display: flex;
+        justify-content: center;
         align-items: center;
         gap: 16px;
       }
@@ -82,13 +88,23 @@
       }
 
       .lead {
-        margin: 8px 0 32px;
+        margin: 12px auto 32px;
+        max-width: 30em;
         color: var(--muted);
+        text-wrap: balance;
       }
 
-      /* Two lines in a row read as one block. */
-      .lead:has(+ .lead) {
-        margin-bottom: 0;
+      /* Small print just above the footer. */
+      .fineprint {
+        margin: 40px auto 0;
+        max-width: 40em;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      /* Break only between phrases, never inside one. */
+      .fineprint span {
+        white-space: nowrap;
       }
 
       a {
@@ -108,6 +124,34 @@
         border-radius: var(--radius);
         color: inherit;
         text-decoration: none;
+        transition:
+          transform 0.15s,
+          border-color 0.15s,
+          box-shadow 0.15s;
+      }
+
+      /* It's a link: lift a little under the pointer or keyboard focus. */
+      .project:hover,
+      .project:focus-visible {
+        transform: translateY(-2px);
+        border-color: var(--accent);
+        box-shadow: 0 6px 18px rgb(0 0 0 / 0.08);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .project {
+          transition: none;
+        }
+        .project:hover,
+        .project:focus-visible {
+          transform: none;
+        }
+      }
+
+      .visit {
+        color: var(--accent);
+        font-weight: 600;
+        font-size: 0.95rem;
       }
 
       .project-head {
@@ -159,7 +203,6 @@
       <p class="lead">
         Small, free, slightly unhinged apps by a few friends. Made for our own households first, then shared.
       </p>
-      <p class="lead">Made with a lot of AI help: Claude for code, ChatGPT for the first drafts of the art.</p>
 
       <a class="project" href="bento/">
         <span class="project-head">
@@ -170,9 +213,15 @@
           A recipe box, dinner plan, shopping list and pantry for your household, starring an onigiri who is fine,
           actually. Free, private, and kept on your own phone.
         </span>
+        <span class="visit">Visit →</span>
       </a>
 
       <p class="lead">More soon. Probably.</p>
+
+      <p class="fineprint">
+        <span>Made with a lot of AI help:</span> <span>Claude for code,</span>
+        <span>ChatGPT for the first drafts of the art.</span>
+      </p>
 
       <footer>
         <a href="https://github.com/The-Koi-Pond">GitHub</a>

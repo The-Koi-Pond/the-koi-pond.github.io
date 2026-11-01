@@ -5,7 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>The Koi Pond</title>
     <meta name="description" content="The Koi Pond: small, free, slightly unhinged apps." />
-    <link rel="icon" href="deki.svg" />
+    <link rel="canonical" href="https://thekoipond.dev/" />
+    <!-- The preview card Bluesky, Discord, messages and so on show for a link. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://thekoipond.dev/" />
+    <meta property="og:title" content="The Koi Pond" />
+    <meta
+      property="og:description"
+      content="Small, free, slightly unhinged apps by a few friends. Made for our own households first, then shared."
+    />
+    <meta property="og:image" content="https://thekoipond.dev/og-card.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Deki, The Koi Pond's mascot, next to the words The Koi Pond" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <!-- Icons: Deki everywhere (SVG where browsers can, PNG on phone home screens). -->
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="deki.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <meta name="theme-color" content="#faf6f1" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#141b1b" media="(prefers-color-scheme: dark)" />
     <style>
       :root {
         --bg: #faf6f1;
@@ -52,7 +71,7 @@
       main {
         max-width: 640px;
         margin: 0 auto;
-        padding: 48px 16px 64px;
+        padding: 48px 16px 0;
       }
 
       /* Everything on this short page is centred, like a business card. */
@@ -174,13 +193,17 @@
         height: auto;
       }
 
-      .project strong {
+      .project h2 {
+        margin: 0;
         font: 400 3rem/1 "Pond Pebbles", system-ui, sans-serif;
         color: var(--accent);
       }
 
+      /* Outside <main>, so screen readers can jump to it as the page's footer;
+         lined up with main's column (608px wide, 16px from the edges on phones). */
       footer {
-        margin-top: 48px;
+        max-width: 608px;
+        margin: 48px max(16px, calc((100% - 608px) / 2)) 64px;
         padding-top: 16px;
         border-top: 1px solid var(--border);
         color: var(--muted);
@@ -208,15 +231,15 @@
       </p>
 
       <a class="project" href="bento/">
-        <span class="project-head">
+        <div class="project-head">
           <img src="onigiri.svg" alt="" width="96" height="69" />
-          <strong>Bentotachi</strong>
-        </span>
+          <h2>Bentotachi</h2>
+        </div>
         <span class="project-text">
           A recipe box, dinner plan, shopping list and pantry for your household, starring an onigiri who is fine,
           actually. Free, private, and kept on your own phone.
         </span>
-        <span class="visit">Visit →</span>
+        <span class="visit">Visit <span aria-hidden="true">→</span></span>
       </a>
 
       <p class="lead">More soon. Probably.</p>
@@ -225,13 +248,13 @@
         <span>Made with a lot of AI help:</span> <span>Claude for code,</span>
         <span>ChatGPT for the first drafts of the art.</span>
       </p>
-
-      <footer>
-        <a href="https://github.com/The-Koi-Pond">GitHub</a>
-        <a href="https://bsky.app/profile/thekoipond.dev">Bluesky</a>
-        <a href="https://ko-fi.com/bentotachi">Ko-fi ♡</a>
-        <a href="mailto:splash@thekoipond.dev">splash@thekoipond.dev</a>
-      </footer>
     </main>
+
+    <footer>
+      <a href="https://github.com/The-Koi-Pond">GitHub</a>
+      <a href="https://bsky.app/profile/thekoipond.dev">Bluesky</a>
+      <a href="https://ko-fi.com/bentotachi">Ko-fi <span aria-hidden="true">♡</span></a>
+      <a href="mailto:splash@thekoipond.dev">splash@thekoipond.dev</a>
+    </footer>
   </body>
 </html>

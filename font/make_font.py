@@ -323,8 +323,13 @@ def edges(outline):
     return found
 
 
+# Hand-tuned pairs, added on top of the automatic kerning (negative: closer).
+HAND_KERN = {
+    "No": -30,
+}
+
 edge = {ch: edges(outline) for ch, (outline, _) in glyphs.items()}
-kerns = []
+moves = {}  # (first, second): how far closer (-) or apart (+)
 for a, (_, width_a) in glyphs.items():
     for b in glyphs:
         shared = set(edge[a]) & set(edge[b])
@@ -332,9 +337,11 @@ for a, (_, width_a) in glyphs.items():
             continue
         gap = min(width_a - edge[a][band][1] + edge[b][band][0] for band in shared)
         move = (GAP - gap) * (CLOSE if gap > GAP else 1)
-        move = round(max(LIMITS[0], min(LIMITS[1], move)))
-        if abs(move) >= NOTICEABLE:
-            kerns.append(f"  pos {glyph_name(a)} {glyph_name(b)} {move};")
+        moves[a, b] = round(max(LIMITS[0], min(LIMITS[1], move)))
+for pair, extra in HAND_KERN.items():
+    moves[pair[0], pair[1]] = moves.get((pair[0], pair[1]), 0) + extra
+kerns = [f"  pos {glyph_name(a)} {glyph_name(b)} {move};" for (a, b), move in moves.items()
+         if abs(move) >= NOTICEABLE or a + b in HAND_KERN]
 KERN_FEATURE = "feature kern {\n" + "\n".join(kerns) + "\n} kern;\n"
 
 

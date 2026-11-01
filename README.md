@@ -2,8 +2,13 @@
 
 The Koi Pond's home page, served by GitHub Pages at
 [thekoipond.dev](https://thekoipond.dev). Project sites show up under it
-automatically, like [thekoipond.dev/bento](https://thekoipond.dev/bento) from
-the `bento` repository.
+automatically, like [thekoipond.dev/bentotachi](https://thekoipond.dev/bentotachi) from
+the `bentotachi` repository.
+
+`bento/` keeps Bentotachi's old address working: it was thekoipond.dev/bento
+until the repository was renamed (2026-11-02), so these pages send old links
+on to /bentotachi/, and the Search Console ownership file is kept there too.
+Only served because no repository is called `bento` any more.
 
 `CNAME` holds the domain; the DNS records for it are at Cloudflare.
 

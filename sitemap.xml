@@ -2,6 +2,6 @@
 <!-- Every page on thekoipond.dev, for search engines. Add each new app's page here. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://thekoipond.dev/</loc></url>
-  <url><loc>https://thekoipond.dev/bento/</loc></url>
-  <url><loc>https://thekoipond.dev/bento/privacy.html</loc></url>
+  <url><loc>https://thekoipond.dev/bentotachi/</loc></url>
+  <url><loc>https://thekoipond.dev/bentotachi/privacy.html</loc></url>
 </urlset>

@@ -34,6 +34,7 @@ brown outline. There are two moods. **Daytime** is light mode and
 | Line | Borders and dividers | `#E6DDD3` | `#3D3530` |
 | Koi orange | Main buttons, links, the selected thing | `#B4532A` | `#E07A4F` |
 | Jade | A second colour for calmer highlights | `#3F7668` | `#7FBFAE` |
+| Danger | Errors, delete buttons | `#B3261E` | `#F2827A` |
 
 These are the colours Bentotachi and thekoipond.dev already use. In light
 mode, put white text on koi-orange buttons. In dark mode, put the dark
@@ -75,7 +76,13 @@ them any lighter.
   and moments that matter. Don't fill whole panels with it. The pond
   should breathe. (This rule comes from De-Koi.)
 - **Danger isn't orange.** The accent is already orange, so errors and
-  delete buttons need a clearly different red, plus an icon or words.
+  delete buttons use Danger red (table above), plus an icon or words.
+  It's 6.07 on Rice, 6.54 under white button text, and 6.87 on the dark
+  background in dark mode (Bentotachi's values).
+- **Apps may add colours for meaning.** An app can have its own colours
+  for its own categories, like Koihongo's kana, component, kanji and word
+  colours. Text on them must still reach 4.5:1, and they shouldn't be
+  orange or red, so they don't get mixed up with actions or danger.
 - **Colour is never the only signal.** Pair it with a label, an icon or a
   shape, for colour-blind people.
 
@@ -107,13 +114,28 @@ are candidates. Try them in Bentotachi before deciding.
 ## Shape and motion
 
 - **Corners:** 12px for cards and panels, 4 to 8px for small controls,
-  fully round for icon-only buttons.
+  fully round for icon-only buttons. Pixel-art apps like Koihongo may use
+  their own corners (a pill-shaped Start button, rounder banners).
 - **Motion behaves like water:** drift, ripple, glide. Something you can
   click may lift 2px when you point at it. No bouncing, spinning or
   flashing.
 - **Reduced motion:** when the device asks for less motion, everything
   holds still. A still version should still look designed, not just
   paused.
+
+## Pixel art on dark backgrounds
+
+Koihongo is pixel art on a dark page, so "calm water" means something a
+little different there:
+
+- **Glows are soft and few.** A glow marks something special (the Start
+  button, a level-up), not every panel. Keep it close to its edge.
+- **Shadows are hard blocks**, offset in whole pixels, never blurry.
+- **Dithering** (a checkerboard of two colours) is how pixel art blends
+  between colours. Use it in scenery, not behind text.
+- **Text sits on solid colour**, never straight on scenery or stars.
+- **Sizes follow the pixel grid.** Pixel fonts drawn on an 8px grid use
+  sizes in multiples of 8.
 
 ## Shared motifs
 
@@ -128,8 +150,9 @@ are candidates. Try them in Bentotachi before deciding.
   `PondEye.css`, written by Xel, plain CSS and SVG with no libraries).
   Rules: at most one per app, on a home or welcome screen, never as a
   spinner or button. Orbits take tens of seconds. Three to six koi in koi
-  orange, jade and amber. With reduced motion, the koi stop in a composed
-  arrangement.
+  orange, jade, amber, or classic white with orange spots (which stand
+  out best on dark water). With reduced motion, the koi stop in a composed
+  arrangement. In a pixel-art app, the koi are pixel sprites.
 - **"A Koi Pond app"** with a small Deki, linking to thekoipond.dev,
   goes in each app's About screen or footer.
 
@@ -138,7 +161,7 @@ are candidates. Try them in Bentotachi before deciding.
 | App | Its own personality | Where it stands |
 |---|---|---|
 | Bentotachi | Ben, the screaming onigiri on chopsticks, and his moods; the drawn title with the umeboshi | Uses the pond colours. Dark mode may move to night water. |
-| Koihongo | Pixel art, sparkles, pixel fonts, Deki-senpai | Navy, periwinkle and pink for now. To be saved as the theme "That tasted purple!", with a pond theme added beside it. |
+| Koihongo | Pixel art, sparkles, pixel fonts, Deki-senpai | Navy, periwinkle and pink for now. Getting three themes to choose from: "That tasted purple!" (today's look), **Night Water** (cold teal-black pond, moonlit) and **Lantern Dusk** (warm dusk with paper lanterns, using the night-water candidate colours). |
 | De-Koi | Visual-novel atmosphere, sprites, the "Koi Pond at Dusk" look | Already close: ember orange `#F06F3F`, lotus teal, parchment text. Its own rules are in its `DESIGN.md`. |
 | DeKoi | The fish ring, sumi-e brush motifs, serif titles | Shelved. Its `DESIGN.md` is the most detailed design writing we have, and worth borrowing from. |
 
@@ -156,11 +179,10 @@ All paths are under `C:\Projects\TheKoiPond\` on Xel's PC.
 
 1. **Night water:** whether Bentotachi and the website move their dark
    mode from `#1C1917` to the teal-tinted candidate above.
-2. **Koihongo's pond theme:** the colours for a pixel-art "pond at
-   night", and whether its scenery art is recoloured or redrawn. Its
-   colours are mostly typed straight into the stylesheet (about 285 of
-   them), so they need turning into named colour variables before a
-   second theme can work.
-3. **The fish ring in Koihongo:** DeKoi's koi are smooth drawings, which
-   would look out of place next to pixel art. They would need redrawing
-   as small pixel sprites.
+2. **Koihongo's two pond themes:** the exact colours, tuned in the real
+   app. Decided on 2026-11-01: Night Water and Lantern Dusk, both kept
+   as options next to "That tasted purple!". The hills and bushes get
+   recoloured; the blossoms stay as they are.
+3. **Pixel koi for the fish ring:** Xel draws them (left- and
+   right-facing at least; more directions if the ring goes all the way
+   round).

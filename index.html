@@ -79,6 +79,11 @@
         color: var(--muted);
       }
 
+      /* Two lines in a row read as one block. */
+      .lead:has(+ .lead) {
+        margin-bottom: 0;
+      }
+
       a {
         color: var(--accent);
       }
@@ -130,7 +135,10 @@
           </picture>
         </h1>
       </header>
-      <p class="lead">Small, free, slightly unhinged apps. Made for my own household first, then shared.</p>
+      <p class="lead">
+        Small, free, slightly unhinged apps by a few friends. Made for our own households first, then shared.
+      </p>
+      <p class="lead">Made with a lot of AI help: Claude for code, ChatGPT for the first drafts of the art.</p>
 
       <a class="project" href="bento/">
         <img src="onigiri.svg" alt="" width="96" height="69" />

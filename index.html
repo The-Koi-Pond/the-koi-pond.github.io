@@ -131,8 +131,12 @@
         color: var(--accent);
       }
 
-      /* Ben and the name side by side on top, the description centred below. */
+      /* Ben and the name side by side on top, the description centred below.
+         As wide as its content, not the whole column, so it doesn't look
+         gappy; with more apps, cards can sit side by side. */
       .project {
+        max-width: 440px;
+        margin: 0 auto;
         display: flex;
         flex-direction: column;
         gap: 8px;

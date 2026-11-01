@@ -8,10 +8,16 @@
 # Every row is measured (baseline, capital height), so all characters share
 # one baseline and size: capitals and digits 700 units tall, of 1000.
 #
-#   python make_font.py   (needs Pillow, numpy, scipy, fontTools, brotli, Inkscape)
+#   python make_font.py [spacing] [output folder]
+#
+# spacing: the space either side of each character, in font units (default
+# below); the output folder defaults to this one. Trying other spacings into a
+# scratch folder leaves the real font alone. Needs Pillow, numpy, scipy,
+# fontTools, brotli and Inkscape.
 import os
 import re
 import subprocess
+import sys
 import tempfile
 
 import numpy as np
@@ -28,10 +34,11 @@ from fontTools.svgLib.path import parse_path
 from fontTools.ttLib import TTFont
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+OUT = sys.argv[2] if len(sys.argv) > 2 else HERE
 INKSCAPE = r"C:\Program Files\Inkscape\bin\inkscape.com"
 S = 4  # enlarge by this much before tracing
 CAP = 700  # capital and digit height, in font units (of 1000)
-SIDE = 36  # space either side of each character
+SIDE = int(sys.argv[1]) if len(sys.argv) > 1 else 36  # space either side of each character
 NAME = "Pond Pebbles"
 
 # Each sheet's rows, left to right. On the first sheet Aa, Cc and Ee are
@@ -43,6 +50,7 @@ SHEETS = {
     "numbers": ["0123456789", ".,!?:;\u2019\u201d-&()"],
     "symbols": ["@#/%+=*"],
     "fix": ["AaCcEe"],
+    "s": ["s"],  # a happier s than the N-Z sheet's (replaces it: later sheets win)
 }
 FUSED = {"Aa", "Cc", "Ee"}
 # Characters that sit on the baseline: lined up exactly on it. Everything
@@ -177,8 +185,14 @@ for sheet, rows in SHEETS.items():
         row_base[r] = base
         sizers = [base - b[1] for c, b in mine if c in SIZERS]
         row_scale[r] = sizers and CAP / float(np.median(sizers))
-    # A row with nothing to size it by (the punctuation) uses its sheet's.
-    sheet_scale = np.median([s for s in row_scale.values() if s])
+    # A row with nothing to size it by (the punctuation) uses its sheet's. A
+    # sheet with nothing at all (the lone s) is sized to the x-height for now;
+    # small letters are sized exactly further on anyway.
+    known = [s for s in row_scale.values() if s]
+    if known:
+        sheet_scale = np.median(known)
+    else:
+        sheet_scale = CAP * 0.58 / float(np.median([b[3] - b[1] for c, b, r in placed]))
     traced = contours(trace(sheet, ink))
     for ch, b, r in placed:
         k = row_scale[r] or sheet_scale
@@ -241,6 +255,19 @@ for ch in [c for c in glyphs if c.islower()]:
         # uses its sheet's other rows.
         s = need.get(row_of[ch]) or float(np.median([v for (sh, _), v in need.items() if sh == sheet]))
     glyphs[ch] = scaled(*glyphs[ch], s)
+
+# Hand nudges, in font units (up is positive): the t's crossbar sat a little
+# above the other small letters' tops, so the t looked hopped up.
+NUDGE = {"t": -30}
+for ch, dy in NUDGE.items():
+    outline, width = glyphs[ch]
+    moved = []
+    for c in outline:
+        rec = RecordingPen()
+        for op, args in c:
+            getattr(TransformPen(rec, (1, 0, 0, 1, 0, dy)), op)(*args)
+        moved.append(rec.value)
+    glyphs[ch] = (moved, width)
 
 
 def glyph_name(ch):
@@ -342,9 +369,9 @@ fb.setupOS2(sTypoAscender=980, sTypoDescender=-320, sTypoLineGap=0, usWinAscent=
             sCapHeight=CAP, sxHeight=XHEIGHT, achVendID="KOIP")
 fb.setupPost()
 fb.addOpenTypeFeatures(KERN_FEATURE)
-otf = os.path.join(HERE, "PondPebbles.otf")
+otf = os.path.join(OUT, "PondPebbles.otf")
 fb.save(otf)
 web = TTFont(otf)
 web.flavor = "woff2"
-web.save(os.path.join(HERE, "PondPebbles.woff2"))
+web.save(os.path.join(OUT, "PondPebbles.woff2"))
 print("wrote", otf, "with", len(glyphs), "characters and", len(kerns), "kerning pairs")

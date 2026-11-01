@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>The Koi Pond</title>
     <meta name="description" content="The Koi Pond: small, free, slightly unhinged apps." />
-    <link rel="icon" href="onigiri.svg" />
+    <link rel="icon" href="deki.svg" />
     <style>
       :root {
         --bg: #faf6f1;
@@ -45,6 +45,19 @@
         max-width: 640px;
         margin: 0 auto;
         padding: 48px 16px 64px;
+      }
+
+      /* Deki, The Koi Pond's mascot, beside the name. */
+      header {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+
+      header img {
+        flex: none;
+        width: 110px;
+        height: auto;
       }
 
       h1 {
@@ -100,8 +113,13 @@
   </head>
   <body>
     <main>
-      <h1>The Koi Pond</h1>
-      <p class="lead">Small, free, slightly unhinged apps. Made for my own household first, then shared.</p>
+      <header>
+        <img src="deki.svg" alt="" width="110" height="116" />
+        <div>
+          <h1>The Koi Pond</h1>
+          <p class="lead">Small, free, slightly unhinged apps. Made for my own household first, then shared.</p>
+        </div>
+      </header>
 
       <a class="project" href="bento/">
         <img src="onigiri.svg" alt="" width="96" height="69" />

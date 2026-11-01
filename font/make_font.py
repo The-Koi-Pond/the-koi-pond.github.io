@@ -38,7 +38,7 @@ OUT = sys.argv[2] if len(sys.argv) > 2 else HERE
 INKSCAPE = r"C:\Program Files\Inkscape\bin\inkscape.com"
 S = 4  # enlarge by this much before tracing
 CAP = 700  # capital and digit height, in font units (of 1000)
-SIDE = int(sys.argv[1]) if len(sys.argv) > 1 else 36  # space either side of each character
+SIDE = int(sys.argv[1]) if len(sys.argv) > 1 else 18  # space either side of each character (Xel picked snug)
 NAME = "Pond Pebbles"
 
 # Each sheet's rows, left to right. On the first sheet Aa, Cc and Ee are
@@ -256,8 +256,12 @@ for ch in [c for c in glyphs if c.islower()]:
         s = need.get(row_of[ch]) or float(np.median([v for (sh, _), v in need.items() if sh == sheet]))
     glyphs[ch] = scaled(*glyphs[ch], s)
 
-# Hand nudges, in font units (up is positive): the t's crossbar sat a little
-# above the other small letters' tops, so the t looked hopped up.
+# Hand adjustments. SHRINK: a little smaller than drawn (from its left edge
+# and the baseline). NUDGE, in font units (up is positive): the t's crossbar
+# sat a little above the other small letters' tops, so it looked hopped up.
+SHRINK = {"t": 0.94}
+for ch, s in SHRINK.items():
+    glyphs[ch] = scaled(*glyphs[ch], s)
 NUDGE = {"t": -30}
 for ch, dy in NUDGE.items():
     outline, width = glyphs[ch]

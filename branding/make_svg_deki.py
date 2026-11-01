@@ -49,7 +49,9 @@ def biggest(mask, count):
 # The body's faint shading is blush-coloured too: keep the two cheeks only.
 blush = biggest(inside & (r > 240) & (g > 195) & (g < 228) & (b > 185) & (b < 215) & (rows > 740), 2)
 parts = {
-    "deki": deki,
+    # The cream fill stops a little inside the outline: two smoothed edges in
+    # the same place leave a pale rim, which shows on dark pages.
+    "deki": ndimage.binary_erosion(deki, iterations=4 * S),
     "jade": jade,
     "jade-dark": jade & (lum < 175),  # the curl's shaded side, the fin creases
     "patches": coral & (rows <= 760),

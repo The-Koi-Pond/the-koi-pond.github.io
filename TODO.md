@@ -1,7 +1,7 @@
 # To do
 
 Open, optional improvements for thekoipond.dev, from a site review on
-2026-11-01 (everything else from that review was fixed in f5dd162). Not
+2026-11-01 (everything else from that review was fixed in 50e20ee). Not
 published on the website (`_config.yml` excludes this file).
 
 ## The app card's link text is long
@@ -18,7 +18,7 @@ published on the website (`_config.yml` excludes this file).
 
 ## Decided against (for now)
 
-These came up in the same review and were skipped on purpose in f5dd162.
+These came up in the same review and were skipped on purpose in 50e20ee.
 Kept here so nobody redoes them by accident; revisit only if the reason
 stops holding.
 

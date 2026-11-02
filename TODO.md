@@ -16,26 +16,18 @@ published on the website (`_config.yml` excludes this file).
   at the `<h2>`, with `aria-describedby` for the description), or make only
   "Visit Bentotachi" the link.
 
-## The card's border is very faint
+## Decided against (for now)
 
-- **Where:** `index.html`, `.project` uses `border: 1px solid var(--border)`.
-- **What:** the border is 1.25:1 against the page in light mode (`#e6ddd3`
-  on `#faf6f1`) and 1.62:1 in dark mode (`#34403e` on `#141b1b`). The
-  accessibility guideline for outlines of clickable things is 3:1.
-- **Why it's minor:** the white card fill and the orange "Visit →" already
-  say "this is clickable".
-- **Fix:** a darker border for the card only, or a light resting shadow.
-  Check `branding/BRAND.md`'s Line colour before changing the shared
-  `--border`, since the footer's line uses it too.
+These came up in the same review and were skipped on purpose in f5dd162.
+Kept here so nobody redoes them by accident; revisit only if the reason
+stops holding.
 
-## The traced SVGs could be about half the size
-
-- **Where:** `deki.svg` (37 KB), `ben-scream.svg` (26 KB), `onigiri.svg`
-  (26 KB), `thekoipond-title.svg` and `-dark.svg` (25 KB each).
-- **What:** the traced paths keep 4 to 5 decimal places (like `-26.86189`),
-  far more than a 110px picture needs.
-- **Why it's low value:** the page is already fast, and GitHub compresses
-  text files.
-- **Fix:** round coordinates to 1 decimal place in the tracing scripts
-  (`branding/make_svg_*.py`, and Bentotachi's for Ben), then re-trace, so
-  the saving survives future re-traces.
+- **The card's border is faint.** It's 1.25:1 against the page in light
+  mode (`#e6ddd3` on `#faf6f1`) and 1.62:1 in dark mode (`#34403e` on
+  `#141b1b`), under the 3:1 guideline for outlines of clickable things.
+  Skipped because the card is already clear from its white fill, its
+  heading and the orange "Visit →".
+- **The traced SVGs could be about half the size** (`deki.svg` 37 KB, the
+  wordmarks, `onigiri.svg` and `ben-scream.svg` 25-26 KB each), by rounding
+  coordinates in the tracing scripts. Skipped because re-tracing risks
+  bringing back the old rim problems, and the page is already fast.

@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>De-Koi</title>
+    <meta
+      name="description"
+      content="De-Koi: AI chat, roleplay and fanfic with any model, on your desktop, a Raspberry Pi or your own server. Free and open source."
+    />
+    <link rel="canonical" href="https://thekoipond.dev/de-koi/" />
+    <!-- The preview card Bluesky, Discord, messages and so on show for a link
+         (made by branding/make_de_koi_page.py, like the other pictures here). -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://thekoipond.dev/de-koi/" />
+    <meta property="og:site_name" content="The Koi Pond" />
+    <meta property="og:title" content="De-Koi" />
+    <meta
+      property="og:description"
+      content="AI chat, roleplay and fanfic with any model, on your desktop, a Raspberry Pi or your own server. Free and open source."
+    />
+    <meta property="og:image" content="https://thekoipond.dev/de-koi/og-card.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="De-Koi's icon, Deki in a mask inside a D-shaped speech bubble, above the word De-Koi" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="de-koi.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <meta name="theme-color" content="#faf6ee" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#05090d" media="(prefers-color-scheme: dark)" />
+    <style>
+      /* De-Koi's own colours (DESIGN.md in the De-Koi repo): rice paper,
+         ink and lacquer orange by day. --muted isn't one of De-Koi's; it's
+         its ink, greyed to just above the 4.5:1 readable minimum on every
+         background here, so never make it lighter. */
+      :root {
+        --bg: #faf6ee;
+        --surface: #ffffff;
+        --text: #1a2a2e;
+        --muted: #5c6b6d;
+        --border: #ded6c8;
+        --accent: #ad4b1c;
+        --accent-text: #ffffff;
+        --soft: #e8efe9;
+        --radius: 12px;
+        color-scheme: light;
+      }
+
+      /* Dark mode is De-Koi's own default look: a deep pond, parchment text,
+         ember orange, lotus-teal panels. */
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #05090d;
+          --surface: #081218;
+          --text: #f1dfc9;
+          --muted: #a98c75;
+          --border: rgb(164 93 61 / 0.24);
+          --accent: #f06f3f;
+          --accent-text: #0a0a0a;
+          --soft: #0a2325;
+          color-scheme: dark;
+        }
+      }
+
+      /* Pond Pebbles, The Koi Pond's own display font (font/make_font.py). */
+      @font-face {
+        font-family: "Pond Pebbles";
+        src: url("../font/PondPebbles.woff2") format("woff2");
+        font-display: swap;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font: 17px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      }
+
+      /* About 70 characters a line on desktop: easy reading. */
+      main {
+        max-width: 680px;
+        margin: 0 auto;
+        padding: 32px 16px 0;
+      }
+
+      a {
+        color: var(--accent);
+      }
+
+      .hero {
+        text-align: center;
+        padding: 16px 0 8px;
+      }
+
+      .hero .logo {
+        width: 150px;
+        height: auto;
+      }
+
+      .hero h1 {
+        margin: 4px 0 0;
+        font: 400 4.5rem/1 "Pond Pebbles", system-ui, sans-serif;
+        color: var(--accent);
+      }
+
+      .tagline {
+        margin: 12px 0 0;
+        color: var(--accent);
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        font-size: 0.9rem;
+      }
+
+      /* Where the app stands, with a jump to "Getting De-Koi". */
+      .status {
+        display: inline-block;
+        margin: 14px 0 0;
+        padding: 6px 14px;
+        border-radius: 999px;
+        background: var(--soft);
+        font-size: 0.9rem;
+      }
+
+      /* On a phone, break only between the phrases, never inside one. */
+      .status > * {
+        white-space: nowrap;
+      }
+
+      h2 {
+        margin: 48px 0 16px;
+        text-align: center;
+        font: 400 2.1rem/1.15 "Pond Pebbles", system-ui, sans-serif;
+        scroll-margin-top: 24px; /* a jump link stops a little above the heading */
+      }
+
+      h3 {
+        margin: 28px 0 4px;
+        font-size: 1.15rem;
+      }
+
+      /* Deki-senpai tells you about the app, in chat bubbles, because
+         De-Koi is a chat app (and its icon is Deki in a speech bubble). */
+      .deki-says {
+        display: flex;
+        align-items: flex-end;
+        gap: 12px;
+        margin: 16px 0;
+      }
+
+      .deki-says .deki {
+        flex: none;
+        width: 56px;
+        height: auto;
+      }
+
+      .bubble {
+        position: relative;
+        padding: 12px 16px;
+        border-radius: 18px 18px 18px 4px;
+        background: var(--soft);
+      }
+
+      .bubble p {
+        margin: 0;
+      }
+
+      .bubble p + p {
+        margin-top: 8px;
+      }
+
+      /* Who's talking, like a name over a chat message. */
+      .bubble .who {
+        font-weight: 700;
+        font-size: 0.9rem;
+        color: var(--accent);
+      }
+
+      /* Screenshots of the app, with a quiet frame so light ones don't melt
+         into the page. */
+      .shot {
+        margin: 12px 0 0;
+      }
+
+      .shot img {
+        display: block;
+        width: 100%;
+        height: auto;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+      }
+
+      .shot figcaption {
+        margin-top: 6px;
+        color: var(--muted);
+        font-size: 0.9rem;
+        text-align: center;
+      }
+
+      /* The fanfic form and reader side by side where there's room. */
+      .pair {
+        display: grid;
+        gap: 12px;
+      }
+
+      @media (min-width: 600px) {
+        .pair {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      .features {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 12px;
+      }
+
+      @media (min-width: 600px) {
+        .features {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      .features li {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 14px 16px;
+      }
+
+      .features strong {
+        display: block;
+      }
+
+      .more {
+        text-align: center;
+        margin: 16px 0 0;
+      }
+
+      /* Where to get it for each kind of device: the name on the left, what
+         to download on the right; stacked on a phone. */
+      .platforms {
+        margin: 16px 0 0;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: var(--surface);
+      }
+
+      .platforms div {
+        padding: 10px 16px;
+      }
+
+      .platforms div + div {
+        border-top: 1px solid var(--border);
+      }
+
+      .platforms dt {
+        font-weight: 700;
+      }
+
+      .platforms dd {
+        margin: 0;
+      }
+
+      @media (min-width: 600px) {
+        .platforms div {
+          display: grid;
+          grid-template-columns: 9.5em 1fr;
+          gap: 16px;
+        }
+      }
+
+      .muted {
+        color: var(--muted);
+      }
+
+      /* The download button and its note, centred. */
+      .cta {
+        text-align: center;
+        margin-top: 24px;
+      }
+
+      .cta p {
+        margin: 10px 0 0;
+      }
+
+      /* An orange pill, like De-Koi's own main buttons. */
+      .button {
+        display: inline-block;
+        padding: 10px 20px;
+        border-radius: 999px;
+        background: var(--accent);
+        color: var(--accent-text);
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      /* Outside <main>, so screen readers can jump to it as the page's footer;
+         lined up with main's column (648px wide, 16px from the edges on phones). */
+      footer {
+        max-width: 648px;
+        margin: 48px max(16px, calc((100% - 648px) / 2)) 64px;
+        padding-top: 16px;
+        border-top: 1px solid var(--border);
+        color: var(--muted);
+        font-size: 0.95rem;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px 20px;
+      }
+
+      /* "Made by The Koi Pond", with a tiny Deki: on its own line at the end. */
+      footer .made-by {
+        flex-basis: 100%;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+      }
+
+      footer .made-by img {
+        width: 26px;
+        height: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header class="hero">
+        <img class="logo" src="de-koi.svg" alt="" width="150" height="150" />
+        <h1>De-Koi</h1>
+        <p class="tagline">CHAT • ROLEPLAY • FANFIC • ANY MODEL</p>
+        <p class="status">
+          <span>In beta ·</span> <span>Free and open source ·</span>
+          <a href="#get">How to get it <span aria-hidden="true">↓</span></a>
+        </p>
+      </header>
+
+      <div class="deki-says">
+        <img class="deki" src="../deki.svg" alt="" width="110" height="116" />
+        <div class="bubble">
+          <p class="who">Deki-senpai</p>
+          <p>Oh! A new kouhai. Welcome! I'm Deki-senpai, the assistant who lives inside De-Koi.</p>
+          <p>
+            De-Koi is where you text characters, play out roleplay scenes and order whole fanfics, with whichever AI
+            model you like. It runs on your own computer, a Raspberry Pi or your own server, and your chats stay there
+            with you. Come on, I'll show you around.
+          </p>
+        </div>
+      </div>
+
+      <h2>Three ways to play</h2>
+      <div class="deki-says">
+        <img class="deki" src="../deki.svg" alt="" width="110" height="116" loading="lazy" />
+        <p class="bubble">
+          Pick how you want to tell the story, and switch whenever you like. I won't tell anyone what you write at
+          3am.
+        </p>
+      </div>
+
+      <h3>Conversation</h3>
+      <p>
+        Text characters the way you text friends. One-on-one or group chats, characters with statuses and schedules
+        who can message you first, quick reactions, and slash commands.
+      </p>
+      <figure class="shot">
+        <img
+          src="conversation.webp"
+          alt="A conversation with Wren Hollis, a lighthouse keeper, about tide tables and the weather"
+          width="1440"
+          height="900"
+          loading="lazy"
+        />
+      </figure>
+
+      <h3>Roleplay</h3>
+      <p>
+        Scene-based roleplay with personas, character portraits and sprites, backgrounds, choices and lorebooks. For
+        long campaigns, the Continuity Director plans arcs and beats for you to approve, and memory recall keeps
+        earlier events in view.
+      </p>
+      <figure class="shot">
+        <img
+          src="roleplay.webp"
+          alt="A roleplay scene: Captain Elias Marr in the chart room of the Halcyon, over a stormy sea painting"
+          width="1440"
+          height="1300"
+          loading="lazy"
+        />
+      </figure>
+
+      <h3>Fanfic</h3>
+      <p>
+        Request a fic like an AO3 prompt: fandom, ships, rating, tropes, point of view, length. De-Koi can look up the
+        canon online first, shows you an outline to edit or skip, then writes it chapter by chapter. Afterwards it can
+        catch continuity slips, check that characters sound like themselves, and read it to you aloud.
+      </p>
+      <div class="pair">
+        <figure class="shot">
+          <img
+            src="fanfic-request.webp"
+            alt="The fanfic request form, filled in for a Sherlock Holmes case fic"
+            width="1440"
+            height="900"
+            loading="lazy"
+          />
+        </figure>
+        <figure class="shot">
+          <img
+            src="fanfic-reader.webp"
+            alt="The chapter reader showing “Before the Lamps Are Lit” with its tools"
+            width="1440"
+            height="900"
+            loading="lazy"
+          />
+        </figure>
+      </div>
+
+      <h2>And around all three</h2>
+      <div class="deki-says">
+        <img class="deki" src="../deki.svg" alt="" width="110" height="116" loading="lazy" />
+        <p class="bubble">The bits that make it all work. Including me, obviously.</p>
+      </div>
+      <ul class="features">
+        <li>
+          <strong>Any model</strong>OpenAI, Anthropic, Google Gemini, Mistral, OpenRouter, xAI and more, any
+          OpenAI-compatible endpoint, your Claude or ChatGPT subscription, or a local model De-Koi downloads and runs
+          for you. New to AI apps? Log in with OpenRouter and start on a free model.
+        </li>
+        <li>
+          <strong>Your library</strong>Characters (SillyTavern cards import too), personas, lorebooks, prompt presets
+          and a gallery, all kept on your own machine.
+        </li>
+        <li>
+          <strong>Me, Deki-senpai</strong>Ask me how anything in De-Koi works, or have me draft characters and tidy
+          your library. I show you a preview and wait for your OK before I change a thing.
+        </li>
+        <li>
+          <strong>Voice and pictures</strong>Characters can speak (ElevenLabs, OpenAI or a voice on your own
+          machine), and De-Koi can make images for your scenes.
+        </li>
+        <li>
+          <strong>On your phone too</strong>Host it on a Raspberry Pi or a server, and the same chats open on your
+          phone and your PC.
+        </li>
+        <li>
+          <strong>Free and open</strong>No subscription, no ads, no account with us. (Your AI provider may charge for
+          their model, unless you run one locally.)
+        </li>
+      </ul>
+      <p class="more">
+        <a href="https://github.com/The-Koi-Pond/De-Koi#every-feature">Every feature, in one long list</a>
+      </p>
+      <figure class="shot">
+        <img
+          src="phone.webp"
+          alt="The same conversation, roleplay and fic open on a phone-sized screen"
+          width="1440"
+          height="980"
+          loading="lazy"
+        />
+      </figure>
+
+      <h2 id="get">Getting De-Koi</h2>
+      <div class="deki-says">
+        <img class="deki" src="../deki.svg" alt="" width="110" height="116" loading="lazy" />
+        <p class="bubble">
+          De-Koi is in beta, so <a href="https://github.com/The-Koi-Pond/De-Koi/blob/main/docs/install.md#before-you-update-or-reinstall-back-up">back up</a>
+          before you install or update. I'm serious. Senpai has seen things.
+        </p>
+      </div>
+      <dl class="platforms">
+        <div>
+          <dt>Windows</dt>
+          <dd>
+            The <code>setup.exe</code> from the latest release. Windows SmartScreen warns you the first time, because
+            the installer isn't signed yet.
+          </dd>
+        </div>
+        <div>
+          <dt>Linux</dt>
+          <dd>The <code>.AppImage</code> or <code>.deb</code> from the latest release.</dd>
+        </div>
+        <div>
+          <dt>Android</dt>
+          <dd>The <code>.apk</code> from the latest release. To update, install the new one over the old one.</dd>
+        </div>
+        <div>
+          <dt>Raspberry Pi</dt>
+          <dd>
+            Ready-made images: the <a href="https://github.com/The-Koi-Pond/De-Koi/blob/main/docs/pi.md">Pi guide</a>,
+            or <a href="https://github.com/The-Koi-Pond/De-Koi/blob/main/docs/pi-bare-metal.md">without Docker</a>.
+          </dd>
+        </div>
+        <div>
+          <dt>Your own server</dt>
+          <dd>
+            The <a href="https://github.com/The-Koi-Pond/De-Koi/blob/main/docs/vds.md">server guide</a>: De-Koi as a
+            web app for your phone and PC.
+          </dd>
+        </div>
+        <div>
+          <dt>Mac</dt>
+          <dd>
+            No build yet. You can
+            <a href="https://github.com/The-Koi-Pond/De-Koi#run-from-source">run it from the source code</a>.
+          </dd>
+        </div>
+      </dl>
+      <div class="cta">
+        <a class="button" href="https://github.com/The-Koi-Pond/De-Koi/releases/latest">Download the latest release</a>
+        <p class="muted">
+          Stuck? <a href="https://github.com/The-Koi-Pond/De-Koi/blob/main/docs/install.md">Step-by-step install help</a>.
+          Windows and Linux builds update themselves once you say yes.
+        </p>
+      </div>
+
+      <h2>Where De-Koi comes from</h2>
+      <div class="deki-says">
+        <img class="deki" src="../deki.svg" alt="" width="110" height="116" loading="lazy" />
+        <p class="bubble">Now the serious part. Senpai can be professional for two whole paragraphs.</p>
+      </div>
+      <p>
+        De-Koi is an unofficial project that began as a fork of
+        <a href="https://github.com/Pasta-Devs/Marinara-Engine">Marinara Engine</a> and has been substantially
+        reworked since. It's a separate project: not an official Marinara Engine release, and not sponsored or
+        endorsed by Marinara Engine, Spicy Marinara, Pasta Devs or the Marinara Engine project.
+      </p>
+      <p>
+        It's free software under the
+        <a href="https://github.com/The-Koi-Pond/De-Koi/blob/main/LICENSE.txt">GNU AGPL-3.0</a>, so the source code
+        for every version is on GitHub. It's made by The Koi Pond and
+        <a href="https://github.com/The-Koi-Pond/De-Koi/graphs/contributors">other contributors</a>, with a lot of AI
+        help, like all our apps.
+      </p>
+      <div class="deki-says">
+        <img class="deki" src="../deki.svg" alt="" width="110" height="116" loading="lazy" />
+        <p class="bubble">That's the tour! Go make something dramatic. I'll be in the app if you need me.</p>
+      </div>
+    </main>
+
+    <footer>
+      <a href="https://github.com/The-Koi-Pond/De-Koi/blob/main/docs/install.md">Install help</a>
+      <a href="https://github.com/The-Koi-Pond/De-Koi/releases">Every release</a>
+      <a href="https://github.com/The-Koi-Pond/De-Koi">Source code</a>
+      <a href="https://github.com/The-Koi-Pond/De-Koi/issues">Report a bug</a>
+      <a class="made-by" href="../"><img src="../deki.svg" alt="" width="26" height="27" />Made by The Koi Pond</a>
+    </footer>
+  </body>
+</html>

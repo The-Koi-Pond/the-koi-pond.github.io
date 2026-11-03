@@ -2,8 +2,8 @@
 
 The studio home page for The Koi Pond: one hand-written HTML page that
 introduces the studio and links to its apps. Right now it has two app
-cards: Bentotachi, at `/bentotachi/`, and De-Koi, which links to its GitHub
-repository (it has no Pages site).
+cards: Bentotachi, at `/bentotachi/` (from its own repo), and De-Koi, at
+`/de-koi/` (a folder in this repo).
 
 ## How it's built and deployed
 
@@ -30,6 +30,9 @@ repository (it has no Pages site).
   this domain. Same for any future app repo with
   Pages turned on. The `bento/` folder *here* only redirects Bentotachi's old
   address (see `README.md`).
+- `/de-koi/` *is* in this repo, unlike Bentotachi's page: De-Koi is shared
+  with friends and its `main` is protected, so its page lives here, where
+  Xel can change it without a De-Koi pull request.
 
 ## Preview locally
 
@@ -56,9 +59,16 @@ too: it's Xel's browser.
   name, light and dark versions, swapped with `<picture>`.
 - `onigiri.svg` (Ben, on the app card) and `ben-scream.svg` (the 404 page):
   copies of Bentotachi's art, made by the scripts in the `bentotachi` repo.
-- `de-koi.png` (De-Koi's card): De-Koi's logo (`public/logo.png` in the
-  `De-Koi` repo) on a dark round disc in De-Koi's own `#05090D`, because the
-  cream koi vanishes on a white card. 176px, shown at 64px.
+- `de-koi/`: De-Koi's page. `index.html` holds its HTML and CSS, in
+  De-Koi's own colours (from De-Koi's `DESIGN.md`), with Deki-senpai
+  telling you about the app in chat bubbles. Its pictures (`de-koi.svg`,
+  the `.webp` screenshots, `apple-touch-icon.png`, `og-card.png`) are made by
+  `branding/make_de_koi_page.py` from the De-Koi repo's icon
+  (`branding/de-koi-icon/`) and README screenshots: rerun it when those
+  change, don't edit them by hand. The home page's De-Koi card uses
+  `de-koi/de-koi.svg` too. The page's facts (platforms, features, the
+  Marinara Engine notice) come from De-Koi's `README.md`; check them against
+  it when De-Koi changes.
 - `og-card.png`: the 1200x630 picture link previews show (Bluesky, Discord,
   messages). Preview services don't accept SVG, so it's a PNG.
 - `robots.txt` and `sitemap.xml`: for search engines. **Add each new app
@@ -67,7 +77,8 @@ too: it's Xel's browser.
   is what the page loads; `.otf` is the download for desktop use (both are
   published); `make_font.py` rebuilds both from the drawn sheets in
   `font/sheets/`.
-- `branding/`: source PNGs, the SVG tracing scripts, and `BRAND.md`.
+- `branding/`: source PNGs, the SVG tracing scripts, `make_de_koi_page.py`
+  and `BRAND.md`.
 - `README.md`: how the SVGs are made, the `bento/` redirect, and the domain.
 - `TODO.md`: open, optional improvements, and things decided against. It's
   local only: listed in `.git/info/exclude`, never committed, so it isn't on

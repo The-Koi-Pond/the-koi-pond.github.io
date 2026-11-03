@@ -39,6 +39,17 @@ app's page is a folder in this repo.
   re-checks it.
 - The `bento/` folder only redirects Bentotachi's old address (see
   `README.md`).
+- **The one exception to "no JavaScript, nothing stored":** Bentotachi's
+  tester pages, `bentotachi/join/` (signup) and `bentotachi/testers/` (next
+  steps and feedback), post their forms to a Cloudflare Worker at
+  `api.thekoipond.dev`. Its code is `workers/bentotachi-testers/` (its
+  `README.md` has the commands and how to test it); it saves to a D1
+  database in Xel's Cloudflare account, and Xel reads the lists at
+  `api.thekoipond.dev/bentotachi/admin` with a password. The pages still
+  have no JavaScript: the Worker sends people back to `#welcome`,
+  `#thanks` or `#oops`, and CSS `:target` shows the right note. Deploying
+  the Worker (`npx wrangler@4 deploy`) publishes, like a push: Xel's
+  go-ahead first. No emails or IP addresses are collected, on purpose.
 
 ## Preview locally
 

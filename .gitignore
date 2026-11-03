@@ -1,0 +1,3 @@
+# Wrangler's local test database and settings (workers/*/).
+.wrangler/
+.dev.vars

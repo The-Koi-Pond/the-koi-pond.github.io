@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Help test Bentotachi</title>
+    <meta name="description" content="Got an Android phone and two weeks? Help test Bentotachi before it goes on Google Play." />
+    <link rel="canonical" href="https://thekoipond.dev/bentotachi/join/" />
+    <!-- The preview card Discord shows for the link. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://thekoipond.dev/bentotachi/join/" />
+    <meta property="og:site_name" content="The Koi Pond" />
+    <meta property="og:title" content="Help test Bentotachi" />
+    <meta
+      property="og:description"
+      content="Got an Android phone and two weeks? Help test Bentotachi before it goes on Google Play."
+    />
+    <meta property="og:image" content="https://thekoipond.dev/bentotachi/og-card.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Ben the onigiri on his chopsticks, above the word Bentotachi" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="../onigiri.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="../apple-touch-icon.png" />
+    <meta name="theme-color" content="#faf6f1" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#141b1b" media="(prefers-color-scheme: dark)" />
+    <link rel="stylesheet" href="../style.css" />
+  </head>
+  <body class="home">
+    <main>
+      <header class="hero">
+        <img class="logo" src="../ben-ready.svg" alt="" width="160" height="115" />
+        <h1 class="page-title">Help test Bentotachi</h1>
+        <p class="tagline">TESTERS WANTED • NO EXPERIENCE NEEDED</p>
+      </header>
+
+      <p class="lead">
+        <a href="../">Bentotachi</a> is my recipe box, meal planner, shopping list and pantry app, starring an onigiri
+        who is fine, actually. It's nearly ready for Google Play, and Google wants a test run first.
+      </p>
+      <p class="lead">That's where you come in.</p>
+
+      <h2>What you'd be signing up for</h2>
+      <ul class="features">
+        <li>
+          <strong>An Android phone</strong>Bentotachi is Android only for now. Sorry, iPhone people. Ben screams for you
+          too.
+        </li>
+        <li>
+          <strong>Two weeks</strong>Google wants testers to keep the app installed for 14 days in a row. Using it is the
+          fun part; not uninstalling it is the important part.
+        </li>
+        <li>
+          <strong>Actually using it</strong>Save a few recipes, plan some dinners, make a shopping list. Tell me what's
+          broken, confusing or great.
+        </li>
+        <li>
+          <strong>That's it</strong>No meetings, no forms to fill in every day, no essays. A message now and then is
+          plenty.
+        </li>
+      </ul>
+
+      <h2 id="form">Count me in</h2>
+      <!-- Shown only when the Worker sends people back here with #oops (no
+           JavaScript needed: the address ends in #oops, so :target matches). -->
+      <p class="note oops" id="oops" role="alert">
+        Hmm, that didn't save. Press your browser's Back button to get what you typed back, then try again in a
+        minute. Or just message me on Discord.
+      </p>
+      <!-- Sent to the Worker in workers/bentotachi-testers, which saves it and
+           sends you on to the testers' page. -->
+      <form class="form" method="post" action="https://api.thekoipond.dev/bentotachi/join">
+        <label for="name">Your name on Discord</label>
+        <p class="hint" id="name-hint">The one I'd see in the server, so I can message you.</p>
+        <input id="name" name="name" required maxlength="60" autocomplete="off" aria-describedby="name-hint" />
+
+        <label for="server">Which server are we both in?</label>
+        <p class="hint" id="server-hint">So I know where to find you.</p>
+        <input id="server" name="server" required maxlength="80" autocomplete="off" aria-describedby="server-hint" />
+
+        <label for="note">Anything else? <span class="muted">(optional)</span></label>
+        <p class="hint" id="note-hint">What you'd cook first, your phone, a time you're usually around…</p>
+        <textarea id="note" name="note" rows="3" maxlength="500" aria-describedby="note-hint"></textarea>
+
+        <label class="check">
+          <input type="checkbox" name="android" value="yes" required />
+          I've got an Android phone I can install apps on
+        </label>
+
+        <!-- A box for bots: people never see it, bots fill it in and get
+             quietly ignored. -->
+        <div class="bot-trap" aria-hidden="true">
+          <label for="website">Leave this empty</label>
+          <input id="website" name="website" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <button class="button">Sign me up</button>
+      </form>
+      <p class="muted small center">
+        No email, no account. What you type here goes to me and nobody else (it's stored with Cloudflare, who look
+        after this website's address). Changed your mind? Tell me on Discord and I'll delete it.
+      </p>
+    </main>
+
+    <footer>
+      <a href="../">About Bentotachi</a>
+      <a class="made-by" href="https://thekoipond.dev/"><img src="../deki.svg" alt="" width="26" height="27" />Made by The Koi Pond</a>
+    </footer>
+  </body>
+</html>

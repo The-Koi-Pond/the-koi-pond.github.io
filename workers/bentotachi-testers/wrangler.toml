@@ -1,0 +1,32 @@
+# Cloudflare's settings for the Worker behind Bentotachi's tester pages
+# (README.md here explains it). It answers at https://api.thekoipond.dev.
+name = "bentotachi-testers"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+workers_dev = false
+routes = [{ pattern = "api.thekoipond.dev", custom_domain = true }]
+
+[vars]
+# Where the browser goes back to after sending a form.
+SITE = "https://thekoipond.dev"
+
+# The signups and feedback (D1 is Cloudflare's SQLite database).
+[[d1_databases]]
+binding = "DB"
+database_name = "bentotachi-testers"
+database_id = "fc67aa95-7f4c-45c9-96be-f4b6bab13234"
+migrations_dir = "migrations"
+
+# At most 5 signups and 5 feedback forms a minute from one address, so a bot
+# can't flood the lists. Cloudflare counts; no addresses are saved.
+[[ratelimits]]
+name = "LIMITER"
+namespace_id = "1001"
+simple = { limit = 5, period = 60 }
+
+# The admin page: 20 loads a minute, plenty for reading and removing, but
+# far too few to guess a long password.
+[[ratelimits]]
+name = "ADMIN_LIMITER"
+namespace_id = "1002"
+simple = { limit = 20, period = 60 }

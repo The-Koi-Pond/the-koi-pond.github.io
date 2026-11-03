@@ -15,6 +15,11 @@ Only served because no repository is called `bento` any more.
 
 `CNAME` holds the domain; the DNS records for it are at Cloudflare.
 
+Bentotachi's tester signup (`bentotachi/join/`) and testers' page
+(`bentotachi/testers/`) send their forms to a small Cloudflare Worker at
+api.thekoipond.dev; its code and commands are in
+`workers/bentotachi-testers/`.
+
 `deki.svg` is Deki, The Koi Pond's mascot, traced from `branding/Deki.png`
 (Xel's, made with ChatGPT):
 

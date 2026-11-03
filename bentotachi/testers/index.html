@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bentotachi testers</title>
+    <!-- For people who signed up at /bentotachi/join/: kept out of search
+         results, and not linked from anywhere else. -->
+    <meta name="robots" content="noindex" />
+    <link rel="icon" href="../onigiri.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="../apple-touch-icon.png" />
+    <meta name="theme-color" content="#faf6f1" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#141b1b" media="(prefers-color-scheme: dark)" />
+    <link rel="stylesheet" href="../style.css" />
+  </head>
+  <body class="home">
+    <main>
+      <header class="hero">
+        <img class="logo" src="../ben-halo.svg" alt="" width="160" height="129" />
+        <h1 class="page-title">Bentotachi testers</h1>
+        <p class="tagline">THANK YOU • GENUINELY • BEN TOO</p>
+      </header>
+
+      <!-- These show only when the address ends in #welcome, #thanks or #oops,
+           where the Worker sends people after a form (no JavaScript needed). -->
+      <p class="note welcome" id="welcome" role="status">
+        <strong>You're signed up!</strong> I'll message you on Discord when the test starts. Bookmark
+        <!-- The plain address: a bookmark of this one would keep #welcome,
+             and show this note on every visit. -->
+        <a href="./">this link</a> to come back later: it's where you send me feedback.
+      </p>
+      <p class="note thanks" id="thanks" role="status">
+        <strong>Got it, thank you!</strong> Ben has been informed. He screamed, but in a grateful way.
+      </p>
+      <p class="note oops" id="oops" role="alert">
+        Hmm, that didn't send. Press your browser's Back button to get what you typed back, then try again in a
+        minute. Or just message me on Discord.
+      </p>
+
+      <h2>What happens next</h2>
+      <ol class="steps">
+        <li>
+          <strong>I message you on Discord</strong> when the test is ready to start.
+        </li>
+        <li>
+          <strong>Google needs to let you in.</strong> For that it wants the email address of your Google account (the
+          one your phone's Play Store uses). I'll ask for it privately on Discord. It never goes on this website.
+        </li>
+        <li>
+          <strong>You get a link</strong>, tap "Become a tester", and install Bentotachi from Google Play like any other
+          app.
+        </li>
+        <li>
+          <strong>Keep it installed for 14 days.</strong> Google counts the days in a row, so even if you're busy, please
+          don't uninstall it before then.
+        </li>
+      </ol>
+
+      <h2>Things to try</h2>
+      <p class="center">No need to do them all, or in order. Just use it like a normal person would (or a weird one).</p>
+      <ul class="features">
+        <li>
+          <strong>Save a recipe</strong>Share one from your browser to Bentotachi, paste a link, or type one in by hand.
+        </li>
+        <li><strong>Plan a few dinners</strong>Put some meals on the plan for the week.</li>
+        <li>
+          <strong>Make a shopping list</strong>Add a recipe's ingredients, then tick things off at the shops.
+        </li>
+        <li><strong>Fill the pantry</strong>Add a few things, and try scanning a barcode.</li>
+        <li><strong>Cook something</strong>Follow a recipe in the app, timers and all.</li>
+        <li>
+          <strong>Make a backup</strong>Save one, so you know your recipes are safe.
+        </li>
+      </ul>
+
+      <h2 id="feedback">Tell me things</h2>
+      <p class="center">
+        Broken, confusing, ugly, great: all of it helps. Use this form, or just message me on Discord, whichever's easier.
+      </p>
+      <!-- Sent to the Worker in workers/bentotachi-testers, which saves it and
+           sends you back here with #thanks. -->
+      <form class="form" method="post" action="https://api.thekoipond.dev/bentotachi/feedback">
+        <fieldset>
+          <legend>What's it about?</legend>
+          <label class="check"><input type="radio" name="kind" value="broke" required /> Something broke</label>
+          <label class="check"><input type="radio" name="kind" value="idea" /> An idea</label>
+          <label class="check"><input type="radio" name="kind" value="thought" /> Just a thought</label>
+        </fieldset>
+
+        <label for="message">What happened, or what you think</label>
+        <p class="hint" id="message-hint">
+          If something broke: what you were doing, and what you expected to happen instead.
+        </p>
+        <textarea id="message" name="message" rows="6" required maxlength="4000" aria-describedby="message-hint"></textarea>
+
+        <label for="name">Your name on Discord <span class="muted">(optional)</span></label>
+        <p class="hint" id="name-hint">So I can ask you about it. Leave it empty to stay anonymous.</p>
+        <input id="name" name="name" maxlength="60" autocomplete="off" aria-describedby="name-hint" />
+
+        <!-- A box for bots: people never see it. -->
+        <div class="bot-trap" aria-hidden="true">
+          <label for="website">Leave this empty</label>
+          <input id="website" name="website" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <button class="button">Send it</button>
+      </form>
+
+      <h2>Good to know</h2>
+      <ul class="plain">
+        <li>It's a test, so things might break. That's the point.</li>
+        <li>I can't see your recipes, your plans or your lists: only what you send me here or on Discord.</li>
+        <li>Want out? Tell me on Discord and I'll delete your details. No hard feelings, only screaming.</li>
+      </ul>
+    </main>
+
+    <footer>
+      <a href="../">About Bentotachi</a>
+      <a class="made-by" href="https://thekoipond.dev/"><img src="../deki.svg" alt="" width="26" height="27" />Made by The Koi Pond</a>
+    </footer>
+  </body>
+</html>

@@ -1,7 +1,8 @@
 # GitHub Pages publishes this repository as thekoipond.dev. These files stay
 # in the repository (public on GitHub) but aren't published on the website:
 # design notes, the guide for Claude Code (CLAUDE.md), the to-do list, the
-# font's source sheets and builder, and the artwork scripts.
+# font's source sheets and builder, the artwork scripts, and the Cloudflare
+# Workers' code (workers/, which runs on Cloudflare, not here).
 # Still published: the page, its pictures, and font/PondPebbles.otf and .woff2
 # (people download the font from thekoipond.dev/font/PondPebbles.otf).
 exclude:
@@ -11,3 +12,4 @@ exclude:
   - branding
   - font/sheets
   - font/make_font.py
+  - workers

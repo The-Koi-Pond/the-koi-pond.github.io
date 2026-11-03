@@ -220,6 +220,176 @@ h2 .aside {
   text-decoration: none;
 }
 
+/* ------------------------------------------------------------------------
+   The tester pages (join/ and testers/). */
+
+/* Their title is words, not the drawn lettering, so it's in Pond Pebbles. */
+.page-title {
+  margin: 8px 0 0;
+  font: 400 3rem/1.1 "Pond Pebbles", system-ui, sans-serif;
+  color: var(--accent);
+}
+
+.center {
+  text-align: center;
+}
+
+.small {
+  font-size: 0.9rem;
+}
+
+/* Numbered steps, each in a box like the feature list. */
+.steps {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  counter-reset: step;
+  display: grid;
+  gap: 12px;
+}
+
+.steps li {
+  counter-increment: step;
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px 14px 56px;
+}
+
+.steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 16px;
+  top: 14px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 700;
+  text-align: center;
+  line-height: 28px;
+}
+
+.plain {
+  padding-left: 20px;
+}
+
+.plain li + li {
+  margin-top: 6px;
+}
+
+/* The forms: a label, a quiet hint under it, then the box. */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+
+.form label,
+.form legend {
+  font-weight: 600;
+  margin-top: 12px;
+}
+
+.form > label:first-child,
+.form fieldset:first-child legend {
+  margin-top: 0;
+}
+
+.hint {
+  margin: 0 0 4px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.form input:not([type]),
+.form textarea {
+  width: 100%;
+  padding: 10px 12px;
+  font: inherit;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.form textarea {
+  resize: vertical;
+}
+
+.form input:focus-visible,
+.form textarea:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+  border-color: var(--accent);
+}
+
+.form fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+/* A tick box or round choice with its words beside it. */
+.form .check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 400;
+  margin-top: 8px;
+}
+
+.form .check input {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  flex: none;
+  accent-color: var(--accent);
+}
+
+.form .button {
+  align-self: center;
+  margin-top: 20px;
+  border: 0;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* The box for bots: off the screen, so people never see it. */
+.bot-trap {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* "You're signed up", "Thank you" and "That didn't save": hidden until the
+   address ends in their #name (the Worker sends people back that way). */
+.welcome,
+.thanks,
+.oops {
+  display: none;
+  margin-top: 24px;
+}
+
+.welcome:target,
+.thanks:target,
+.oops:target {
+  display: block;
+}
+
+.oops {
+  background: var(--accent-soft);
+}
+
 /* Outside <main>, so screen readers can jump to it as the page's footer;
    lined up with main's column (648px wide, 16px from the edges on phones). */
 footer {

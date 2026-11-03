@@ -69,7 +69,10 @@ too: it's Xel's browser.
   `font/sheets/`.
 - `branding/`: source PNGs, the SVG tracing scripts, and `BRAND.md`.
 - `README.md`: how the SVGs are made, the `bento/` redirect, and the domain.
-- `TODO.md`: open, optional improvements, and things decided against.
+- `TODO.md`: open, optional improvements, and things decided against. It's
+  local only: listed in `.git/info/exclude`, never committed, so it isn't on
+  GitHub. (`_config.yml` still excludes it, in case it's ever committed by
+  mistake.)
 
 ## Conventions
 

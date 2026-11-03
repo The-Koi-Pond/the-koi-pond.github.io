@@ -2,8 +2,8 @@
 
 The studio home page for The Koi Pond: one hand-written HTML page that
 introduces the studio and links to its apps. Right now it has two app
-cards: Bentotachi, at `/bentotachi/` (from its own repo), and De-Koi, at
-`/de-koi/` (a folder in this repo).
+cards: Bentotachi, at `/bentotachi/`, and De-Koi, at `/de-koi/`. Each
+app's page is a folder in this repo.
 
 ## How it's built and deployed
 
@@ -24,15 +24,21 @@ cards: Bentotachi, at `/bentotachi/` (from its own repo), and De-Koi, at
 - `CNAME` holds the domain `thekoipond.dev`. DNS is at Cloudflare. HTTPS is
   enforced in the Pages settings; `www.` and `http://` redirect to
   `https://thekoipond.dev/`.
-- `/bentotachi/` is not in this repo. It is the `bentotachi` repository's own
-  Pages site (`C:\Projects\TheKoiPond\bentotachi\`: its `site/` folder,
-  published by its `.github/workflows/pages.yml`), which GitHub mounts under
-  this domain. Same for any future app repo with
-  Pages turned on. The `bento/` folder *here* only redirects Bentotachi's old
-  address (see `README.md`).
-- `/de-koi/` *is* in this repo, unlike Bentotachi's page: De-Koi is shared
-  with friends and its `main` is protected, so its page lives here, where
-  Xel can change it without a De-Koi pull request.
+- **Every app's page lives here, in a folder named after its address**
+  (`bentotachi/`, `de-koi/`), not in the app's own repo. Bentotachi's page
+  moved here from the `bentotachi` repo's `site/` folder on 2026-11-03, for
+  consistency. Its address didn't change.
+- Never turn on GitHub Pages in an app's own repo: a repo with Pages on
+  takes over the address with its name (`thekoipond.dev/<repo>/`) and
+  hides the folder here.
+- `bentotachi/privacy.html` is Bentotachi's privacy policy, linked from
+  Google Play: keep its address. When the app starts doing something new
+  with people's data, its policy changes here, in a separate commit from
+  the app's. Never delete `bentotachi/google11869a0aeef0ff1c.html` (or its
+  copy in `bento/`): it's the Search Console ownership check, and Google
+  re-checks it.
+- The `bento/` folder only redirects Bentotachi's old address (see
+  `README.md`).
 
 ## Preview locally
 
@@ -42,8 +48,7 @@ From this folder:
 python -m http.server 8000
 ```
 
-Then open http://localhost:8000/. The `/bentotachi/` link will 404 locally,
-because that page lives in the other repo. Check dark mode by switching the
+Then open http://localhost:8000/. Check dark mode by switching the
 OS or browser theme (the page uses `prefers-color-scheme`). Test in Firefox
 too: it's Xel's browser.
 

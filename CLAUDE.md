@@ -107,7 +107,11 @@ too: it's Xel's browser.
   same thing). The wordmark has `alt="The Koi Pond"` because it *is* the
   heading text. Decorative symbols (→, ♡) are wrapped in
   `<span aria-hidden="true">`.
-- The app card is one big link. Keep the default focus outline visible.
+- Each app card is one big link. Keep the default focus outline visible. Its
+  `aria-labelledby` points at the card's `<h2>` and `aria-describedby` at
+  its text and "Visit" line, so a screen reader names the link after the app
+  instead of reading the whole card. A new card needs its own `id`s for
+  these.
 - The `<footer>` sits outside `<main>` on purpose (screen readers treat it as
   the page footer), with its own width rules to line up with `main`.
 - The email address in the footer is public on purpose.

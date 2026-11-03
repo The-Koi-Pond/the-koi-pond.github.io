@@ -4,17 +4,7 @@ Open, optional improvements for thekoipond.dev, from a site review on
 2026-11-01 (everything else from that review was fixed in 50e20ee). Not
 published on the website (`_config.yml` excludes this file).
 
-## The app card's link text is long
-
-- **Where:** `index.html`, the `<a class="project">` card.
-- **What:** the whole card is one link, so a screen reader reads the full
-  description as the link's name ("Bentotachi A recipe box, meal plan, ...
-  Visit"). "Bentotachi" is already a heading, so jumping by headings works.
-- **When it matters:** once there are several app cards, listing the page's
-  links gets long and samey.
-- **Fix:** keep the link's name to the heading (`aria-labelledby` pointing
-  at the `<h2>`, with `aria-describedby` for the description), or make only
-  "Visit Bentotachi" the link.
+Nothing open right now.
 
 ## Decided against (for now)
 

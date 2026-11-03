@@ -264,29 +264,42 @@
         Small, free, slightly unhinged apps by a few friends. Made for our own households first, then shared.
       </p>
 
+      <!-- Each card is one big link. Without aria-labelledby, a screen reader
+           would read the whole card as the link's name; this keeps the name to
+           the app's name, and reads the text and "Visit" after it. -->
       <div class="projects">
-        <a class="project" href="bentotachi/">
+        <a
+          class="project"
+          href="bentotachi/"
+          aria-labelledby="bentotachi-name"
+          aria-describedby="bentotachi-text bentotachi-visit"
+        >
           <div class="project-head">
             <img src="onigiri.svg" alt="" width="96" height="69" />
-            <h2>Bentotachi</h2>
+            <h2 id="bentotachi-name">Bentotachi</h2>
           </div>
-          <span class="project-text">
+          <span class="project-text" id="bentotachi-text">
             A recipe box, meal plan, shopping list and pantry for your household, starring an onigiri who is fine,
             actually. Free, private, and kept on your own phone.
           </span>
-          <span class="visit">Visit <span aria-hidden="true">→</span></span>
+          <span class="visit" id="bentotachi-visit">Visit <span aria-hidden="true">→</span></span>
         </a>
 
-        <a class="project" href="https://github.com/The-Koi-Pond/De-Koi">
+        <a
+          class="project"
+          href="https://github.com/The-Koi-Pond/De-Koi"
+          aria-labelledby="de-koi-name"
+          aria-describedby="de-koi-text de-koi-visit"
+        >
           <div class="project-head">
             <img class="round" src="de-koi.png" alt="" width="176" height="176" />
-            <h2>De-Koi</h2>
+            <h2 id="de-koi-name">De-Koi</h2>
           </div>
-          <span class="project-text">
+          <span class="project-text" id="de-koi-text">
             AI chat, roleplay and fanfic with any model, on your desktop, a Raspberry Pi or your own server. Free
             and open source.
           </span>
-          <span class="visit">See it on GitHub <span aria-hidden="true">→</span></span>
+          <span class="visit" id="de-koi-visit">See it on GitHub <span aria-hidden="true">→</span></span>
         </a>
       </div>
 

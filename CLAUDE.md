@@ -60,6 +60,13 @@ too: it's Xel's browser.
   served at whatever address was missing.
 - `deki.svg`: Deki, the mascot. `favicon.ico` and `apple-touch-icon.png` are
   Deki for old browsers and phone home screens.
+- `deki-steady.svg`: Deki gently squishing nonstop, made from `deki.svg` by
+  `branding/make_deki_steady.py` (rerun it if `deki.svg` changes). The home
+  page shows it in a `<picture>` that swaps in the still `deki.svg` for
+  people with reduced motion turned on, because Firefox ignores the SVG's
+  own reduced-motion rule inside an `<img>`. It has a little room around
+  Deki to squish into, so it's shown 116px wide (the still one 110px) for
+  Deki to look the same size.
 - `thekoipond-title.svg` / `thekoipond-title-dark.svg`: the drawn studio
   name, light and dark versions, swapped with `<picture>`.
 - `onigiri.svg` (Ben, on the app card) and `ben-scream.svg` (the 404 page):

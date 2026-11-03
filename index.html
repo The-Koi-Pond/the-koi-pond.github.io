@@ -98,8 +98,20 @@
 
       .deki {
         flex: none;
-        width: 110px;
+        line-height: 0; /* no gap under the picture */
+      }
+
+      /* The squishing Deki has a little room around them to squish into,
+         so their picture is a bit wider for Deki to look the same size. */
+      .deki img {
+        width: 116px;
         height: auto;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .deki img {
+          width: 110px;
+        }
       }
 
       /* Its own width: sized only by the image inside, Firefox squeezes it to
@@ -251,7 +263,13 @@
   <body>
     <main>
       <header>
-        <img class="deki" src="deki.svg" alt="" width="110" height="116" />
+        <!-- Deki squishes gently, nonstop (deki-steady.svg). People who ask
+             for less motion get the still Deki instead: Firefox ignores the
+             SVG's own reduced-motion rule inside an <img>. -->
+        <picture class="deki">
+          <source srcset="deki.svg" media="(prefers-reduced-motion: reduce)" />
+          <img src="deki-steady.svg" alt="" width="116" height="120" />
+        </picture>
         <h1>
           <picture>
             <source srcset="thekoipond-title-dark.svg" media="(prefers-color-scheme: dark)" />

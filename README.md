@@ -26,6 +26,13 @@ It needs Python with Pillow, numpy and scipy, and Inkscape 1.4. It leaves
 out the picture's shadow, body shading and curl gloss, so Deki stays crisp
 when small.
 
+`deki-steady.svg` is the same Deki, gently squishing nonstop (the home
+page's big Deki):
+
+```
+python branding/make_deki_steady.py deki.svg .
+```
+
 `thekoipond-title.svg` (brown letters) and `thekoipond-title-dark.svg`
 (cream letters, for dark mode) are the drawn name, traced from
 `branding/TheKoiPond.png`:

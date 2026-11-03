@@ -165,6 +165,13 @@
           box-shadow 0.15s;
       }
 
+      /* The app cards, one above the other with a little water between. */
+      .projects {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
       /* It's a link: lift a little under the pointer or keyboard focus. */
       .project:hover,
       .project:focus-visible {
@@ -206,6 +213,13 @@
         flex: none;
         width: 80px;
         height: auto;
+      }
+
+      /* De-Koi's logo is a solid round pond, so it looks heavier than Ben at
+         the same width; a bit smaller evens them out. It sits on its own dark
+         disc because the cream koi would vanish on a white card. */
+      .project img.round {
+        width: 64px;
       }
 
       .project h2 {
@@ -250,17 +264,31 @@
         Small, free, slightly unhinged apps by a few friends. Made for our own households first, then shared.
       </p>
 
-      <a class="project" href="bentotachi/">
-        <div class="project-head">
-          <img src="onigiri.svg" alt="" width="96" height="69" />
-          <h2>Bentotachi</h2>
-        </div>
-        <span class="project-text">
-          A recipe box, meal plan, shopping list and pantry for your household, starring an onigiri who is fine,
-          actually. Free, private, and kept on your own phone.
-        </span>
-        <span class="visit">Visit <span aria-hidden="true">→</span></span>
-      </a>
+      <div class="projects">
+        <a class="project" href="bentotachi/">
+          <div class="project-head">
+            <img src="onigiri.svg" alt="" width="96" height="69" />
+            <h2>Bentotachi</h2>
+          </div>
+          <span class="project-text">
+            A recipe box, meal plan, shopping list and pantry for your household, starring an onigiri who is fine,
+            actually. Free, private, and kept on your own phone.
+          </span>
+          <span class="visit">Visit <span aria-hidden="true">→</span></span>
+        </a>
+
+        <a class="project" href="https://github.com/The-Koi-Pond/De-Koi">
+          <div class="project-head">
+            <img class="round" src="de-koi.png" alt="" width="176" height="176" />
+            <h2>De-Koi</h2>
+          </div>
+          <span class="project-text">
+            AI chat, roleplay and fanfic with any model, on your desktop, a Raspberry Pi or your own server. Free
+            and open source.
+          </span>
+          <span class="visit">See it on GitHub <span aria-hidden="true">→</span></span>
+        </a>
+      </div>
 
       <p class="lead">More soon. Probably.</p>
     </main>

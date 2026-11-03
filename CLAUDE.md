@@ -1,8 +1,9 @@
 # thekoipond.dev (The Koi Pond's home page)
 
 The studio home page for The Koi Pond: one hand-written HTML page that
-introduces the studio and links to its apps. Right now it links to one app,
-Bentotachi, at `/bentotachi/`.
+introduces the studio and links to its apps. Right now it has two app
+cards: Bentotachi, at `/bentotachi/`, and De-Koi, which links to its GitHub
+repository (it has no Pages site).
 
 ## How it's built and deployed
 
@@ -55,6 +56,9 @@ too: it's Xel's browser.
   name, light and dark versions, swapped with `<picture>`.
 - `onigiri.svg` (Ben, on the app card) and `ben-scream.svg` (the 404 page):
   copies of Bentotachi's art, made by the scripts in the `bentotachi` repo.
+- `de-koi.png` (De-Koi's card): De-Koi's logo (`public/logo.png` in the
+  `De-Koi` repo) on a dark round disc in De-Koi's own `#05090D`, because the
+  cream koi vanishes on a white card. 176px, shown at 64px.
 - `og-card.png`: the 1200x630 picture link previews show (Bluesky, Discord,
   messages). Preview services don't accept SVG, so it's a PNG.
 - `robots.txt` and `sitemap.xml`: for search engines. **Add each new app

@@ -177,7 +177,9 @@ Bentotachi's rice), but the apps shouldn't drift further towards it:
 
 - **Deki** (`deki.svg`, traced from `branding/Deki.png`) is The Koi
   Pond's mascot. It appears on the website, on each app's About screen,
-  and as Deki-senpai in Koihongo.
+  and as Deki-senpai in Koihongo and De-Koi. Deki is a genderless mythical
+  mer-koi: write about them as "they". Asked what gender they are,
+  Deki says: "I am a fish."
 - **The ripple** is the wavy jade line under "The Koi Pond" in the logo.
   Use it as a divider, or as a gentle loading motif.
 - **The fish ring** is a few koi swimming slow circles around a centre,

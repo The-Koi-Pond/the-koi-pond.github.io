@@ -159,9 +159,17 @@
 
       .bubble {
         position: relative;
+        margin: 0;
         padding: 12px 16px;
         border-radius: 18px 18px 18px 4px;
         background: var(--soft);
+      }
+
+      /* Two messages in a row, close together like a double text. */
+      .bubbles {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
       }
 
       .bubble p {
@@ -344,13 +352,19 @@
 
       <div class="deki-says">
         <img class="deki" src="../deki.svg" alt="" width="110" height="116" />
-        <div class="bubble">
-          <p class="who">Deki-senpai</p>
-          <p>Oh! A new kouhai. Welcome! I'm Deki-senpai, the assistant who lives inside De-Koi.</p>
-          <p>
-            De-Koi is where you text characters, play out roleplay scenes and order whole fanfics, with whichever AI
-            model you like. It runs on your own computer, a Raspberry Pi or your own server, and your chats stay there
-            with you. Come on, I'll show you around.
+        <div class="bubbles">
+          <div class="bubble">
+            <p class="who">Deki-senpai</p>
+            <p>Oh! A new kouhai. Welcome! I'm Deki-senpai, the assistant who lives inside De-Koi.</p>
+            <p>
+              De-Koi is where you text characters, play out roleplay scenes and order whole fanfics, with whichever AI
+              model you like. It runs on your own computer, a Raspberry Pi or your own server, and your chats stay
+              there with you. Come on, I'll show you around.
+            </p>
+          </div>
+          <p class="bubble">
+            Quick vibe check first: if “I put on my robe and wizard hat” is utter nonsense to you, De-Koi probably
+            isn't your thing. If you just snorted, welcome home.
           </p>
         </div>
       </div>

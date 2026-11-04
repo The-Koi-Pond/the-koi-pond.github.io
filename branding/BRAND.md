@@ -21,25 +21,39 @@ A screaming onigiri is welcome. A screaming settings page isn't.
 
 ## The pond colours
 
-The palette is Deki's: a cream body, koi-orange spots, jade fins and a
-brown outline. There are two moods. **Daytime** is light mode and
-**pond at night** is dark mode. (Koihongo's "Night Water" theme is a
-different, colder set of colours; see its row below.)
+The palette comes from Deki (jade fins, koi spots) and the water. There
+are two moods. **Daytime** is light mode and **pond at night** is dark
+mode. (Koihongo's "Night Water" theme is a different, colder set of
+colours; see its row below.)
 
 | Name | Used for | Light | Dark |
 |---|---|---|---|
-| Rice / Pond at night | Page background | `#FAF6F1` | `#141B1B` |
+| Tea-rice / Pond at night | Page background | `#F3F6F4` | `#141B1B` |
 | Paper | Cards, sheets, panels | `#FFFFFF` | `#202928` |
 | Ink | Main text | `#2B2420` | `#F1EBE5` |
-| Mist | Quieter text (hints, dates, captions) | `#7A6D64` | `#A89A8F` |
-| Line | Borders and dividers | `#E6DDD3` | `#34403E` |
-| Koi orange | Main buttons, links, the selected thing | `#B4532A` | `#E07A4F` |
+| Mist | Quieter text (hints, dates, captions) | `#5F6B67` | `#A9B3AE` |
+| Line | Borders and dividers | `#D8DDDB` | `#34403E` |
+| Koi vermilion | Main buttons, links, the selected thing | `#B8341C` | `#F7694A` |
 | Jade | A second colour for calmer highlights | `#3F7668` | `#7FBFAE` |
-| Danger | Errors, delete buttons | `#B3261E` | `#F2827A` |
+| Danger (crimson) | Errors, delete buttons | `#B0213A` | `#FF6470` |
 
-These are the colours Bentotachi and thekoipond.dev already use. In light
-mode, put white text on koi-orange buttons. In dark mode, put the dark
-background colour on them.
+**Changed on 2026-11-04.** Until then the daytime palette was a cream
+background (`#FAF6F1`) with a clay "koi orange" (`#B4532A`, dark
+`#E07A4F`), which is the look people now recognise as AI-made (see "Our
+own look, not the default one" below and
+`C:\Projects\TheKoiPond\AI-DESIGN-TELLS.md`). The background became a
+near-white with a hint of jade, and the orange a clearer, redder vermilion,
+like a red koi. Chosen side by side in
+`C:\Projects\TheKoiPond\AI-DESIGN-TELLS-colours.html`.
+
+Who uses what: thekoipond.dev and De-Koi's Pond theme use vermilion
+(De-Koi's danger crimson came from there). **Bentotachi has its own
+accent**: umeboshi plum (`#A82D4A`, dark `#EE7D92`) on the same tea-rice,
+with its own danger colours, because the plum is its title's filling; its
+exact colours are in its `docs/VISION.md`.
+
+In light mode, put white text on vermilion buttons. In dark mode, put the
+dark background colour on them.
 
 Colours for drawings (logos, mascots) are a little different, because
 art doesn't have to work as text:
@@ -48,43 +62,49 @@ art doesn't have to work as text:
 |---|---|---|
 | Art ink (outlines, drawn letters) | `#361F17`, or `#F1EBE5` on dark | Logos and titles |
 | Ben's ink | `#2E201B` | Ben's outline and nori (`onigiri.svg` and his moods) |
-| Art orange | `#C8643A` | Ben's chopsticks |
+| Chopstick wood | `#A87A43` (shine `#D4B07C`) | Ben's chopsticks and the Bentotachi title's underline (orange `#C8643A` until 2026-11-04) |
 | Art jade | `#5A9A8A` | The ripple, the curl in "Koi" |
 | Deki's cream / blush / spots | `#FEF6ED` / `#FED7CA` / `#FD9E82` | `deki.svg` |
 | Deki's jade (light, shade) / outline | `#A1CDC1`, `#7FB3A8` / `#623A2D` | `deki.svg` |
 
 ### Readability
 
-Checked on 2026-11-01. The usual minimum for normal-size text is 4.5:1.
+Checked on 2026-11-04. The usual minimum for normal-size text is 4.5:1.
 
 | Text | On | Ratio |
 |---|---|---|
-| Ink `#2B2420` | Rice `#FAF6F1` | 14.2 |
-| Mist `#7A6D64` | Rice | 4.65 |
-| Koi orange `#B4532A` | Rice | 4.63 |
-| White | Koi orange `#B4532A` | 4.99 |
-| Jade `#3F7668` | Rice | 4.88 |
+| Ink `#2B2420` | Tea-rice `#F3F6F4` | 14.0 |
+| Mist `#5F6B67` | Tea-rice | 5.10 |
+| Koi vermilion `#B8341C` | Tea-rice | 5.44 |
+| White | Koi vermilion `#B8341C` | 5.92 |
+| Jade `#3F7668` | Tea-rice | 4.82 |
+| Danger `#B0213A` | Tea-rice | 6.18 |
+| White | Danger `#B0213A` | 6.72 |
 | Ink `#F1EBE5` | Pond at night `#141B1B` | 14.8 |
-| Mist `#A89A8F` | Pond at night | 6.39 |
-| Koi orange `#E07A4F` | Pond at night | 5.88 |
+| Mist `#A9B3AE` | Pond at night | 8.11 |
+| Koi vermilion `#F7694A` | Pond at night | 5.88 |
 | Jade `#7FBFAE` | Pond at night | 8.29 |
+| Danger `#FF6470` | Pond at night | 6.08 |
 | Ink `#F1EBE5` | Dark Paper `#202928` | 12.6 |
-| Mist `#A89A8F` | Dark Paper | 5.45 |
-| Koi orange `#E07A4F` | Dark Paper | 5.01 |
-| Pond-at-night text `#141B1B` | Dark-mode orange button `#E07A4F` | 5.88 |
+| Mist `#A9B3AE` | Dark Paper | 6.92 |
+| Koi vermilion `#F7694A` | Dark Paper | 5.02 |
+| Danger `#FF6470` | Dark Paper | 5.19 |
+| Pond-at-night text `#141B1B` | Dark-mode vermilion button `#F7694A` | 5.88 |
+| Pond-at-night text `#141B1B` | Dark-mode danger button `#FF6470` | 6.08 |
 
-Light Mist and light koi orange are only just over the line. Don't make
-them any lighter.
+Jade on tea-rice and dark vermilion on Dark Paper are the closest to the
+line. Don't make them any lighter.
 
 ### Colour rules
 
-- **Orange is earned.** Use koi orange for actions, the selected thing
-  and moments that matter. Don't fill whole panels with it. The pond
-  should breathe. (This rule comes from De-Koi.)
-- **Danger isn't orange.** The accent is already orange, so errors and
-  delete buttons use Danger red (table above), plus an icon or words.
-  It's 6.07 on Rice, 6.54 under white button text, and 6.86 on pond at
-  night in dark mode (Bentotachi's values).
+- **Vermilion is earned.** Use it for actions, the selected thing and
+  moments that matter. Don't fill whole panels with it. The pond should
+  breathe. (This rule comes from De-Koi.)
+- **Danger isn't the accent.** Errors and delete buttons use crimson
+  (table above), plus an icon or words. Vermilion and the old danger red
+  were nearly the same colour in light mode, so danger moved towards pink
+  (hue 350–355°), while vermilion leans orange. An app whose accent is
+  pink or plum (Bentotachi) keeps a redder or more orange danger instead.
 - **Apps may add colours for meaning.** An app can have its own colours
   for its own categories, like Koihongo's kana, component, kanji and word
   colours. Text on them must still reach 4.5:1, and they shouldn't be
@@ -109,8 +129,11 @@ The soft tints behind highlighted things are tinted to match:
 
 | Name | Used for | Dark |
 |---|---|---|
-| Orange tint | Behind selected and highlighted things | `#302A25` (orange text on it: 4.76) |
+| Vermilion tint | Behind selected and highlighted things | `#2D2D2A` (vermilion text on it: 4.65; anything warmer drops below 4.5) |
 | Jade tint | Calm notes, "good" boxes | `#1D3330` |
+
+In light mode the vermilion tint is `#F8EBE8` (vermilion text on it: 5.09)
+and the jade tint `#E2EFEB`.
 
 Text that sits on a coloured button or badge in dark mode is the pond-
 at-night colour, `#141B1B`.
@@ -159,8 +182,10 @@ little different there:
 
 Warm cream backgrounds, a terracotta accent and serif headings are the
 look AI tools fall back on when nobody steers them. Our daytime palette
-is close to it. It has real reasons (Deki's cream body and koi spots,
-Bentotachi's rice), but the apps shouldn't drift further towards it:
+was close to it until 2026-11-04, when the cream became tea-rice and the
+clay orange became vermilion (and plum for Bentotachi). Don't drift back
+towards it; `C:\Projects\TheKoiPond\AI-DESIGN-TELLS.md` lists the other
+tells to avoid:
 
 - **What makes the apps related is the motifs:** Deki, the ripple, the
   fish ring, Pond Pebbles and the "A Koi Pond app" credit. They don't
@@ -198,9 +223,9 @@ Bentotachi's rice), but the apps shouldn't drift further towards it:
 
 | App | Its own personality | Where it stands |
 |---|---|---|
-| Bentotachi | Ben, the screaming onigiri on chopsticks, and his moods; the drawn title with the umeboshi | Uses the pond colours; dark mode is pond at night (since 2026-11-01). Pill-shaped buttons and chips. "A Koi Pond app" credit at the bottom of its ⋮ menu. |
+| Bentotachi | Ben, the screaming onigiri on chopsticks, and his moods; the drawn title with the umeboshi | Its own accent since 2026-11-04: umeboshi plum on a "tea-rice" background, and Ben's chopsticks became plain wood; dark mode is pond at night (since 2026-11-01). Pill-shaped buttons and chips. "A Koi Pond app" credit at the bottom of its ⋮ menu. |
 | Koihongo | Pixel art, sparkles, pixel fonts, Deki-senpai | Navy, periwinkle and pink for now. Getting three themes to choose from: "That tasted purple!" (today's look), **Night Water** (cold teal-black pond, moonlit) and **Lantern Dusk** (warm dusk with paper lanterns, built on the pond-at-night colours). |
-| De-Koi | Visual-novel atmosphere, sprites, the "Koi Pond at Dusk" look | Already close: ember orange `#F06F3F`, lotus teal, parchment text. Its own rules are in its `DESIGN.md`. |
+| De-Koi | Visual-novel atmosphere, sprites, the "Koi Pond at Dusk" look | Its new Pond theme uses the pond colours: vermilion `#F7694A` / `#B8341C`, crimson danger, one teal hue for the water (De-Koi PR #1591). The older Default theme keeps ember orange `#F06F3F`. Its own rules are in its `DESIGN.md`. |
 | DeKoi | The fish ring, sumi-e brush motifs, serif titles | Shelved. Its `DESIGN.md` is the most detailed design writing we have, and worth borrowing from. |
 
 ## Where things live

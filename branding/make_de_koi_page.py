@@ -22,11 +22,12 @@ DE_KOI = Path(sys.argv[1] if len(sys.argv) > 1 else r"C:\Projects\TheKoiPond\De-
 ICON = DE_KOI / "branding" / "de-koi-icon" / "de-koi-icon.svg"
 SHOTS = DE_KOI / "docs" / "screenshots" / "readme"
 
-# De-Koi's light theme (its DESIGN.md): rice paper, ink, lacquer orange.
-# Cream is what De-Koi's own app icons sit on.
-RICE_PAPER = "#faf6ee"
+# The page's light colours (branding/BRAND.md, since 2026-11-04): tea-rice,
+# ink, koi vermilion (De-Koi's Pond theme). Cream is what De-Koi's own app
+# icons sit on.
+RICE_PAPER = "#f3f6f4"
 INK = "#1a2a2e"
-LACQUER = "#ad4b1c"
+LACQUER = "#b8341c"
 CREAM = "#fef6ed"
 
 OUT.mkdir(exist_ok=True)

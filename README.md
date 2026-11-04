@@ -47,7 +47,8 @@ python branding/make_svg_wordmark.py branding/TheKoiPond.png .
 ```
 
 Colours, shared with Bentotachi: letters #361F17 (dark mode #F1EBE5), jade
-#5A9A8A for the curl and ripple, cream background #FAF6F1.
+#5A9A8A for the curl and ripple, on the tea-rice page background #F3F6F4
+(cream #FAF6F1 until 2026-11-04; see `branding/BRAND.md`).
 
 `de-koi/` is De-Koi's page. Its pictures (the icon, the screenshots, the phone icon and the
 link-preview card) come from the De-Koi repository:

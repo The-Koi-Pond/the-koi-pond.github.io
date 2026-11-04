@@ -258,8 +258,8 @@ function page(title, body, status = 200) {
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(title)}</title>
 <style>
-:root { --bg: #faf6f1; --surface: #fff; --text: #2b2420; --muted: #7a6d64; --border: #e6ddd3; --accent: #b4532a; --soft: #e2efeb; color-scheme: light; }
-@media (prefers-color-scheme: dark) { :root { --bg: #141b1b; --surface: #202928; --text: #f1ebe5; --muted: #a89a8f; --border: #34403e; --accent: #e07a4f; --soft: #1d3330; color-scheme: dark; } }
+:root { --bg: #f3f6f4; --surface: #fff; --text: #2b2420; --muted: #5f6b67; --border: #d8dddb; --accent: #a82d4a; --soft: #e2efeb; color-scheme: light; }
+@media (prefers-color-scheme: dark) { :root { --bg: #141b1b; --surface: #202928; --text: #f1ebe5; --muted: #a9b3ae; --border: #34403e; --accent: #ee7d92; --soft: #1d3330; color-scheme: dark; } }
 body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
 main { max-width: 960px; margin: 0 auto; padding: 24px 16px 48px; }
 h1 { margin: 0; color: var(--accent); }

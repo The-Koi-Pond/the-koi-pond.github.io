@@ -1,12 +1,12 @@
 /* Bento's website (GitHub Pages), in the app's own colours. */
 :root {
-  --bg: #faf6f1;
+  --bg: #f3f6f4;
   --surface: #ffffff;
   --text: #2b2420;
-  --muted: #7a6d64;
-  --border: #e6ddd3;
-  --accent: #b4532a;
-  --accent-soft: #f6e4da;
+  --muted: #5f6b67;
+  --border: #d8dddb;
+  --accent: #a82d4a;
+  --accent-soft: #f4e4e7;
   --jade-soft: #e2efeb;
   --accent-text: #ffffff;
   --radius: 12px;
@@ -19,10 +19,10 @@
     --bg: #141b1b;
     --surface: #202928;
     --text: #f1ebe5;
-    --muted: #a89a8f;
+    --muted: #a9b3ae;
     --border: #34403e;
-    --accent: #e07a4f;
-    --accent-soft: #302a25;
+    --accent: #ee7d92;
+    --accent-soft: #33282c;
     --jade-soft: #1d3330;
     --accent-text: #141b1b;
     color-scheme: dark;

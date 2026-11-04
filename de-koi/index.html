@@ -108,12 +108,13 @@
         color: var(--accent);
       }
 
-      .tagline {
+      /* The line under the title: a plain sentence, never an uppercase,
+         letter-spaced list of words (an AI-made look; AI-DESIGN-TELLS.md). */
+      .motto {
         margin: 12px 0 0;
-        color: var(--accent);
-        font-weight: 700;
-        letter-spacing: 0.12em;
-        font-size: 0.9rem;
+        color: var(--muted);
+        font-size: 1.05rem;
+        font-style: italic;
       }
 
       /* Where the app stands, with a jump to "Getting De-Koi". */
@@ -344,7 +345,7 @@
       <header class="hero">
         <img class="logo" src="de-koi.svg" alt="" width="150" height="150" />
         <h1>De-Koi</h1>
-        <p class="tagline">CHAT • ROLEPLAY • FANFIC • ANY MODEL</p>
+        <p class="motto">Where your characters text back.</p>
         <p class="status">
           <span>In beta ·</span> <span>Free and open source ·</span>
           <a href="#get">How to get it <span aria-hidden="true">↓</span></a>

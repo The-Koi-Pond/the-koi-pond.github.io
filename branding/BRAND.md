@@ -52,6 +52,13 @@ accent**: umeboshi plum (`#A82D4A`, dark `#EE7D92`) on the same tea-rice,
 with its own danger colours, because the plum is its title's filling; its
 exact colours are in its `docs/VISION.md`.
 
+**De-Koi has its own, tealer night** (Xel's pick, 2026-11-04). On a chat
+app's big dark screens `#141B1B` read as grey, so De-Koi's Pond theme uses
+a deeper teal at the same steps: background `#041719`, paper `#112527`,
+line `#233B3E` (plus `#001012` for its sidebars). Its daytime colours are
+the ones above. Exact values and contrasts are in De-Koi's `DESIGN.md`,
+section 7.
+
 In light mode, put white text on vermilion buttons. In dark mode, put the
 dark background colour on them.
 

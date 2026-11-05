@@ -16,7 +16,7 @@
     <main>
       <p><a href="index.html"><span aria-hidden="true">←</span> Bentotachi</a></p>
       <h1>Privacy policy</h1>
-      <p class="muted">Last updated 31 October 2026.</p>
+      <p class="muted">Last updated 5 November 2026.</p>
 
       <p>
         Bentotachi is a recipe, dinner-plan, shopping-list and pantry app made by The Koi Pond, a small group of friends.
@@ -33,8 +33,9 @@
       <h2>What Bentotachi stores, and where</h2>
       <p>
         When you use Bentotachi, it stores what you put into it: your account (a username, password, display name and
-        optionally an email address, profile picture and colour), recipes and their photos, ratings, notes, the dinner
-        plan, the shopping list and the pantry.
+        optionally an email address, profile picture and colour), recipes and their photos, ratings, notes (including
+        the ones on the fridge door), the dinner plan, the shopping list, and the pantry with its items' photos and
+        packets.
       </p>
       <p>
         <strong>On this phone only</strong> (the usual way to start): Bentotachi runs its own small server inside the app,
@@ -61,9 +62,14 @@
           Bentotachi, it opens in a browser and that website's own privacy policy applies.
         </li>
         <li>
-          <strong>Open Food Facts</strong>, when you scan a barcode Bentotachi doesn't know yet. Bentotachi sends only the barcode
-          number to <a href="https://world.openfoodfacts.org">Open Food Facts</a>, a free, open database of
-          food products, to find the product's name and brand. Nothing else about you is sent.
+          <strong>Open Food Facts</strong>, when you scan a barcode Bentotachi doesn't know yet, and to find a photo for a
+          pantry item that has a barcode. Bentotachi (on your phone, or your server) sends only the barcode number to
+          <a href="https://world.openfoodfacts.org">Open Food Facts</a>, a free, open database of food products, to find
+          the product's name, brand, size and photo. Nothing else about you is sent.
+        </li>
+        <li>
+          <strong>Store pages you link to a pantry item.</strong> To find a photo for an item without one, Bentotachi (on
+          your phone, or your server) fetches the store's product page you linked and takes the product photo from it.
         </li>
       </ul>
       <p>Bentotachi doesn't contact the developer, and doesn't use any advertising or analytics services.</p>
@@ -71,8 +77,9 @@
       <h2>Permissions</h2>
       <p>
         Bentotachi uses your internet connection to reach recipe websites and, if you use one, your Bentotachi server. When you
-        add a photo to a recipe or your profile, or a saved web page to import, you pick the file yourself; Bentotachi only
-        gets the file you choose.
+        add a photo to a recipe, a pantry item or your profile, or a saved web page to import, you pick the file yourself;
+        Bentotachi only gets the file you choose. When you tap <strong>Take a photo</strong>, your phone's own camera app
+        takes it and hands Bentotachi just that photo: Bentotachi doesn't ask for camera access.
       </p>
       <p>
         Scanning a barcode uses Google's own scanner on your phone (part of Google Play services), which handles the
@@ -89,6 +96,10 @@
         that's on your phone only, the same place says <strong>Delete everything</strong>, which deletes all of
         Bentotachi's data from the phone. Uninstalling the app also removes everything it kept on your phone.
       </p>
+      <p>
+        Without the app: see <a href="delete-account.html">Deleting your Bentotachi account and data</a>, which
+        explains how, whether it's on your phone or a household server.
+      </p>
 
       <h2>Children</h2>
       <p>Bentotachi is a household app for adults. It isn't made for children and doesn't knowingly collect their information.</p>
@@ -98,8 +109,10 @@
 
       <h2>Contact</h2>
       <p>
-        Questions about this policy: open an issue at
-        <a href="https://github.com/The-Koi-Pond/bentotachi/issues">github.com/The-Koi-Pond/bentotachi/issues</a>.
+        Questions about this policy: email <a href="mailto:splash@thekoipond.dev">splash@thekoipond.dev</a>, or open
+        an issue at
+        <a href="https://github.com/The-Koi-Pond/bentotachi/issues">github.com/The-Koi-Pond/bentotachi/issues</a>
+        (those are public).
       </p>
 
     </main>

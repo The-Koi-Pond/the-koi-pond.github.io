@@ -8,7 +8,7 @@
 # The Bentotachi repo defaults to C:\Projects\TheKoiPond\bentotachi. Rerun
 # this when Ben, the title or Bentotachi's colours change (copy the SVGs into
 # bentotachi/ first; see the Bentotachi repo's branding/README.md). It needs
-# Pillow, Inkscape 1.4 at the path below, and Segoe UI Bold (Windows).
+# Pillow, Inkscape 1.4 at the path below, and Segoe UI Italic (Windows).
 import subprocess
 import sys
 import tempfile
@@ -21,11 +21,11 @@ SITE = Path(__file__).resolve().parents[1]
 OUT = SITE / "bentotachi"
 BENTO = Path(sys.argv[1] if len(sys.argv) > 1 else r"C:\Projects\TheKoiPond\bentotachi")
 ASSETS = BENTO / "web" / "src" / "assets"
-FONT = r"C:\Windows\Fonts\segoeuib.ttf"
+ITALIC = r"C:\Windows\Fonts\segoeuii.ttf"
 
-# Bentotachi's light colours (its docs/VISION.md): tea-rice and umeboshi.
+# Bentotachi's light colours (its docs/VISION.md): tea-rice and its text.
 BG = "#f3f6f4"
-PLUM = "#a82d4a"
+TEXT = "#2b2420"
 
 
 def render(svg, width):
@@ -50,14 +50,12 @@ card.alpha_composite(ben, ((1200 - ben.width) // 2, 80))
 title = fit(render(ASSETS / "bentotachi-title.svg", 2400), 640)
 card.alpha_composite(title, ((1200 - title.width) // 2, 320))
 
+# The tagline as a plain sentence (Bentotachi's VISION.md, 2026-11-04: no
+# letter-spaced capitals with dots between them).
 draw = ImageDraw.Draw(card)
-font = ImageFont.truetype(FONT, 30)
-text, spacing = "RECIPES • PLAN • PANTRY • TOGETHER", 3.6
-widths = [draw.textlength(ch, font=font) for ch in text]
-x = (1200 - (sum(widths) + spacing * (len(text) - 1))) / 2
-for ch, w in zip(text, widths):
-    draw.text((x, 518), ch, font=font, fill=PLUM)
-    x += w + spacing
+font = ImageFont.truetype(ITALIC, 36)
+text = "Because dinner insists on happening every day."
+draw.text(((1200 - draw.textlength(text, font=font)) / 2, 516), text, font=font, fill=TEXT)
 card.convert("RGB").save(OUT / "og-card.png", optimize=True)
 
 # Phone home screens need a solid square: Ben on the page background.

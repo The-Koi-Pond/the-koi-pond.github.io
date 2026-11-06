@@ -58,8 +58,9 @@ FUSED = {"Aa", "Cc", "Ee"}
 ON_BASELINE = set("ABCDEFGHIKLMNOPRSTUVWXYZabcdehiklmnorstuvwxz0123456789.!?:&#/%")
 # Which characters set a row's size: its capitals, or digits, or the #.
 SIZERS = set("ABCDEFGHIKLMNOPRSTUVWXYZ0123456789#")
-# Extra keys that type the drawn characters.
-ALSO = {"'": "\u2019", '"': "\u201d", "\u2018": "\u2019", "\u201c": "\u201d", "\u2013": "-"}
+# Extra keys that type the drawn characters. (The opening quotes \u2018 \u201c aren't
+# drawn: they're the closing ones turned round, further on.)
+ALSO = {"'": "\u2019", '"': "\u201d", "\u2013": "-"}
 
 tmp = tempfile.mkdtemp()
 
@@ -284,6 +285,24 @@ for ch, dy in NUDGE.items():
             getattr(TransformPen(rec, (1, 0, 0, 1, 0, dy)), op)(*args)
         moved.append(rec.value)
     glyphs[ch] = (moved, width)
+
+# Opening quotes (Xel, 2026-11-06): the closing ’ and ” turned upside down
+# about their own middle, so they mirror them (a 6 shape to the closing 9)
+# at the same height. Made before kerning, so they're kerned too.
+for closing, opening in (("’", "‘"), ("”", "“")):
+    outline, width = glyphs[closing]
+    pen = BoundsPen(None)
+    for c in outline:
+        for op, args in c:
+            getattr(pen, op)(*args)
+    x0, y0, x1, y1 = pen.bounds
+    moved = []
+    for c in outline:
+        rec = RecordingPen()
+        for op, args in c:
+            getattr(TransformPen(rec, (-1, 0, 0, -1, x0 + x1, y0 + y1)), op)(*args)
+        moved.append(rec.value)
+    glyphs[opening] = (moved, width)
 
 
 def glyph_name(ch):

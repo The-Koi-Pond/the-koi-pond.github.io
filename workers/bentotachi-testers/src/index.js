@@ -15,14 +15,20 @@ const KINDS = { broke: "Something broke", idea: "An idea", thought: "Just a thou
 // Even a flood that gets past the rate limit can't fill the database.
 const MAX_ROWS = { signups: 1000, feedback: 5000 };
 
+// Screenshots with feedback: a few per message, each small enough for one
+// database row (D1 keeps up to 2 MB a row; the page shrinks them first),
+// and a total cap like the other tables.
+const SCREENSHOTS = { perMessage: 3, maxBytes: 1_500_000, maxRows: 1500 };
+
 // For every page this Worker shows: never cached or indexed, and no scripts
 // or outside files at all, so text someone typed can never run as code.
+// Images only from here (the admin page's screenshots).
 const HEADERS = {
   "Content-Type": "text/html; charset=utf-8",
   "Cache-Control": "no-store",
   "X-Robots-Tag": "noindex",
   "Content-Security-Policy":
-    "default-src 'none'; style-src 'unsafe-inline'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'",
+    "default-src 'none'; style-src 'unsafe-inline'; img-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'",
   // Not "no-referrer": under that, browsers send "Origin: null" even on the
   // admin page's own Remove forms, so remove() would refuse every click.
   // "same-origin" still tells other sites nothing.
@@ -41,6 +47,8 @@ export default {
         return post ? feedback(request, env) : back(env, "/bentotachi/testers/");
       case "/bentotachi/admin":
         return admin(request, env, url);
+      case "/bentotachi/admin/screenshot":
+        return admin(request, env, url, true);
       case "/":
         return back(env, "/");
       default:
@@ -96,14 +104,54 @@ async function feedback(request, env) {
     }
     if (await full(env, "feedback")) return back(env, "/bentotachi/testers/#oops");
 
-    await env.DB.prepare("INSERT INTO feedback (created, name, kind, message) VALUES (?, ?, ?, ?)")
+    const saved = await env.DB.prepare("INSERT INTO feedback (created, name, kind, message) VALUES (?, ?, ?, ?) RETURNING id")
       .bind(new Date().toISOString(), name, kind, message)
-      .run();
-    return back(env, "/bentotachi/testers/#thanks");
+      .first();
+    // Screenshots are extras: the message is saved either way, and the page
+    // says when one couldn't be (too big, not a picture, too many).
+    const kept = await saveScreenshots(env, saved.id, form.getAll("screenshot"));
+    return back(env, kept ? "/bentotachi/testers/#thanks" : "/bentotachi/testers/#thanks-no-screenshot");
   } catch (error) {
     console.error(error);
     return back(env, "/bentotachi/testers/#oops");
   }
+}
+
+// Saves the screenshots sent with a feedback message. True if all of them
+// were kept (or there were none).
+async function saveScreenshots(env, feedbackId, files) {
+  const sent = files.filter((file) => typeof file === "object" && file && file.size > 0);
+  if (!sent.length) return true;
+  const { n } = await env.DB.prepare("SELECT COUNT(*) AS n FROM feedback_files").first();
+  let room = Math.min(SCREENSHOTS.perMessage, SCREENSHOTS.maxRows - n);
+  let all = sent.length <= room;
+  for (const file of sent) {
+    if (room <= 0) break;
+    if (file.size > SCREENSHOTS.maxBytes) {
+      all = false;
+      continue;
+    }
+    const buffer = await file.arrayBuffer();
+    const type = imageType(new Uint8Array(buffer));
+    if (!type) {
+      all = false;
+      continue;
+    }
+    // D1 stores an ArrayBuffer as a BLOB.
+    await env.DB.prepare("INSERT INTO feedback_files (feedback_id, type, data) VALUES (?, ?, ?)").bind(feedbackId, type, buffer).run();
+    room--;
+  }
+  return all;
+}
+
+// What kind of picture a file really is, from its first bytes (not what the
+// browser called it), or null: only these are ever stored or shown.
+function imageType(b) {
+  if (b[0] === 0x89 && b[1] === 0x50 && b[2] === 0x4e && b[3] === 0x47) return "image/png";
+  if (b[0] === 0xff && b[1] === 0xd8 && b[2] === 0xff) return "image/jpeg";
+  if (b[0] === 0x47 && b[1] === 0x49 && b[2] === 0x46 && b[3] === 0x38) return "image/gif";
+  if (b[0] === 0x52 && b[1] === 0x49 && b[2] === 0x46 && b[3] === 0x46 && b[8] === 0x57 && b[9] === 0x45 && b[10] === 0x42 && b[11] === 0x50) return "image/webp";
+  return null;
 }
 
 // The invisible writing-direction marks and overrides (U+061C, U+200E,
@@ -147,7 +195,7 @@ async function full(env, table) {
 // ---------------------------------------------------------------------------
 // Xel's private page: who signed up, and the feedback.
 
-async function admin(request, env, url) {
+async function admin(request, env, url, screenshot = false) {
   if (!env.ADMIN_PASSWORD) {
     return page("Not set up yet", "<p>The admin password isn't set yet: see README.md next to this Worker.</p>", 503);
   }
@@ -163,15 +211,37 @@ async function admin(request, env, url) {
       headers: { ...HEADERS, "WWW-Authenticate": 'Basic realm="Bentotachi testers", charset="UTF-8"' },
     });
   }
+  if (screenshot) return showScreenshot(request, env, url);
   if (request.method === "POST") return remove(request, env, url);
   if (request.method !== "GET") return new Response("Not allowed.", { status: 405, headers: HEADERS });
 
-  const [signups, notes] = await Promise.all([
+  const [signups, notes, files] = await Promise.all([
     env.DB.prepare("SELECT * FROM signups ORDER BY id DESC").all(),
     env.DB.prepare("SELECT * FROM feedback ORDER BY id DESC").all(),
+    env.DB.prepare("SELECT id, feedback_id FROM feedback_files ORDER BY id").all(),
   ]);
   const zone = request.cf?.timezone ?? "UTC"; // the viewer's time zone, from Cloudflare
-  return page("Bentotachi testers", adminBody(signups.results, notes.results, zone));
+  return page("Bentotachi testers", adminBody(signups.results, notes.results, files.results, zone));
+}
+
+// One screenshot, for the admin page (behind its password): only ever a
+// picture, with its real type, and never run or sniffed as anything else.
+async function showScreenshot(request, env, url) {
+  if (request.method !== "GET") return new Response("Not allowed.", { status: 405, headers: HEADERS });
+  const id = Number(url.searchParams.get("id"));
+  const file = Number.isInteger(id) ? await env.DB.prepare("SELECT type, data FROM feedback_files WHERE id = ?").bind(id).first() : null;
+  if (!file || !["image/png", "image/jpeg", "image/gif", "image/webp"].includes(file.type)) {
+    return new Response("Nothing here.", { status: 404, headers: HEADERS });
+  }
+  return new Response(new Uint8Array(file.data), {
+    headers: {
+      "Content-Type": file.type,
+      "Cache-Control": "private, no-store",
+      "Content-Security-Policy": "default-src 'none'; sandbox",
+      "X-Content-Type-Options": "nosniff",
+      "X-Robots-Tag": "noindex",
+    },
+  });
 }
 
 // The browser sends the password as "Basic " + base64 of "anything:password".
@@ -204,11 +274,13 @@ async function remove(request, env, url) {
   const table = typeof name === "string" && Object.hasOwn(MAX_ROWS, name) ? name : null;
   const id = Number(form.get("id"));
   if (!table || !Number.isInteger(id)) return page("Hmm", "<p>Nothing to remove.</p>", 400);
+  // Feedback takes its screenshots with it.
+  if (table === "feedback") await env.DB.prepare("DELETE FROM feedback_files WHERE feedback_id = ?").bind(id).run();
   await env.DB.prepare(`DELETE FROM ${table} WHERE id = ?`).bind(id).run();
   return Response.redirect(`${url.origin}/bentotachi/admin`, 303);
 }
 
-function adminBody(signups, notes, zone) {
+function adminBody(signups, notes, files, zone) {
   const when = (iso) =>
     new Date(iso).toLocaleString("en-GB", { timeZone: zone, dateStyle: "medium", timeStyle: "short" });
   const removeButton = (table, id) =>
@@ -223,12 +295,24 @@ function adminBody(signups, notes, zone) {
         `<td class="text">${esc(s.note)}</td><td>${removeButton("signups", s.id)}</td></tr>`,
     )
     .join("");
+  // Each message's screenshots: thumbnails that open full size.
+  const shots = (feedbackId) => {
+    const mine = files.filter((file) => file.feedback_id === feedbackId);
+    if (!mine.length) return "";
+    return (
+      `<p class="shots">` +
+      mine
+        .map((file) => `<a href="/bentotachi/admin/screenshot?id=${file.id}"><img src="/bentotachi/admin/screenshot?id=${file.id}" alt="Screenshot"></a>`)
+        .join("") +
+      `</p>`
+    );
+  };
   const cards = notes
     .map(
       (f) =>
         `<li><p class="meta"><strong>${esc(KINDS[f.kind] ?? f.kind)}</strong> · ${esc(when(f.created))} · ` +
         `${f.name ? esc(f.name) : "<em>no name</em>"}</p><p class="text">${esc(f.message)}</p>` +
-        `${removeButton("feedback", f.id)}</li>`,
+        `${shots(f.id)}${removeButton("feedback", f.id)}</li>`,
     )
     .join("");
 
@@ -276,6 +360,8 @@ td:first-child { white-space: nowrap; color: var(--muted); }
 .feedback p { margin: 0; }
 .meta { color: var(--muted); margin-bottom: 6px !important; }
 .meta strong { color: var(--accent); }
+.shots { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px !important; }
+.shots img { display: block; height: 160px; max-width: 100%; border-radius: 8px; border: 1px solid var(--border); }
 .remove summary { color: var(--muted); cursor: pointer; font-size: 0.9rem; }
 .remove button { margin-top: 6px; font: inherit; padding: 4px 12px; border-radius: 999px; border: 1px solid var(--accent); background: var(--soft); color: var(--text); cursor: pointer; }
 </style></head>

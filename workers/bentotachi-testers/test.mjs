@@ -105,10 +105,11 @@ test("the right password shows the lists, with typed HTML made harmless", async 
   assert.ok(r.text.includes("line one\nline two"));
   assert.ok(r.text.includes("Something broke"));
   assert.equal(r.headers.get("cache-control"), "no-store");
-  // Exactly this: no scripts at all, even if escaping ever slips.
+  // Exactly this: no scripts at all, even if escaping ever slips; images
+  // only from here (the screenshots).
   assert.equal(
     r.headers.get("content-security-policy"),
-    "default-src 'none'; style-src 'unsafe-inline'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'",
+    "default-src 'none'; style-src 'unsafe-inline'; img-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'",
   );
   // "no-referrer" would make browsers send "Origin: null" on the Remove
   // forms, and every Remove would be refused. These tests set Origin by
@@ -143,9 +144,67 @@ test("Remove can't reach other tables, or names every object has", async () => {
   }
 });
 
-test("wrong passwords stop being checked after 20 tries a minute", async () => {
+// Screenshots with feedback, from another address (the feedback limit for
+// this one is used up by now). The page shrinks them before sending; here
+// they're sent as they are.
+const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==", "base64");
+async function sendWithFiles(fields, files, address) {
+  const form = new FormData();
+  for (const [key, value] of Object.entries(fields)) form.append(key, value);
+  for (const [name, bytes, type] of files) form.append("screenshot", new Blob([bytes], { type }), name);
+  const res = await fetch(API + "/bentotachi/feedback", { method: "POST", body: form, headers: { "cf-connecting-ip": address }, redirect: "manual" });
+  return { status: res.status, to: res.headers.get("location") };
+}
+
+test("feedback with a screenshot keeps both, and the admin page shows it behind the password", async () => {
+  const r = await sendWithFiles({ kind: "broke", message: "Look at this" }, [["shot.png", PNG, "image/png"]], "10.9.0.1");
+  assert.equal(r.to, `${SITE}/bentotachi/testers/#thanks`);
+  const page = (await adminPage()).text;
+  const id = page.match(/\/bentotachi\/admin\/screenshot\?id=(\d+)/)?.[1];
+  assert.ok(id, "a screenshot link on the admin page");
+  const shot = await fetch(`${API}/bentotachi/admin/screenshot?id=${id}`, { headers: auth(PASSWORD) });
+  assert.equal(shot.status, 200);
+  assert.equal(shot.headers.get("content-type"), "image/png");
+  assert.equal(shot.headers.get("x-content-type-options"), "nosniff");
+  assert.deepEqual(Buffer.from(await shot.arrayBuffer()), PNG);
+  const locked = await fetch(`${API}/bentotachi/admin/screenshot?id=${id}`, { redirect: "manual" });
+  assert.equal(locked.status, 401);
+});
+
+test("a file that isn't a picture, or too big, is left out, the message kept, and the page says so", async () => {
+  const fake = await sendWithFiles({ kind: "idea", message: "Not a picture" }, [["evil.png", Buffer.from("<svg onload=alert(1)>"), "image/png"]], "10.9.0.2");
+  assert.equal(fake.to, `${SITE}/bentotachi/testers/#thanks-no-screenshot`);
+  const big = Buffer.concat([PNG, Buffer.alloc(1_600_000)]);
+  const large = await sendWithFiles({ kind: "idea", message: "Too big" }, [["big.png", big, "image/png"]], "10.9.0.3");
+  assert.equal(large.to, `${SITE}/bentotachi/testers/#thanks-no-screenshot`);
+  const page = (await adminPage()).text;
+  assert.ok(page.includes("Not a picture") && page.includes("Too big"));
+});
+
+test("only 3 screenshots a message are kept", async () => {
+  const four = [1, 2, 3, 4].map((n) => [`s${n}.png`, PNG, "image/png"]);
+  const r = await sendWithFiles({ kind: "thought", message: "Four shots" }, four, "10.9.0.4");
+  assert.equal(r.to, `${SITE}/bentotachi/testers/#thanks-no-screenshot`);
+  const page = (await adminPage()).text;
+  const card = page.slice(page.indexOf("Four shots"));
+  assert.equal(card.slice(0, card.indexOf("</li>")).split("<img").length - 1, 3);
+});
+
+test("removing feedback removes its screenshots", async () => {
+  const page = (await adminPage()).text;
+  const card = page.slice(0, page.indexOf("Look at this"));
+  const shotId = page.slice(page.indexOf("Look at this")).match(/screenshot\?id=(\d+)/)[1];
+  const feedbackId = page.slice(page.indexOf("Look at this")).match(/name="table" value="feedback"><input type="hidden" name="id" value="(\d+)"/)[1];
+  assert.ok(card.length > 0);
+  const r = await send("/bentotachi/admin", { table: "feedback", id: feedbackId }, { ...auth(PASSWORD), Origin: API });
+  assert.equal(r.status, 303);
+  const gone = await fetch(`${API}/bentotachi/admin/screenshot?id=${shotId}`, { headers: auth(PASSWORD) });
+  assert.equal(gone.status, 404);
+});
+
+test("wrong passwords stop being checked after 100 tries a minute", async () => {
   const statuses = [];
-  for (let i = 0; i < 20; i++) statuses.push((await adminPage("nope")).status);
+  for (let i = 0; i < 101; i++) statuses.push((await adminPage("nope")).status);
   assert.ok(statuses.includes(429), statuses.join(" "));
 });
 

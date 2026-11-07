@@ -19,8 +19,9 @@ who asks to be deleted.
 
 Spam protection: a hidden box only bots fill in (they're told it worked,
 and nothing is saved), at most 5 signups and 5 feedback forms a minute from
-one address, and a cap on the total (1000 signups, 5000 feedback). The
-admin page allows 20 loads a minute from one address. Someone with many
+one address, and a cap on the total (1000 signups, 5000 feedback, 1500
+screenshots). The admin page allows 100 loads a minute from one address
+(each screenshot shown on it counts as one). Someone with many
 addresses gets more tries, so the password must be long (20+ characters:
 a few random words plus numbers is fine), used nowhere else, and not built
 from facts about Xel.

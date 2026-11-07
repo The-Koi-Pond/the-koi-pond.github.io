@@ -31,6 +31,10 @@
       <p class="note thanks" id="thanks" role="status">
         <strong>Got it, thank you!</strong> Ben has been informed. He screamed, but in a grateful way.
       </p>
+      <p class="note thanks" id="thanks-no-screenshot" role="status">
+        <strong>Got your message, thank you!</strong> But a screenshot didn't make it (too big, more than 3, or not a
+        picture). If it matters, send it to me on Discord.
+      </p>
       <p class="note oops" id="oops" role="alert">
         Hmm, that didn't send. Press your browser's Back button to get what you typed back, then try again in a
         minute. Or just message me on Discord.
@@ -81,8 +85,8 @@
         Broken, confusing, ugly, great: all of it helps. Use this form, or just message me on Discord, whichever's easier.
       </p>
       <!-- Sent to the Worker in workers/bentotachi-testers, which saves it and
-           sends you back here with #thanks. -->
-      <form class="form" method="post" action="https://api.thekoipond.dev/bentotachi/feedback">
+           sends you back here with #thanks (or #thanks-no-screenshot). -->
+      <form class="form" method="post" action="https://api.thekoipond.dev/bentotachi/feedback" enctype="multipart/form-data">
         <fieldset>
           <legend>What's it about?</legend>
           <label class="check"><input type="radio" name="kind" value="broke" required /> Something broke</label>
@@ -96,6 +100,14 @@
         </p>
         <textarea id="message" name="message" rows="6" required maxlength="4000" aria-describedby="message-hint"></textarea>
 
+        <label for="screenshot">Screenshots <span class="muted">(optional, up to 3)</span></label>
+        <p class="hint" id="screenshot-hint">
+          A picture of what went wrong helps a lot. Check it first: whatever's on the screen comes along, like your
+          recipes or your shopping list.
+        </p>
+        <input id="screenshot" name="screenshot" type="file" accept="image/*" multiple aria-describedby="screenshot-hint" />
+        <p class="hint" id="screenshot-note" role="status"></p>
+
         <label for="name">Your name on Discord <span class="muted">(optional)</span></label>
         <p class="hint" id="name-hint">So I can ask you about it. Leave it empty to stay anonymous.</p>
         <input id="name" name="name" maxlength="60" autocomplete="off" aria-describedby="name-hint" />
@@ -108,6 +120,51 @@
 
         <button class="button">Send it</button>
       </form>
+      <script>
+        // Screenshots straight off a phone are several MB: this shrinks each
+        // to at most 1600 pixels across, as a JPEG well under the 1.5 MB the
+        // Worker keeps, and keeps the first 3. Without it (no JavaScript),
+        // small ones still send and big ones are left out, with the message
+        // saved either way.
+        (() => {
+          const input = document.getElementById("screenshot");
+          const note = document.getElementById("screenshot-note");
+          if (!input || !window.DataTransfer || !window.createImageBitmap) return;
+          async function shrink(file) {
+            const image = await createImageBitmap(file);
+            const scale = Math.min(1, 1600 / Math.max(image.width, image.height));
+            const canvas = document.createElement("canvas");
+            canvas.width = Math.round(image.width * scale);
+            canvas.height = Math.round(image.height * scale);
+            canvas.getContext("2d").drawImage(image, 0, 0, canvas.width, canvas.height);
+            const blob = await new Promise((done) => canvas.toBlob(done, "image/jpeg", 0.85));
+            return new File([blob], file.name.replace(/\.[^.]*$/, "") + ".jpg", { type: "image/jpeg" });
+          }
+          input.addEventListener("change", async () => {
+            const all = [...input.files];
+            const picked = all.slice(0, 3);
+            if (!picked.length) {
+              note.textContent = "";
+              return;
+            }
+            note.textContent = "Getting them ready…";
+            const ready = new DataTransfer();
+            for (const file of picked) {
+              try {
+                ready.items.add(await shrink(file));
+              } catch {
+                // Not a picture the browser can read: sent as it is, and the
+                // Worker decides.
+                ready.items.add(file);
+              }
+            }
+            input.files = ready.files;
+            note.textContent =
+              `${picked.length} screenshot${picked.length > 1 ? "s" : ""} ready to send.` +
+              (all.length > 3 ? " Only the first 3 come along." : "");
+          });
+        })();
+      </script>
 
       <h2>Good to know</h2>
       <ul class="plain">

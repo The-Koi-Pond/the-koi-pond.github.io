@@ -11,7 +11,15 @@
   <id>https://thekoipond.dev/bentotachi/changelog.xml</id>
   <icon>https://thekoipond.dev/bentotachi/apple-touch-icon.png</icon>
   <author><name>The Koi Pond</name><uri>https://thekoipond.dev/</uri></author>
-  <updated>2026-11-06T13:31:52Z</updated>
+  <updated>2026-11-07T11:06:50Z</updated>
+
+  <entry>
+    <title>1.18.0: Onigiri for everyone</title>
+    <link href="https://thekoipond.dev/bentotachi/changelog.html#v1-18-0"/>
+    <id>tag:thekoipond.dev,2026:bentotachi/1.18.0</id>
+    <updated>2026-11-07T11:06:50Z</updated>
+    <summary>Onigiri ratings, where each recipe is from, an Ingredients and Method switch that remembers your place, a ⋯ menu, nutrition facts if you want them, pasting a whole recipe, and a much easier move from Paprika.</summary>
+  </entry>
 
   <entry>
     <title>1.17.0: A good tidy-up</title>

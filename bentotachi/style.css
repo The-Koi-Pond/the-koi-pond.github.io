@@ -430,6 +430,40 @@ h2 .aside {
   background: var(--accent-soft);
 }
 
+/* ------------------------------------------------------------------------
+   What's new (changelog.html): one card per release, newest first. */
+
+.release {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  margin-top: 16px;
+  scroll-margin-top: 24px; /* a link to one release stops a little above it */
+}
+
+/* The release's silly name, in Pond Pebbles like the app's page titles. */
+.release h2 {
+  margin: 0;
+  font: 400 1.8rem/1.15 "Pond Pebbles", system-ui, sans-serif;
+}
+
+/* The version and date: the plain facts, quietly under the name. */
+.release .when {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.release ul {
+  margin: 12px 0 0;
+  padding-left: 20px;
+}
+
+.release li + li {
+  margin-top: 6px;
+}
+
 /* Outside <main>, so screen readers can jump to it as the page's footer;
    lined up with main's column (648px wide, 16px from the edges on phones). */
 footer {

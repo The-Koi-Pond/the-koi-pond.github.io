@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>What's new in Bentotachi</title>
+    <meta name="description" content="Every Bentotachi update in plain words, newest first: what changed, what got fixed, and what Ben screamed about." />
+    <link rel="canonical" href="https://thekoipond.dev/bentotachi/changelog.html" />
+    <!-- Feed readers find the feed through this. Each release goes in
+         changelog.xml too (see CLAUDE.md, "Bentotachi's changelog"). -->
+    <link rel="alternate" type="application/atom+xml" title="What's new in Bentotachi" href="changelog.xml" />
+    <link rel="icon" href="onigiri.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <meta name="theme-color" content="#f3f6f4" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#141b1b" media="(prefers-color-scheme: dark)" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main>
+      <p><a href="index.html"><span aria-hidden="true">←</span> Bentotachi</a></p>
+      <header class="hero">
+        <img class="logo" src="ben-ready.svg" alt="" width="160" height="116" />
+        <h1 class="page-title">What's new</h1>
+        <p class="motto">Every update, newest first, in plain words. Ben screamed at most of them.</p>
+      </header>
+
+      <p class="center muted small">
+        Use a feed reader? <a href="changelog.xml">Follow the updates there</a> instead.
+      </p>
+
+      <!-- Newest first. A new release: copy one <article>, give it a new id
+           (v + the version with dashes), and add the same release to
+           changelog.xml. Titles are in Pond Pebbles, which has no accented
+           letters: keep them to plain ones. -->
+
+      <article class="release" id="v1-17-0">
+        <h2>A good tidy-up</h2>
+        <p class="when">Version 1.17.0 · 7 November 2026</p>
+        <ul>
+          <li>
+            <strong>Edit mode.</strong> Tap <em>Edit</em> on the Recipes page, pick a few recipes, then put them all on
+            a shelf or delete them in one go. The bin in the top bar has retired. It had a good run.
+          </li>
+          <li>Every recipe has its own <em>Delete recipe</em> at the bottom of its page.</li>
+          <li>
+            The fridge door looks like an actual fridge door now: notes on coloured paper, a little crooked, held up by
+            magnets in the colour of whoever left them.
+          </li>
+          <li>
+            A tidier recipe page: the description, servings and times share one card, and the ratings sit next to when
+            you last had it.
+          </li>
+          <li>
+            The meal plan opens on today, with yesterday just above it, and calls its weeks "This week" and "Next
+            week".
+          </li>
+          <li>Slimmer shopping list rows, so more of the list fits on screen in the shop.</li>
+          <li>Page titles are in Pond Pebbles, The Koi Pond's very own font. Like this one.</li>
+        </ul>
+      </article>
+
+      <article class="release" id="v1-16-0">
+        <h2>Packets, counted (if you want)</h2>
+        <p class="when">Version 1.16.0 · 5 November 2026</p>
+        <ul>
+          <li>
+            In the pantry's Detailed view, keep track of the actual packets in the cupboard: "In stock: 1 kg ✕ · 2 kg
+            ✕". Tap one when it's finished, or Undo if you spoke too soon.
+          </li>
+          <li>Finishing the last packet marks the item Out and asks whether it should go on the shopping list.</li>
+          <li>Scanning something you already have offers <em>+ Add this packet</em>, with the brand and size filled in.</li>
+          <li>
+            Don't want to count packets? Don't. Have, Low and Out work exactly as before, and nobody will check.
+          </li>
+        </ul>
+      </article>
+
+      <article class="release" id="v1-15-0">
+        <h2>The fridge door</h2>
+        <p class="when">Version 1.15.0 · 4 November 2026</p>
+        <ul>
+          <li>
+            <strong>Notes for everyone at home</strong> ("Out of bin bags. Again."), on the fridge door: tap the title
+            at the top of the app. <em>Done</em> takes a note down.
+          </li>
+          <li>
+            "Lately" shows how much of the coming week is planned, what's run out, and which recipes were added or
+            cooked, and by whom.
+          </li>
+          <li>
+            A small number says how many notes someone else left since you last looked. No buzzing phones, just the
+            number.
+          </li>
+          <li>Using Bentotachi on your own? Then they're notes to yourself. Still counts.</li>
+          <li>A new line on the first screen: "Because dinner insists on happening every day."</li>
+        </ul>
+      </article>
+
+      <article class="release" id="v1-14-0">
+        <h2>New colours, fewer surprises</h2>
+        <p class="when">Version 1.14.0 · 4 November 2026</p>
+        <ul>
+          <li>New colours: pickled-plum pink and soft jade green instead of orange and cream. Ben's chopsticks are plain wood now.</li>
+          <li>
+            A new app asks one thing first: "How will you use Bentotachi?" Just you on this phone, or with your
+            household.
+          </li>
+          <li>
+            On your own phone, there's no username or password to look at any more. (It's tucked away in Backups, for
+            the day you move to a household server.)
+          </li>
+          <li>
+            A recipe saved in Bentotachi's browser is no longer lost if Android closes the app while you're away. It's
+            saved when you come back.
+          </li>
+          <li>Swapping two meals on the plan can't lose one of them any more.</li>
+          <li>Browse remembers your last search, so you can save a recipe and go straight back for more.</li>
+          <li>Closing the barcode scanner no longer complains that it isn't ready. It was ready. It was just rude.</li>
+        </ul>
+      </article>
+
+      <article class="release" id="v1-13-0">
+        <h2>The pantry glow-up</h2>
+        <p class="when">Version 1.13.0 · 2 November 2026</p>
+        <ul>
+          <li>
+            <strong>Pantry photos, by themselves:</strong> from the barcode (through Open Food Facts, a free product
+            database) or from the shop page you linked. Or take your own.
+          </li>
+          <li>Simple and Detailed views: Simple is one line per thing; Detailed shows photos, brands and notes.</li>
+          <li>One box at the top to find something, add it, or type a barcode.</li>
+          <li>
+            Have, Low and Out is a little level meter now. Running out asks "Put it on the shopping list?" instead of
+            just doing it.
+          </li>
+          <li>Several shop links per item, say one for Coles and one for Woolworths.</li>
+          <li>Recipes with an absurdly long life story no longer fail to import. The story gets trimmed.</li>
+        </ul>
+      </article>
+
+      <article class="release" id="v1-12-0">
+        <h2>Breakfast is now a thing</h2>
+        <p class="when">Versions 1.12.0 and 1.12.1 · 2 November 2026</p>
+        <ul>
+          <li>
+            <strong>Breakfast and lunch on the plan</strong>, if you want them (Household, then Meals on the plan).
+            Dinner-only households carry on as before.
+          </li>
+          <li>
+            <strong>Change the servings</strong> and every amount changes with it, even "juice of 1 lemon". Cooking for
+            six instead of four, no maths needed.
+          </li>
+          <li>
+            <strong>Timers:</strong> a step that says "simmer for 10 minutes" gets a button that starts one. Running
+            timers wait at the bottom of every page, and beep and buzz when they're done.
+          </li>
+          <li>
+            The shopping list sorts itself by aisle, fruit and veg first, frozen last. Typing "milk" when milk is
+            already on the list says so.
+          </li>
+          <li>Share a recipe as text with the friend who asked for it, or print just the recipe from a computer.</li>
+          <li>Bring your recipes over from Paprika, Mealie or Tandoor, photos and all.</li>
+          <li>Dutch measurements ("1,5 kg", eetlepels) for our Dutch tester, and weeks starting on Sunday in the US.</li>
+          <li>
+            Fixes in 1.12.1: scaling copes with "½ cup + 2 tbsp", and shopping list changes made with no signal aren't
+            lost if you have to log in again.
+          </li>
+        </ul>
+      </article>
+
+      <article class="release" id="v1-11-0">
+        <h2>Hello, Bentotachi</h2>
+        <p class="when">Version 1.11.0 · 2 November 2026</p>
+        <ul>
+          <li><strong>Bento is now Bentotachi.</strong> Plain "Bento" was taken. Several times.</li>
+          <li>
+            <strong>Meet Ben,</strong> the screaming onigiri on chopsticks. He's fine, actually. He turns up on empty
+            screens, errors and backups, in the mood each one deserves.
+          </li>
+          <li>
+            <strong>Works on just your phone:</strong> no server and no account to set up, just your name. Save a
+            backup whenever you like.
+          </li>
+          <li>
+            The shopping list works with no signal: tick things off and add them in the supermarket's dead zone, and
+            they're sent when you're back.
+          </li>
+          <li>Undo for taking things off the shopping list and the plan.</li>
+          <li>Export all your recipes, with photos, as a Paprika file that other recipe apps can open.</li>
+          <li>"Our tablespoon": 15 ml, or the Australian 20 ml. Recipes say when theirs is different.</li>
+          <li>
+            Pantry: notes on items ("3 cans"), "once opened, keep in the fridge", and a double-check when the scanner
+            misreads a barcode.
+          </li>
+          <li><em>Delete my account</em> in Profile (on your own phone, <em>Delete everything</em>).</li>
+        </ul>
+      </article>
+
+      <article class="release" id="v1-10-0">
+        <h2>Beep</h2>
+        <p class="when">Version 1.10.0 · 31 October 2026</p>
+        <ul>
+          <li>
+            <strong>Scan barcodes in the pantry.</strong> Bentotachi looks the product up at Open Food Facts and fills
+            in its name and brand. Google's own scanner does the scanning, so Bentotachi never needs permission to use
+            your camera.
+          </li>
+        </ul>
+      </article>
+
+      <article class="release" id="v1-9-0">
+        <h2>Shelves, hints and a stopwatch</h2>
+        <p class="when">Version 1.9.0 · 31 October 2026</p>
+        <ul>
+          <li>Recipes sit on shelves (Mains, Desserts, "things we make when we're sad"), in whatever order you drag them.</li>
+          <li>Tag suggestions when you add a recipe.</li>
+          <li>
+            <strong>Time it:</strong> a stopwatch for how long a recipe really takes (not the "ready in 20 minutes"
+            lie), which can save the real times to the recipe. <em>We cooked this</em> remembers the day.
+          </li>
+          <li>
+            Hints for the other side of the world: grams beside pounds, °C beside °F, cm beside inches, and "capsicum"
+            beside "bell pepper".
+          </li>
+          <li>Imports work on more recipe sites, including old blogs and ones that write the recipe as plain text.</li>
+          <li>Edit just one part of a recipe (the method, the notes) right on its page.</li>
+          <li>The recipe writer's tips get their own notes, kept apart from yours.</li>
+          <li>Double-tap a recipe's photo to move and zoom it, so the food is actually in the picture.</li>
+          <li>Leaving with unsaved changes asks first.</li>
+        </ul>
+      </article>
+
+      <article class="release" id="v1-8-0">
+        <h2>One very long day</h2>
+        <p class="when">Versions 1.5 to 1.8 · 30 October 2026</p>
+        <ul>
+          <li>
+            <strong>The meal plan,</strong> as a list or a month, with notes like "Take-away night" and a dinner
+            chooser with <em>Surprise me</em>.
+          </li>
+          <li>
+            <strong>Last had:</strong> Bentotachi remembers when you last ate something, to finally settle "didn't we
+            just have that?"
+          </li>
+          <li>Recipe ingredients link to the pantry, so a recipe shows what you have, what's low and what's out.</li>
+          <li><em>Shop for these</em> puts the plan's ingredients on the shopping list in one go.</li>
+          <li>
+            Profiles with your own picture and colour, plus ratings, hearts and thumbs down (with reasons, like "baked
+            pineapple").
+          </li>
+          <li>Coles and Woolworths links on pantry items.</li>
+          <li>A Household page, to add the people you live with.</li>
+          <li>Share recipes to Bentotachi from your browser, and read them with no internet.</li>
+        </ul>
+      </article>
+
+      <p class="center muted small">
+        Before that: Bentotachi began on 29 October 2026 as one household's recipe box and shopping list. Everything
+        above grew out of it, one "wouldn't it be nice if" at a time.
+      </p>
+    </main>
+
+    <footer>
+      <a href="index.html">Bentotachi</a>
+      <a href="privacy.html">Privacy policy</a>
+      <a href="https://github.com/The-Koi-Pond/bentotachi/issues">Complain about the screaming</a>
+      <a class="made-by" href="https://thekoipond.dev/"><img src="deki.svg" alt="" width="26" height="27" />Made by The Koi Pond</a>
+    </footer>
+  </body>
+</html>

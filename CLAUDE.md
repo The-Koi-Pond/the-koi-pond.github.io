@@ -51,6 +51,29 @@ app's page is a folder in this repo.
   the Worker (`npx wrangler@4 deploy`) publishes, like a push: Xel's
   go-ahead first. No emails or IP addresses are collected, on purpose.
 
+## Bentotachi's changelog
+
+`bentotachi/changelog.html` ("What's new", added 2026-11-07) lists every
+Bentotachi release, newest first, one card each. `bentotachi/changelog.xml`
+is the same list as an Atom feed, for feed readers: one `<entry>` per
+release with a one-line summary linking to its card. **A new release goes
+in both**, plus the feed's own `<updated>`.
+
+- The source is the release's notes in the `bentotachi` repo's
+  `docs/PLAN.md` ("Released in 1.x.y"). Rewrite them for people who use the
+  app, not for developers: what they can now do or what stopped going
+  wrong, never file names, fields, servers' insides or test names. Skip
+  changes nobody would notice.
+- Voice (Bentotachi's `docs/VISION.md`): say the thing plainly, then the
+  joke beside it; the joke never replaces the information. Each release
+  gets a silly name (its `<h2>`, in Pond Pebbles, so plain letters only:
+  no accents). Backups, deleting and privacy stay plain.
+- Never the household's real names, addresses or anything private: the
+  repository is public. Made-up examples only.
+- Several releases on one day can share a card ("Versions 1.12.0 and
+  1.12.1"). Each card's `id` is `v` plus its version with dashes
+  (`v1-17-0`), and the feed links to it, so never change an old one.
+
 ## Preview locally
 
 From this folder:

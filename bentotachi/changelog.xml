@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Bentotachi's updates for feed readers (an Atom feed). It follows
+     changelog.html: each release there gets an <entry> here, newest first,
+     with a one-line summary and a link to its card. When adding one, also
+     set the feed's own <updated> to the new entry's date. -->
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>What's new in Bentotachi</title>
+  <subtitle>Every Bentotachi update in plain words, newest first.</subtitle>
+  <link rel="alternate" type="text/html" href="https://thekoipond.dev/bentotachi/changelog.html"/>
+  <link rel="self" type="application/atom+xml" href="https://thekoipond.dev/bentotachi/changelog.xml"/>
+  <id>https://thekoipond.dev/bentotachi/changelog.xml</id>
+  <icon>https://thekoipond.dev/bentotachi/apple-touch-icon.png</icon>
+  <author><name>The Koi Pond</name><uri>https://thekoipond.dev/</uri></author>
+  <updated>2026-11-06T13:31:52Z</updated>
+
+  <entry>
+    <title>1.17.0: A good tidy-up</title>
+    <link href="https://thekoipond.dev/bentotachi/changelog.html#v1-17-0"/>
+    <id>tag:thekoipond.dev,2026:bentotachi/1.17.0</id>
+    <updated>2026-11-06T13:31:52Z</updated>
+    <summary>Edit mode for putting many recipes on a shelf or deleting them at once, a fridge door that looks like one, a tidier recipe page and meal plan, and slimmer shopping list rows.</summary>
+  </entry>
+
+  <entry>
+    <title>1.16.0: Packets, counted (if you want)</title>
+    <link href="https://thekoipond.dev/bentotachi/changelog.html#v1-16-0"/>
+    <id>tag:thekoipond.dev,2026:bentotachi/1.16.0</id>
+    <updated>2026-11-05T01:00:00Z</updated>
+    <summary>Keep track of the actual packets in the cupboard, if you like. Finishing the last one asks about the shopping list. Have, Low and Out still work as before.</summary>
+  </entry>
+
+  <entry>
+    <title>1.15.0: The fridge door</title>
+    <link href="https://thekoipond.dev/bentotachi/changelog.html#v1-15-0"/>
+    <id>tag:thekoipond.dev,2026:bentotachi/1.15.0</id>
+    <updated>2026-11-04T03:00:00Z</updated>
+    <summary>Notes for everyone at home, and "Lately": what's planned, what's run out, and what got cooked, and by whom.</summary>
+  </entry>
+
+  <entry>
+    <title>1.14.0: New colours, fewer surprises</title>
+    <link href="https://thekoipond.dev/bentotachi/changelog.html#v1-14-0"/>
+    <id>tag:thekoipond.dev,2026:bentotachi/1.14.0</id>
+    <updated>2026-11-04T01:00:00Z</updated>
+    <summary>Pickled-plum and jade colours, a simpler first screen, no login details on a phone-only Bentotachi, and recipes saved in the app's browser no longer lost.</summary>
+  </entry>
+
+  <entry>
+    <title>1.13.0: The pantry glow-up</title>
+    <link href="https://thekoipond.dev/bentotachi/changelog.html#v1-13-0"/>
+    <id>tag:thekoipond.dev,2026:bentotachi/1.13.0</id>
+    <updated>2026-11-02T05:00:00Z</updated>
+    <summary>Pantry photos that find themselves, Simple and Detailed views, one box to find or add things, and a question before anything goes on the shopping list.</summary>
+  </entry>
+
+  <entry>
+    <title>1.12.0 and 1.12.1: Breakfast is now a thing</title>
+    <link href="https://thekoipond.dev/bentotachi/changelog.html#v1-12-0"/>
+    <id>tag:thekoipond.dev,2026:bentotachi/1.12.0</id>
+    <updated>2026-11-02T03:00:00Z</updated>
+    <summary>Breakfast and lunch on the plan, changing the servings, timers in the method, a shopping list sorted by aisle, and importing from Paprika, Mealie or Tandoor.</summary>
+  </entry>
+
+  <entry>
+    <title>1.11.0: Hello, Bentotachi</title>
+    <link href="https://thekoipond.dev/bentotachi/changelog.html#v1-11-0"/>
+    <id>tag:thekoipond.dev,2026:bentotachi/1.11.0</id>
+    <updated>2026-11-02T01:00:00Z</updated>
+    <summary>Bento becomes Bentotachi, Ben the screaming onigiri arrives, it works on just your phone, and the shopping list works with no signal.</summary>
+  </entry>
+
+  <entry>
+    <title>1.10.0: Beep</title>
+    <link href="https://thekoipond.dev/bentotachi/changelog.html#v1-10-0"/>
+    <id>tag:thekoipond.dev,2026:bentotachi/1.10.0</id>
+    <updated>2026-10-31T05:00:00Z</updated>
+    <summary>Scan barcodes in the pantry, without giving Bentotachi permission to use your camera.</summary>
+  </entry>
+
+  <entry>
+    <title>1.9.0: Shelves, hints and a stopwatch</title>
+    <link href="https://thekoipond.dev/bentotachi/changelog.html#v1-9-0"/>
+    <id>tag:thekoipond.dev,2026:bentotachi/1.9.0</id>
+    <updated>2026-10-31T01:00:00Z</updated>
+    <summary>Recipe shelves, tag suggestions, a stopwatch for how long a recipe really takes, metric and imperial hints, and imports from more sites.</summary>
+  </entry>
+
+  <entry>
+    <title>1.5 to 1.8: One very long day</title>
+    <link href="https://thekoipond.dev/bentotachi/changelog.html#v1-8-0"/>
+    <id>tag:thekoipond.dev,2026:bentotachi/1.8.0</id>
+    <updated>2026-10-30T05:00:00Z</updated>
+    <summary>The meal plan, "Last had", pantry links on recipe ingredients, profiles and ratings, and a Household page.</summary>
+  </entry>
+</feed>

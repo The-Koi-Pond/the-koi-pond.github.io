@@ -11,7 +11,15 @@
   <id>https://thekoipond.dev/bentotachi/changelog.xml</id>
   <icon>https://thekoipond.dev/bentotachi/apple-touch-icon.png</icon>
   <author><name>The Koi Pond</name><uri>https://thekoipond.dev/</uri></author>
-  <updated>2026-11-08T05:00:00Z</updated>
+  <updated>2026-11-08T13:00:00Z</updated>
+
+  <entry>
+    <title>1.20.0: Linguine is not penne</title>
+    <link href="https://thekoipond.dev/bentotachi/changelog.html#v1-20-0"/>
+    <id>tag:thekoipond.dev,2026:bentotachi/1.20.0</id>
+    <updated>2026-11-08T13:00:00Z</updated>
+    <summary>Shopping that counts the packets in your pantry and asks only for what's short, a Finished button that takes what a recipe used off the pantry, kinds of one thing (linguine only counts linguine), a friendlier pantry, and adding a whole category of recipes at once.</summary>
+  </entry>
 
   <entry>
     <title>1.19.0: Sides, please</title>

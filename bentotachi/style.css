@@ -464,6 +464,26 @@ h2 .aside {
   margin-top: 6px;
 }
 
+/* "What's coming" above the releases: the same card, in groups, with a
+   dashed edge because none of it has shipped yet. */
+.coming {
+  border-style: dashed;
+}
+
+.coming h3 {
+  margin: 18px 0 0;
+  font-size: 1.05rem;
+}
+
+.coming h3 + p,
+.coming p.small {
+  margin: 4px 0 0;
+}
+
+.coming p.small:last-child {
+  margin-top: 14px;
+}
+
 /* Outside <main>, so screen readers can jump to it as the page's footer;
    lined up with main's column (648px wide, 16px from the edges on phones). */
 footer {

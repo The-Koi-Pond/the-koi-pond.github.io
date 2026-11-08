@@ -73,6 +73,14 @@ in both**, plus the feed's own `<updated>`.
 - Several releases on one day can share a card ("Versions 1.12.0 and
   1.12.1"). Each card's `id` is `v` plus its version with dashes
   (`v1-17-0`), and the feed links to it, so never change an old one.
+- **What's coming** (added 2026-11-08) is the dashed card above the
+  releases (`id="coming"`), not in the feed. Keep it current with every
+  release: "In the next update" is the bentotachi repo's PLAN.md "Not
+  released yet" list (empty it into the new release's card when it ships);
+  "Being worked on next" is PLAN.md's "Next:" sections; "Thinking about" is
+  a handful of its "To consider" ideas. Plans, not promises: no dates, and
+  nothing only maybe-planned goes under "next". Credit testers as "a
+  tester's idea", never by name.
 
 ## Preview locally
 

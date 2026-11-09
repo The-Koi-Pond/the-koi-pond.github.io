@@ -11,7 +11,15 @@
   <id>https://thekoipond.dev/bentotachi/changelog.xml</id>
   <icon>https://thekoipond.dev/bentotachi/apple-touch-icon.png</icon>
   <author><name>The Koi Pond</name><uri>https://thekoipond.dev/</uri></author>
-  <updated>2026-11-09T12:00:00Z</updated>
+  <updated>2026-11-09T18:00:00Z</updated>
+
+  <entry>
+    <title>1.22.0: Your way, light or dark</title>
+    <link href="https://thekoipond.dev/bentotachi/changelog.html#v1-22-0"/>
+    <id>tag:thekoipond.dev,2026:bentotachi/1.22.0</id>
+    <updated>2026-11-09T18:00:00Z</updated>
+    <summary>Light or dark of your own choosing, a calmer dinner chooser with recipes first, a tidier profile, and the household's settings moved to Settings.</summary>
+  </entry>
 
   <entry>
     <title>1.21.0: Everything in its compartment</title>

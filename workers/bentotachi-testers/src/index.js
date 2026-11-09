@@ -20,6 +20,10 @@ const MAX_ROWS = { signups: 1000, feedback: 5000 };
 // and a total cap like the other tables.
 const SCREENSHOTS = { perMessage: 3, maxBytes: 1_500_000, maxRows: 1500 };
 
+// Google Play's rule for a new developer account's closed test: this many
+// testers opted in, for this many days in a row, before it can go public.
+const PLAY_TEST = { testers: 12, days: 14 };
+
 // For every page this Worker shows: never cached or indexed, and no scripts
 // or outside files at all, so text someone typed can never run as code.
 // Images only from here (the admin page's screenshots).
@@ -45,10 +49,14 @@ export default {
         return post ? join(request, env) : back(env, "/bentotachi/join/");
       case "/bentotachi/feedback":
         return post ? feedback(request, env) : back(env, "/bentotachi/testers/");
+      case "/bentotachi/status":
+        return status(request, env);
       case "/bentotachi/admin":
-        return admin(request, env, url);
+        return admin(request, env, url, request.method === "POST" ? remove : lists);
       case "/bentotachi/admin/screenshot":
-        return admin(request, env, url, true);
+        return admin(request, env, url, showScreenshot);
+      case "/bentotachi/admin/status":
+        return admin(request, env, url, saveStatus);
       case "/":
         return back(env, "/");
       default:
@@ -192,10 +200,41 @@ async function full(env, table) {
   return row.n >= MAX_ROWS[table];
 }
 
+// How the test is going, for the testers' page (its script fetches this).
+// Only counts and a date: nothing anyone typed.
+async function status(request, env) {
+  const headers = {
+    "Content-Type": "application/json",
+    // A minute's caching is plenty: the numbers change a few times a week.
+    "Cache-Control": "public, max-age=60",
+    "Access-Control-Allow-Origin": new URL(env.SITE).origin,
+    "X-Content-Type-Options": "nosniff",
+  };
+  if (request.method !== "GET") return new Response("{}", { status: 405, headers });
+  try {
+    const [test, signups] = await Promise.all([
+      env.DB.prepare("SELECT opted_in, started FROM test_status WHERE id = 1").first(),
+      env.DB.prepare("SELECT COUNT(*) AS n FROM signups").first(),
+    ]);
+    const body = {
+      signedUp: signups.n,
+      optedIn: test?.opted_in ?? 0,
+      started: test?.started ?? null,
+      needed: PLAY_TEST.testers,
+      days: PLAY_TEST.days,
+    };
+    return new Response(JSON.stringify(body), { headers });
+  } catch (error) {
+    console.error(error);
+    return new Response("{}", { status: 500, headers: { ...headers, "Cache-Control": "no-store" } });
+  }
+}
+
 // ---------------------------------------------------------------------------
 // Xel's private page: who signed up, and the feedback.
 
-async function admin(request, env, url, screenshot = false) {
+// Every admin address goes through here: the password, then its handler.
+async function admin(request, env, url, handler) {
   if (!env.ADMIN_PASSWORD) {
     return page("Not set up yet", "<p>The admin password isn't set yet: see README.md next to this Worker.</p>", 503);
   }
@@ -211,17 +250,65 @@ async function admin(request, env, url, screenshot = false) {
       headers: { ...HEADERS, "WWW-Authenticate": 'Basic realm="Bentotachi testers", charset="UTF-8"' },
     });
   }
-  if (screenshot) return showScreenshot(request, env, url);
-  if (request.method === "POST") return remove(request, env, url);
-  if (request.method !== "GET") return new Response("Not allowed.", { status: 405, headers: HEADERS });
+  // Browsers say which site a form came from (Origin), so another website
+  // can't make Xel's signed-in browser remove or change things.
+  if (request.method === "POST" && request.headers.get("Origin") !== url.origin) {
+    return page("Refused", "<p>That didn't come from this page.</p>", 403);
+  }
+  return handler(request, env, url);
+}
 
-  const [signups, notes, files] = await Promise.all([
+// The viewer's time zone, from Cloudflare.
+const timeZone = (request) => request.cf?.timezone ?? "UTC";
+
+async function lists(request, env) {
+  if (request.method !== "GET") return new Response("Not allowed.", { status: 405, headers: HEADERS });
+  const [signups, notes, files, test] = await Promise.all([
     env.DB.prepare("SELECT * FROM signups ORDER BY id DESC").all(),
     env.DB.prepare("SELECT * FROM feedback ORDER BY id DESC").all(),
     env.DB.prepare("SELECT id, feedback_id FROM feedback_files ORDER BY id").all(),
+    env.DB.prepare("SELECT opted_in, started FROM test_status WHERE id = 1").first(),
   ]);
-  const zone = request.cf?.timezone ?? "UTC"; // the viewer's time zone, from Cloudflare
-  return page("Bentotachi testers", adminBody(signups.results, notes.results, files.results, zone));
+  return page("Bentotachi testers", adminBody(signups.results, notes.results, files.results, test, timeZone(request)));
+}
+
+// Xel copies the opted-in count from Play Console. The 14 days start the
+// day it reaches 12, and Google starts them over if it drops below, so the
+// date fills itself in and clears itself. A date typed in wins, to match
+// what Play Console says.
+async function saveStatus(request, env, url) {
+  const done = Response.redirect(`${url.origin}/bentotachi/admin`, 303);
+  if (request.method !== "POST") return done;
+  const form = await request.formData();
+  const count = form.get("opted_in");
+  const date = form.get("started") ?? "";
+  if (typeof count !== "string" || !/^\d{1,4}$/.test(count.trim()) || typeof date !== "string" || (date && !isDay(date))) {
+    return page("Hmm", "<p>That didn't look right. Go back and check the number and the date.</p>", 400);
+  }
+  const optedIn = Number(count.trim());
+  const today = new Date().toLocaleDateString("en-CA", { timeZone: timeZone(request) }); // YYYY-MM-DD
+  const started = optedIn >= PLAY_TEST.testers ? date || today : null;
+  await env.DB.prepare("UPDATE test_status SET opted_in = ?, started = ? WHERE id = 1").bind(optedIn, started).run();
+  return done;
+}
+
+// A real calendar day written YYYY-MM-DD (what a date box sends).
+function isDay(text) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(text)) return false;
+  // Month 13 or 31 February: not a day (or rolled over into another one).
+  const day = new Date(text + "T00:00:00Z");
+  return !Number.isNaN(day.getTime()) && day.toISOString().startsWith(text);
+}
+
+function testStatusForm(test) {
+  const optedIn = test?.opted_in ?? 0;
+  return `<h2>How the test is going</h2>
+<form class="status" method="post" action="/bentotachi/admin/status">
+<label>Opted in on Google Play <input type="number" name="opted_in" min="0" max="9999" value="${optedIn}" required></label>
+<label>The ${PLAY_TEST.days} days started on <input type="date" name="started" value="${esc(test?.started ?? "")}"></label>
+<button>Save</button>
+<p class="hint">Copy the number from Play Console. When it reaches ${PLAY_TEST.testers}, leave the date empty and it fills in with today; it clears if the number drops below ${PLAY_TEST.testers}. The testers' page shows both.</p>
+</form>`;
 }
 
 // One screenshot, for the admin page (behind its password): only ever a
@@ -262,12 +349,8 @@ async function rightPassword(header, password) {
   return crypto.subtle.timingSafeEqual(a, b);
 }
 
-// A Remove button. Browsers say which site a form came from (Origin), so
-// another website can't make Xel's signed-in browser remove things.
+// A Remove button (admin() has already checked it came from this page).
 async function remove(request, env, url) {
-  if (request.headers.get("Origin") !== url.origin) {
-    return page("Refused", "<p>That didn't come from this page.</p>", 403);
-  }
   const form = await request.formData();
   const name = form.get("table");
   // hasOwn, not just MAX_ROWS[name]: "constructor" and such are on every object.
@@ -280,7 +363,7 @@ async function remove(request, env, url) {
   return Response.redirect(`${url.origin}/bentotachi/admin`, 303);
 }
 
-function adminBody(signups, notes, files, zone) {
+function adminBody(signups, notes, files, test, zone) {
   const when = (iso) =>
     new Date(iso).toLocaleString("en-GB", { timeZone: zone, dateStyle: "medium", timeStyle: "short" });
   const removeButton = (table, id) =>
@@ -318,6 +401,7 @@ function adminBody(signups, notes, files, zone) {
 
   return `<h1>Bentotachi testers</h1>
 <p class="count">${signups.length} signed up · ${notes.length} feedback</p>
+${testStatusForm(test)}
 <h2>Signed up</h2>
 ${
   signups.length
@@ -362,8 +446,14 @@ td:first-child { white-space: nowrap; color: var(--muted); }
 .meta strong { color: var(--accent); }
 .shots { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px !important; }
 .shots img { display: block; height: 160px; max-width: 100%; border-radius: 8px; border: 1px solid var(--border); }
+.status { display: flex; flex-wrap: wrap; align-items: end; gap: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; }
+.status label { display: grid; gap: 4px; color: var(--muted); }
+.status input { font: inherit; padding: 4px 8px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); color: var(--text); }
+.status input[type="number"] { width: 6em; }
+.status button, .remove button { font: inherit; padding: 4px 12px; border-radius: 999px; border: 1px solid var(--accent); background: var(--soft); color: var(--text); cursor: pointer; }
+.hint { flex-basis: 100%; margin: 0; color: var(--muted); font-size: 0.9rem; }
 .remove summary { color: var(--muted); cursor: pointer; font-size: 0.9rem; }
-.remove button { margin-top: 6px; font: inherit; padding: 4px 12px; border-radius: 999px; border: 1px solid var(--accent); background: var(--soft); color: var(--text); cursor: pointer; }
+.remove button { margin-top: 6px; }
 </style></head>
 <body><main>${body}</main></body></html>`;
   return new Response(html, { status, headers: HEADERS });

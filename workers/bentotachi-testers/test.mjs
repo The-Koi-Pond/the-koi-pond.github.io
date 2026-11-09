@@ -202,6 +202,64 @@ test("removing feedback removes its screenshots", async () => {
   assert.equal(gone.status, 404);
 });
 
+const status = async () => {
+  const res = await fetch(API + "/bentotachi/status");
+  return { status: res.status, body: await res.json(), headers: res.headers };
+};
+const saveStatus = (fields, headers = { ...auth(PASSWORD), Origin: API }) => send("/bentotachi/admin/status", fields, headers);
+
+test("the status starts at nothing, counts the signups, and only the website may read it", async () => {
+  const r = await status();
+  assert.equal(r.status, 200);
+  // 2 signups are left by now (one was removed above).
+  assert.deepEqual(r.body, { signedUp: 2, optedIn: 0, started: null, needed: 12, days: 14 });
+  assert.equal(r.headers.get("access-control-allow-origin"), SITE);
+});
+
+test("changing the status needs the password, from the admin page", async () => {
+  assert.equal((await saveStatus({ opted_in: "7", started: "" }, {})).status, 401);
+  assert.equal((await saveStatus({ opted_in: "7", started: "" }, { ...auth(PASSWORD), Origin: "https://evil.example" })).status, 403);
+  assert.equal((await status()).body.optedIn, 0);
+});
+
+test("below 12 the count is saved and there's no start date, even one typed in", async () => {
+  const r = await saveStatus({ opted_in: "7", started: "2026-11-01" });
+  assert.equal(r.status, 303);
+  const { body } = await status();
+  assert.equal(body.optedIn, 7);
+  assert.equal(body.started, null);
+  assert.match((await adminPage()).text, /name="opted_in" min="0" max="9999" value="7"/);
+});
+
+test("reaching 12 with no date starts the 14 days today", async () => {
+  await saveStatus({ opted_in: "12", started: "" });
+  const { body } = await status();
+  assert.match(body.started, /^\d{4}-\d{2}-\d{2}$/);
+  // "Today" is in the admin's time zone, so within a day of UTC's.
+  assert.ok(Math.abs(new Date(body.started + "T12:00:00Z") - Date.now()) < 2 * 86400000, body.started);
+});
+
+test("a date typed in wins, and dropping below 12 clears it", async () => {
+  await saveStatus({ opted_in: "13", started: "2026-11-10" });
+  assert.equal((await status()).body.started, "2026-11-10");
+  await saveStatus({ opted_in: "11", started: "2026-11-10" });
+  assert.equal((await status()).body.started, null);
+});
+
+test("a count or date that isn't one is refused, and nothing changes", async () => {
+  for (const fields of [
+    { opted_in: "", started: "" },
+    { opted_in: "-1", started: "" },
+    { opted_in: "3.5", started: "" },
+    { opted_in: "12", started: "2026-02-31" },
+    { opted_in: "12", started: "2026-13-01" },
+    { opted_in: "12", started: "tomorrow" },
+  ]) {
+    assert.equal((await saveStatus(fields)).status, 400, JSON.stringify(fields));
+  }
+  assert.equal((await status()).body.optedIn, 11);
+});
+
 test("wrong passwords stop being checked after 100 tries a minute", async () => {
   const statuses = [];
   for (let i = 0; i < 101; i++) statuses.push((await adminPage("nope")).status);

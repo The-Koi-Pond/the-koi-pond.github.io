@@ -40,6 +40,89 @@
         minute. Or just message me on Discord.
       </p>
 
+      <!-- Filled in by the script below from the Worker's /bentotachi/status
+           (Xel types the count into the admin page). Stays hidden without
+           JavaScript, or if the Worker can't be reached. -->
+      <section class="progress" id="progress" aria-labelledby="progress-title" hidden>
+        <h2 id="progress-title">How the test is going</h2>
+        <div class="tiles">
+          <div class="tile">
+            <p class="tile-label">Testers in</p>
+            <p class="tile-value" id="testers-value"></p>
+            <div class="meter" aria-hidden="true"><span id="testers-bar"></span></div>
+            <p class="tile-note" id="testers-note"></p>
+          </div>
+          <div class="tile">
+            <p class="tile-label" id="days-label"></p>
+            <p class="tile-value" id="days-value"></p>
+            <div class="meter" aria-hidden="true"><span id="days-bar"></span></div>
+            <p class="tile-note" id="days-note"></p>
+          </div>
+        </div>
+        <p class="center" id="progress-nudge" hidden>
+          Signed up but not in yet? Steps 1 to 3 below get you in. Ben can't start the clock without you.
+        </p>
+      </section>
+      <script>
+        (async () => {
+          let s;
+          try {
+            const res = await fetch("https://api.thekoipond.dev/bentotachi/status");
+            if (!res.ok) return;
+            s = await res.json();
+          } catch {
+            // Worker unreachable: the box stays hidden, the rest of the page works.
+            return;
+          }
+          const counts = [s.signedUp, s.optedIn, s.needed, s.days];
+          if (!counts.every(Number.isInteger) || s.needed < 1 || s.days < 1) return;
+          const set = (id, text) => (document.getElementById(id).textContent = text);
+          const fill = (id, part) => (document.getElementById(id).style.width = `${Math.min(1, part) * 100}%`);
+          const plural = (n, word) => `${n} ${word}${n === 1 ? "" : "s"}`;
+
+          const enough = s.optedIn >= s.needed;
+          set("testers-value", enough ? `${s.optedIn}` : `${s.optedIn} of ${s.needed}`);
+          fill("testers-bar", s.optedIn / s.needed);
+          set(
+            "testers-note",
+            enough
+              ? `${s.needed} needed, so that's enough. ${s.signedUp} signed up in all.`
+              : `${s.signedUp} signed up so far.`,
+          );
+
+          set("days-label", `Google's ${s.days} days`);
+          const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s.started ?? "");
+          if (!match) {
+            const short = Math.max(0, s.needed - s.optedIn);
+            set("days-value", "Not started");
+            fill("days-bar", 0);
+            set(
+              "days-note",
+              short ? `They start once ${s.needed} testers are in: ${short} to go.` : "Starting any moment now.",
+            );
+            document.getElementById("progress-nudge").hidden = short === 0;
+          } else {
+            // Counted in whole days on this device's calendar; rounding
+            // covers a daylight-saving day being an hour short or long.
+            const start = new Date(+match[1], match[2] - 1, +match[3]);
+            const now = new Date();
+            const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            const gone = Math.max(0, Math.round((today - start) / 86400000));
+            const end = new Date(start.getFullYear(), start.getMonth(), start.getDate() + s.days);
+            const endText = end.toLocaleDateString("en-AU", { day: "numeric", month: "long" });
+            fill("days-bar", gone / s.days);
+            if (gone >= s.days) {
+              set("days-value", "Done");
+              set("days-note", `All ${s.days} days are in. Thank you for sticking with it.`);
+            } else {
+              set("days-value", `${plural(s.days - gone, "day")} to go`);
+              set("days-note", `Day ${gone + 1} of ${s.days}. Please keep it installed until ${endText}.`);
+            }
+          }
+          document.getElementById("progress").hidden = false;
+        })();
+      </script>
+
       <h2>What happens next</h2>
       <ol class="steps">
         <li>
@@ -60,6 +143,11 @@
           <strong>Install <a href="https://play.google.com/store/apps/details?id=com.xel.bento">Bentotachi from Google
           Play</a></strong> like any other app. Until Google finishes checking the store page, it may be called
           “com.xel.bento (unreviewed)”. Same app, worse name.
+          <p class="step-note">
+            <strong>Seeing “Item not found”?</strong> Google Play is probably signed in with a different Google account
+            from the one you joined the group with. Tap your picture at the top right, switch to the account you joined
+            with, then open the link again. Same goes for the test's page in step 2.
+          </p>
         </li>
         <li>
           <strong>Keep it installed for 14 days.</strong> Google counts the days in a row, so even if you're busy, please

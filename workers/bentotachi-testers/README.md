@@ -17,6 +17,13 @@ the website (`#welcome`, `#thanks`, or `#oops` when something was wrong).
 admin password (any username). Each entry has a Remove button, for anyone
 who asks to be deleted.
 
+**How the test is going:** the testers' page shows how many testers are in
+and counts down Google's 14 days, from `/bentotachi/status` (counts and a
+date only, readable by the website). Play Console's opted-in number can't
+be fetched, so Xel copies it into the box at the top of the admin page. The
+start date fills itself in the day it reaches 12 and clears below 12; a date
+typed in wins, to match Play Console.
+
 Spam protection: a hidden box only bots fill in (they're told it worked,
 and nothing is saved), at most 5 signups and 5 feedback forms a minute from
 one address, and a cap on the total (1000 signups, 5000 feedback, 1500

@@ -47,7 +47,9 @@ app's page is a folder in this repo.
   database in Xel's Cloudflare account, and Xel reads the lists at
   `api.thekoipond.dev/bentotachi/admin` with a password. The pages still
   have no JavaScript: the Worker sends people back to `#welcome`,
-  `#thanks` or `#oops`, and CSS `:target` shows the right note. Deploying
+  `#thanks` or `#oops`, and CSS `:target` shows the right note. The
+  testers' page also has two small scripts: one shrinks screenshots, one
+  fills in "How the test is going" from the Worker (hidden without it). Deploying
   the Worker (`npx wrangler@4 deploy`) publishes, like a push: Xel's
   go-ahead first. No emails or IP addresses are collected, on purpose.
 

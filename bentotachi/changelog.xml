@@ -11,7 +11,15 @@
   <id>https://thekoipond.dev/bentotachi/changelog.xml</id>
   <icon>https://thekoipond.dev/bentotachi/apple-touch-icon.png</icon>
   <author><name>The Koi Pond</name><uri>https://thekoipond.dev/</uri></author>
-  <updated>2026-11-09T18:00:00Z</updated>
+  <updated>2026-11-10T02:52:00Z</updated>
+
+  <entry>
+    <title>1.23.0: Every jar its own date</title>
+    <link href="https://thekoipond.dev/bentotachi/changelog.html#v1-23-0"/>
+    <id>tag:thekoipond.dev,2026:bentotachi/1.23.0</id>
+    <updated>2026-11-10T02:52:00Z</updated>
+    <summary>Each jar, tin and bag with its own use-by, opened and bought date, the brands and sizes you buy with a star on your favourite, pantry places like the fridge or the freezer, scanning that counts by itself, and a new calendar for every date.</summary>
+  </entry>
 
   <entry>
     <title>1.22.0: Your way, light or dark</title>

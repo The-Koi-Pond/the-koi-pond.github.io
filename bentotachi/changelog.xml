@@ -11,7 +11,15 @@
   <id>https://thekoipond.dev/bentotachi/changelog.xml</id>
   <icon>https://thekoipond.dev/bentotachi/apple-touch-icon.png</icon>
   <author><name>The Koi Pond</name><uri>https://thekoipond.dev/</uri></author>
-  <updated>2026-11-10T14:50:00Z</updated>
+  <updated>2026-11-11T12:08:00Z</updated>
+
+  <entry>
+    <title>1.25.0: Dinner in the dead zone</title>
+    <link href="https://thekoipond.dev/bentotachi/changelog.html#v1-25-0"/>
+    <id>tag:thekoipond.dev,2026:bentotachi/1.25.0</id>
+    <updated>2026-11-11T12:08:00Z</updated>
+    <summary>Browse a site by category and tick a whole bunch of recipes at once, the plan, pantry, fridge door and shelves to read with no signal, no more minutes of "Loading…", and a little cloud that says when the server can't be reached.</summary>
+  </entry>
 
   <entry>
     <title>1.24.0: Older phones welcome</title>

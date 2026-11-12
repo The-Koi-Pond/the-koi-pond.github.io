@@ -231,7 +231,7 @@ tells to avoid:
 | App | Its own personality | Where it stands |
 |---|---|---|
 | Bentotachi | Ben, the screaming onigiri on chopsticks, and his moods; the drawn title with the umeboshi | Its own accent since 2026-11-04: umeboshi plum on a "tea-rice" background, and Ben's chopsticks became plain wood; dark mode is pond at night (since 2026-11-01). Pill-shaped buttons and chips. "A Koi Pond app" credit at the bottom of its ⋮ menu. |
-| Koihongo | Pixel art, sparkles, pixel fonts, Deki-senpai | Navy, periwinkle and pink for now. Getting three themes to choose from: "That tasted purple!" (today's look), **Night Water** (cold teal-black pond, moonlit) and **Lantern Dusk** (warm dusk with paper lanterns, built on the pond-at-night colours). |
+| Koihongo | Pixel art, sparkles, pixel fonts, Deki-senpai | Three themes to choose from in Settings (since 2026-11-01): "That tasted purple!" (the original navy, periwinkle and pink), **Night Water** (cold teal-black pond, moonlit) and **Lantern Dusk** (warm dusk with paper lanterns, built on the pond-at-night colours). |
 | De-Koi | Visual-novel atmosphere, sprites, the "Koi Pond at Dusk" look | Its new Pond theme uses the pond colours: vermilion `#F7694A` / `#B8341C`, crimson danger, one teal hue for the water (De-Koi PR #1591). The older Default theme keeps ember orange `#F06F3F`. Its own rules are in its `DESIGN.md`. |
 | DeKoi | The fish ring, sumi-e brush motifs, serif titles | Shelved. Its `DESIGN.md` is the most detailed design writing we have, and worth borrowing from. |
 
@@ -241,16 +241,17 @@ All paths are under `C:\Projects\TheKoiPond\` on Xel's PC.
 
 - Deki, the studio logo and Pond Pebbles: `the-koi-pond.github.io\`
   (see its `README.md` for how they're made).
-- Ben, the Bentotachi title and app icons: `bento\branding\` (see its
+- Ben, the Bentotachi title and app icons: `bentotachi\branding\` (see its
   `README.md`).
 - The fish ring: DeKoi, path above.
 
 ## Still to decide
 
-1. **Koihongo's two pond themes:** the exact colours, tuned in the real
-   app. Decided on 2026-11-01: Night Water and Lantern Dusk, both kept
-   as options next to "That tasted purple!". The hills and bushes get
-   recoloured; the blossoms stay as they are.
-2. **Pixel koi for the fish ring:** Xel draws them (left- and
-   right-facing at least; more directions if the ring goes all the way
-   round).
+- **Pixel koi for the fish ring:** Xel makes the art with AI tools such
+  as PixelLab and ChatGPT, rather than drawing it by hand, so don't ask
+  Xel to draw the koi. Until there are sprites, use simple placeholders
+  made in code. Needed: left- and right-facing at least, plus more
+  directions if the ring goes all the way round.
+
+(Koihongo's two pond themes were settled here too. Night Water and
+Lantern Dusk shipped on 2026-11-01, next to "That tasted purple!".)

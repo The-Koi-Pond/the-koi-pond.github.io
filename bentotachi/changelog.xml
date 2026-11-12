@@ -11,7 +11,15 @@
   <id>https://thekoipond.dev/bentotachi/changelog.xml</id>
   <icon>https://thekoipond.dev/bentotachi/apple-touch-icon.png</icon>
   <author><name>The Koi Pond</name><uri>https://thekoipond.dev/</uri></author>
-  <updated>2026-11-11T12:08:00Z</updated>
+  <updated>2026-11-12T03:39:00Z</updated>
+
+  <entry>
+    <title>1.26.0: Nobody gets eaten</title>
+    <link href="https://thekoipond.dev/bentotachi/changelog.html#v1-26-0"/>
+    <id>tag:thekoipond.dev,2026:bentotachi/1.26.0</id>
+    <updated>2026-11-12T03:39:00Z</updated>
+    <summary>Backups that always let you back in, photos with no signal, tidier categories, "Serves 6" instead of "Makes 6 people", a tub counted as an amount, and the rest of a tester's bug report fixed.</summary>
+  </entry>
 
   <entry>
     <title>1.25.0: Dinner in the dead zone</title>

@@ -11,7 +11,15 @@
   <id>https://thekoipond.dev/bentotachi/changelog.xml</id>
   <icon>https://thekoipond.dev/bentotachi/apple-touch-icon.png</icon>
   <author><name>The Koi Pond</name><uri>https://thekoipond.dev/</uri></author>
-  <updated>2026-11-12T03:39:00Z</updated>
+  <updated>2026-11-12T06:49:00Z</updated>
+
+  <entry>
+    <title>1.27.0: Counting your chickens</title>
+    <link href="https://thekoipond.dev/bentotachi/changelog.html#v1-27-0"/>
+    <id>tag:thekoipond.dev,2026:bentotachi/1.27.0</id>
+    <updated>2026-11-12T06:49:00Z</updated>
+    <summary>Eggs count: a carton of 12 comes down as you cook, Dark mode darkens the phone's own bars too, BBC Food's categories are back on Browse, a recipe opened offline gets its heart back, and more fixes from a tester's notes.</summary>
+  </entry>
 
   <entry>
     <title>1.26.0: Nobody gets eaten</title>

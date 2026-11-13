@@ -11,7 +11,15 @@
   <id>https://thekoipond.dev/bentotachi/changelog.xml</id>
   <icon>https://thekoipond.dev/bentotachi/apple-touch-icon.png</icon>
   <author><name>The Koi Pond</name><uri>https://thekoipond.dev/</uri></author>
-  <updated>2026-11-13T06:09:00Z</updated>
+  <updated>2026-11-13T09:14:00Z</updated>
+
+  <entry>
+    <title>1.29.0: Five cloves, one line</title>
+    <link href="https://thekoipond.dev/bentotachi/changelog.html#v1-29-0"/>
+    <id>tag:thekoipond.dev,2026:bentotachi/1.29.0</id>
+    <updated>2026-11-13T09:14:00Z</updated>
+    <summary>The shopping list adds up the same thing from different recipes, with a little book showing who wants how much; lines leave the chopping to the recipe; and a ‹ at the top of a recipe takes you back.</summary>
+  </entry>
 
   <entry>
     <title>1.28.0: The big tidy-up</title>

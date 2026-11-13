@@ -11,7 +11,15 @@
   <id>https://thekoipond.dev/bentotachi/changelog.xml</id>
   <icon>https://thekoipond.dev/bentotachi/apple-touch-icon.png</icon>
   <author><name>The Koi Pond</name><uri>https://thekoipond.dev/</uri></author>
-  <updated>2026-11-12T06:49:00Z</updated>
+  <updated>2026-11-13T06:09:00Z</updated>
+
+  <entry>
+    <title>1.28.0: The big tidy-up</title>
+    <link href="https://thekoipond.dev/bentotachi/changelog.html#v1-28-0"/>
+    <id>tag:thekoipond.dev,2026:bentotachi/1.28.0</id>
+    <updated>2026-11-13T06:09:00Z</updated>
+    <summary>Several shopping lists, a design check-up (easier to read, easier to tap, happy with your phone's biggest text), ticks that stay until you've cooked, ingredients first on a recipe, and a tap on the ⠿ to move things without dragging.</summary>
+  </entry>
 
   <entry>
     <title>1.27.0: Counting your chickens</title>
